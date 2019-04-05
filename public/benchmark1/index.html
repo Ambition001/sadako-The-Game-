@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sadako: Benchmark 1</title>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/5.9.3/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/5.9.3/firebase-auth.js"></script>
+    <script defer src="/__/firebase/5.9.3/firebase-database.js"></script>
+    <script defer src="/__/firebase/5.9.3/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/5.9.3/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+	<style type="text/css">
+        ul.lst-kix_lu51ldhfmgle-0 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_lu51ldhfmgle-1 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_lu51ldhfmgle-2 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_lu51ldhfmgle-7 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_itfej07ikb12-7 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_lu51ldhfmgle-8 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_itfej07ikb12-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_4uekw32jsqa3-4>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_qwii8u21z68d-5>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_lu51ldhfmgle-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_lu51ldhfmgle-4 {
+            list-style-type: none
+        }
+
+        .lst-kix_4uekw32jsqa3-3>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_qwii8u21z68d-4>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_lu51ldhfmgle-5 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_lu51ldhfmgle-6 {
+            list-style-type: none
+        }
+
+        .lst-kix_4uekw32jsqa3-2>li:before {
+            content: "\0025a0  "
+        }
+
+        .lst-kix_z660y6arwxx-2>li:before {
+            content: "\0025a0  "
+        }
+
+        ul.lst-kix_itfej07ikb12-0 {
+            list-style-type: none
+        }
+
+        .lst-kix_z660y6arwxx-1>li:before {
+            content: "\0025cb  "
+        }
+
+        ul.lst-kix_itfej07ikb12-1 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_itfej07ikb12-2 {
+            list-style-type: none
+        }
+
+        .lst-kix_z660y6arwxx-0>li:before {
+            content: "\0025cf  "
+        }
+
+        ul.lst-kix_itfej07ikb12-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_itfej07ikb12-4 {
+            list-style-type: none
+        }
+
+        .lst-kix_4uekw32jsqa3-1>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_qwii8u21z68d-6>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_itfej07ikb12-5 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_itfej07ikb12-6 {
+            list-style-type: none
+        }
+
+        .lst-kix_qwii8u21z68d-7>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_4uekw32jsqa3-0>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_qwii8u21z68d-8>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_wsxq455y30l2-6>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_wsxq455y30l2-5>li:before {
+            content: "\0025a0  "
+        }
+
+        .lst-kix_wsxq455y30l2-7>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_2n7hxfe2hqzy-0>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_2n7hxfe2hqzy-1>li:before {
+            content: "\0025cb  "
+        }
+
+        ul.lst-kix_2n7hxfe2hqzy-3 {
+            list-style-type: none
+        }
+
+        .lst-kix_wsxq455y30l2-2>li:before {
+            content: "\0025a0  "
+        }
+
+        ul.lst-kix_2n7hxfe2hqzy-4 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_2n7hxfe2hqzy-1 {
+            list-style-type: none
+        }
+
+        .lst-kix_qhy1irywm76d-2>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_wsxq455y30l2-1>li:before {
+            content: "\0025cb  "
+        }
+
+        ul.lst-kix_2n7hxfe2hqzy-2 {
+            list-style-type: none
+        }
+
+        .lst-kix_2n7hxfe2hqzy-3>li:before {
+            content: "\0025cf  "
+        }
+
+        ul.lst-kix_2n7hxfe2hqzy-7 {
+            list-style-type: none
+        }
+
+        .lst-kix_qhy1irywm76d-3>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_wsxq455y30l2-0>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_wsxq455y30l2-8>li:before {
+            content: "\0025a0  "
+        }
+
+        ul.lst-kix_2n7hxfe2hqzy-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_2n7hxfe2hqzy-2>li:before {
+            content: "\0025a0  "
+        }
+
+        ul.lst-kix_2n7hxfe2hqzy-5 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_2n7hxfe2hqzy-6 {
+            list-style-type: none
+        }
+
+        .lst-kix_2n7hxfe2hqzy-5>li:before {
+            content: "\0025a0  "
+        }
+
+        .lst-kix_qhy1irywm76d-5>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_qhy1irywm76d-4>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_qhy1irywm76d-6>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_2n7hxfe2hqzy-0 {
+            list-style-type: none
+        }
+
+        .lst-kix_2n7hxfe2hqzy-4>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_2n7hxfe2hqzy-8>li:before {
+            content: "\0025a0  "
+        }
+
+        .lst-kix_qhy1irywm76d-8>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_wsxq455y30l2-3>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_2n7hxfe2hqzy-7>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_qhy1irywm76d-7>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_wsxq455y30l2-4>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_2n7hxfe2hqzy-6>li:before {
+            content: "\0025cf  "
+        }
+
+        ul.lst-kix_qhy1irywm76d-0 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_qhy1irywm76d-1 {
+            list-style-type: none
+        }
+
+        .lst-kix_z660y6arwxx-3>li:before {
+            content: "\0025cf  "
+        }
+
+        ul.lst-kix_qhy1irywm76d-2 {
+            list-style-type: none
+        }
+
+        .lst-kix_z660y6arwxx-4>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_4uekw32jsqa3-5>li:before {
+            content: "\0025a0  "
+        }
+
+        ul.lst-kix_857fe9npr4mv-4 {
+            list-style-type: none
+        }
+
+        .lst-kix_z660y6arwxx-6>li:before {
+            content: "\0025cf  "
+        }
+
+        ul.lst-kix_857fe9npr4mv-5 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_857fe9npr4mv-6 {
+            list-style-type: none
+        }
+
+        .lst-kix_z660y6arwxx-5>li:before {
+            content: "\0025a0  "
+        }
+
+        .lst-kix_z660y6arwxx-7>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_g10m4x67is9f-1>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_4uekw32jsqa3-6>li:before {
+            content: "\0025cf  "
+        }
+
+        ul.lst-kix_857fe9npr4mv-7 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_857fe9npr4mv-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_g10m4x67is9f-0>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_4uekw32jsqa3-7>li:before {
+            content: "\0025cb  "
+        }
+
+        ul.lst-kix_m0jz4plfg4ny-5 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_m0jz4plfg4ny-4 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_m0jz4plfg4ny-7 {
+            list-style-type: none
+        }
+
+        .lst-kix_4uekw32jsqa3-8>li:before {
+            content: "\0025a0  "
+        }
+
+        ul.lst-kix_m0jz4plfg4ny-6 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_857fe9npr4mv-0 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_m0jz4plfg4ny-1 {
+            list-style-type: none
+        }
+
+        .lst-kix_z660y6arwxx-8>li:before {
+            content: "\0025a0  "
+        }
+
+        ul.lst-kix_857fe9npr4mv-1 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_m0jz4plfg4ny-0 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_857fe9npr4mv-2 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_m0jz4plfg4ny-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_857fe9npr4mv-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_m0jz4plfg4ny-2 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_qhy1irywm76d-7 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_qhy1irywm76d-8 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_qhy1irywm76d-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_qhy1irywm76d-4 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_m0jz4plfg4ny-8 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_qhy1irywm76d-5 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_qhy1irywm76d-6 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_lv22c9e3agfu-7 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_lv22c9e3agfu-6 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_lv22c9e3agfu-8 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_lv22c9e3agfu-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_lv22c9e3agfu-2 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_lv22c9e3agfu-5 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_lv22c9e3agfu-4 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_i02c8cpuyeov-8 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_lv22c9e3agfu-1 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_i02c8cpuyeov-6 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_lv22c9e3agfu-0 {
+            list-style-type: none
+        }
+
+        .lst-kix_g10m4x67is9f-8>li:before {
+            content: "\0025a0  "
+        }
+
+        ul.lst-kix_i02c8cpuyeov-7 {
+            list-style-type: none
+        }
+
+        .lst-kix_itfej07ikb12-5>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_itfej07ikb12-3>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_g10m4x67is9f-2>li:before {
+            content: "\0025a0  "
+        }
+
+        .lst-kix_g10m4x67is9f-6>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_itfej07ikb12-1>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_g10m4x67is9f-4>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_857fe9npr4mv-0>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_lu51ldhfmgle-8>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_3biiziyp2c1j-4>li:before {
+            content: "\0025cb  "
+        }
+
+        ul.lst-kix_i02c8cpuyeov-4 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_i02c8cpuyeov-5 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_i02c8cpuyeov-2 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_i02c8cpuyeov-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_i02c8cpuyeov-0 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_i02c8cpuyeov-1 {
+            list-style-type: none
+        }
+
+        .lst-kix_3biiziyp2c1j-8>li:before {
+            content: "\0025a0  "
+        }
+
+        .lst-kix_qhy1irywm76d-1>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_3biiziyp2c1j-6>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_lv22c9e3agfu-8>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_lv22c9e3agfu-6>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_lv22c9e3agfu-0>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_z660y6arwxx-0 {
+            list-style-type: none
+        }
+
+        .lst-kix_lu51ldhfmgle-2>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_z660y6arwxx-1 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_z660y6arwxx-2 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_z660y6arwxx-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_z660y6arwxx-4 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_z660y6arwxx-5 {
+            list-style-type: none
+        }
+
+        .lst-kix_lv22c9e3agfu-4>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_lu51ldhfmgle-4>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_lu51ldhfmgle-6>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_lv22c9e3agfu-2>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_4uekw32jsqa3-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_m0jz4plfg4ny-1>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_4uekw32jsqa3-7 {
+            list-style-type: none
+        }
+
+        .lst-kix_iohux4q82z8y-4>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_iohux4q82z8y-6>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_4uekw32jsqa3-6 {
+            list-style-type: none
+        }
+
+        .lst-kix_qwii8u21z68d-2>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_z660y6arwxx-6 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_z660y6arwxx-7 {
+            list-style-type: none
+        }
+
+        .lst-kix_iohux4q82z8y-0>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_iohux4q82z8y-8>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_z660y6arwxx-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_m0jz4plfg4ny-3>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_qwii8u21z68d-0>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_lu51ldhfmgle-0>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_4uekw32jsqa3-1 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_4uekw32jsqa3-0 {
+            list-style-type: none
+        }
+
+        .lst-kix_iohux4q82z8y-2>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_4uekw32jsqa3-5 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_4uekw32jsqa3-4 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_4uekw32jsqa3-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_4uekw32jsqa3-2 {
+            list-style-type: none
+        }
+
+        .lst-kix_ccfzovz9fbd7-7>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_ccfzovz9fbd7-6>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_ccfzovz9fbd7-8>li:before {
+            content: "\0025a0  "
+        }
+
+        .lst-kix_ccfzovz9fbd7-5>li:before {
+            content: "\0025a0  "
+        }
+
+        .lst-kix_ccfzovz9fbd7-3>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_ccfzovz9fbd7-2>li:before {
+            content: "\0025a0  "
+        }
+
+        .lst-kix_ccfzovz9fbd7-4>li:before {
+            content: "\0025cb  "
+        }
+
+        ul.lst-kix_qwii8u21z68d-8 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_qwii8u21z68d-7 {
+            list-style-type: none
+        }
+
+        .lst-kix_m0jz4plfg4ny-8>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_qwii8u21z68d-6 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_qwii8u21z68d-5 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_qwii8u21z68d-4 {
+            list-style-type: none
+        }
+
+        .lst-kix_ccfzovz9fbd7-0>li:before {
+            content: "\0025cf  "
+        }
+
+        ul.lst-kix_qwii8u21z68d-3 {
+            list-style-type: none
+        }
+
+        .lst-kix_m0jz4plfg4ny-6>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_qwii8u21z68d-2 {
+            list-style-type: none
+        }
+
+        .lst-kix_ccfzovz9fbd7-1>li:before {
+            content: "\0025cb  "
+        }
+
+        ul.lst-kix_qwii8u21z68d-1 {
+            list-style-type: none
+        }
+
+        .lst-kix_m0jz4plfg4ny-5>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_qwii8u21z68d-0 {
+            list-style-type: none
+        }
+
+        .lst-kix_m0jz4plfg4ny-7>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_ccfzovz9fbd7-5 {
+            list-style-type: none
+        }
+
+        .lst-kix_i02c8cpuyeov-8>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_ccfzovz9fbd7-4 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_ccfzovz9fbd7-7 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_ccfzovz9fbd7-6 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_ccfzovz9fbd7-1 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_ccfzovz9fbd7-0 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_ccfzovz9fbd7-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_ccfzovz9fbd7-2 {
+            list-style-type: none
+        }
+
+        .lst-kix_i02c8cpuyeov-4>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_3biiziyp2c1j-1>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_3biiziyp2c1j-2>li:before {
+            content: "\0025a0  "
+        }
+
+        .lst-kix_i02c8cpuyeov-2>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_i02c8cpuyeov-3>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_3biiziyp2c1j-0>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_i02c8cpuyeov-5>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_i02c8cpuyeov-6>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_i02c8cpuyeov-7>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_857fe9npr4mv-2>li:before {
+            content: "\0025a0  "
+        }
+
+        ul.lst-kix_ccfzovz9fbd7-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_wf457zjvzpdm-5>li:before {
+            content: "\0025a0  "
+        }
+
+        .lst-kix_wf457zjvzpdm-7>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_857fe9npr4mv-3>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_wf457zjvzpdm-6>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_857fe9npr4mv-4>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_wf457zjvzpdm-1>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_857fe9npr4mv-6>li:before {
+            content: "\0025cf  "
+        }
+
+        ul.lst-kix_wsxq455y30l2-1 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_wsxq455y30l2-0 {
+            list-style-type: none
+        }
+
+        .lst-kix_857fe9npr4mv-5>li:before {
+            content: "\0025a0  "
+        }
+
+        ul.lst-kix_wsxq455y30l2-3 {
+            list-style-type: none
+        }
+
+        .lst-kix_wf457zjvzpdm-0>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_wf457zjvzpdm-8>li:before {
+            content: "\0025a0  "
+        }
+
+        ul.lst-kix_wsxq455y30l2-2 {
+            list-style-type: none
+        }
+
+        .lst-kix_857fe9npr4mv-8>li:before {
+            content: "\0025a0  "
+        }
+
+        .lst-kix_i02c8cpuyeov-0>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_i02c8cpuyeov-1>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_itfej07ikb12-6>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_itfej07ikb12-7>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_itfej07ikb12-8>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_857fe9npr4mv-7>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_wf457zjvzpdm-2>li:before {
+            content: "\0025a0  "
+        }
+
+        .lst-kix_wf457zjvzpdm-3>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_wf457zjvzpdm-4>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_itfej07ikb12-0>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_3biiziyp2c1j-0 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_3biiziyp2c1j-1 {
+            list-style-type: none
+        }
+
+        .lst-kix_g10m4x67is9f-7>li:before {
+            content: "\0025cb  "
+        }
+
+        ul.lst-kix_iohux4q82z8y-0 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_iohux4q82z8y-1 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_wsxq455y30l2-5 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_wsxq455y30l2-4 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_g10m4x67is9f-1 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_wsxq455y30l2-7 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_g10m4x67is9f-0 {
+            list-style-type: none
+        }
+
+        .lst-kix_g10m4x67is9f-3>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_g10m4x67is9f-5>li:before {
+            content: "\0025a0  "
+        }
+
+        ul.lst-kix_wsxq455y30l2-6 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_g10m4x67is9f-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_g10m4x67is9f-2 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_wsxq455y30l2-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_itfej07ikb12-4>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_g10m4x67is9f-5 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_g10m4x67is9f-4 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_g10m4x67is9f-7 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_g10m4x67is9f-6 {
+            list-style-type: none
+        }
+
+        .lst-kix_itfej07ikb12-2>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_g10m4x67is9f-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_857fe9npr4mv-1>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_lu51ldhfmgle-7>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_3biiziyp2c1j-3>li:before {
+            content: "\0025cf  "
+        }
+
+        .lst-kix_3biiziyp2c1j-5>li:before {
+            content: "\0025a0  "
+        }
+
+        ul.lst-kix_3biiziyp2c1j-2 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_3biiziyp2c1j-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_3biiziyp2c1j-4 {
+            list-style-type: none
+        }
+
+        .lst-kix_3biiziyp2c1j-7>li:before {
+            content: "\0025cb  "
+        }
+
+        .lst-kix_qhy1irywm76d-0>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_3biiziyp2c1j-5 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_3biiziyp2c1j-6 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_3biiziyp2c1j-7 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_3biiziyp2c1j-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_lv22c9e3agfu-7>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_lv22c9e3agfu-5>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_lv22c9e3agfu-1>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_lu51ldhfmgle-3>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_wf457zjvzpdm-0 {
+            list-style-type: none
+        }
+
+        .lst-kix_lv22c9e3agfu-3>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_wf457zjvzpdm-1 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_wf457zjvzpdm-2 {
+            list-style-type: none
+        }
+
+        .lst-kix_lu51ldhfmgle-5>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_iohux4q82z8y-5>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_wf457zjvzpdm-7 {
+            list-style-type: none
+        }
+
+        .lst-kix_qwii8u21z68d-3>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_wf457zjvzpdm-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_m0jz4plfg4ny-0>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_wf457zjvzpdm-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_wf457zjvzpdm-4 {
+            list-style-type: none
+        }
+
+        .lst-kix_m0jz4plfg4ny-2>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_wf457zjvzpdm-5 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_wf457zjvzpdm-6 {
+            list-style-type: none
+        }
+
+        .lst-kix_m0jz4plfg4ny-4>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_iohux4q82z8y-7>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_qwii8u21z68d-1>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_lu51ldhfmgle-1>li:before {
+            content: "-  "
+        }
+
+        ul.lst-kix_iohux4q82z8y-4 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_iohux4q82z8y-5 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_iohux4q82z8y-2 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_iohux4q82z8y-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_iohux4q82z8y-8 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_iohux4q82z8y-6 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_iohux4q82z8y-7 {
+            list-style-type: none
+        }
+
+        .lst-kix_iohux4q82z8y-1>li:before {
+            content: "-  "
+        }
+
+        .lst-kix_iohux4q82z8y-3>li:before {
+            content: "-  "
+        }
+
+        ol {
+            margin: 0;
+            padding: 0
+        }
+
+        table td,
+        table th {
+            padding: 0
+        }
+
+        .c3 {
+            margin-left: 36pt;
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: left;
+            height: 11pt
+        }
+
+        .c2 {
+            color: #000000;
+            font-weight: 700;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 11pt;
+            font-family: "Arial";
+            font-style: normal
+        }
+
+        .c0 {
+            color: #000000;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 11pt;
+            font-family: "Arial";
+            font-style: normal
+        }
+
+        .c8 {
+            padding-top: 20pt;
+            padding-bottom: 6pt;
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c12 {
+            color: #000000;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 20pt;
+            font-family: "Arial";
+            font-style: normal
+        }
+
+        .c5 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c13 {
+            background-color: #ffffff;
+            max-width: 468pt;
+            padding: 72pt 72pt 72pt 72pt
+        }
+
+        .c1 {
+            padding: 0;
+            margin: 0
+        }
+
+        .c7 {
+            margin-left: 72pt;
+            padding-left: 0pt
+        }
+
+        .c14 {
+            text-indent: 36pt
+        }
+
+        .c9 {
+            padding-left: 0pt
+        }
+
+        .c11 {
+            height: 11pt
+        }
+
+        .c10 {
+            font-style: italic
+        }
+
+        .c6 {
+            margin-left: 36pt
+        }
+
+        .c4 {
+            font-weight: 700
+        }
+
+        .title {
+            padding-top: 0pt;
+            color: #000000;
+            font-size: 26pt;
+            padding-bottom: 3pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .subtitle {
+            padding-top: 0pt;
+            color: #666666;
+            font-size: 15pt;
+            padding-bottom: 16pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        li {
+            color: #000000;
+            font-size: 11pt;
+            font-family: "Arial"
+        }
+
+        p {
+            margin: 0;
+            color: #000000;
+            font-size: 11pt;
+            font-family: "Arial"
+        }
+
+        h1 {
+            padding-top: 20pt;
+            color: #000000;
+            font-size: 20pt;
+            padding-bottom: 6pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h2 {
+            padding-top: 18pt;
+            color: #000000;
+            font-size: 16pt;
+            padding-bottom: 6pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h3 {
+            padding-top: 16pt;
+            color: #434343;
+            font-size: 14pt;
+            padding-bottom: 4pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h4 {
+            padding-top: 14pt;
+            color: #666666;
+            font-size: 12pt;
+            padding-bottom: 4pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h5 {
+            padding-top: 12pt;
+            color: #666666;
+            font-size: 11pt;
+            padding-bottom: 4pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h6 {
+            padding-top: 12pt;
+            color: #666666;
+            font-size: 11pt;
+            padding-bottom: 4pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            font-style: italic;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+    </style>
+</head>
+
+<body class="c13">
+    <h1 class="c8" id="h.4728cptygvqz"><span class="c12">Introduction</span></h1>
+    <p class="c5"><span class="c0">This document describes a game called &ldquo;Sadako&rdquo;, which is designed to be a
+            2D side-scroller game. The game will employ sprite-based animation, tiled backgrounds, collision detection,
+            physics, AI, side scrolling &amp; gravity, and more basic 2D game techniques.</span></p>
+    <h1 class="c8" id="h.ypxvaftpku0e"><span class="c12">Technology</span></h1>
+    <p class="c5"><span>Sadako</span><span>&nbsp;will be developed for the Browser using the Phaser javascript library,
+            which is a open source framework for canvas and WebGL powered browser game. WebGL will be used as the
+            underlying rendering technology. We&rsquo;ll use FL Studio 20 to make music, Pro Create, Aseprite, and
+            Piskel to make the sprites and other images. We also use Tiled to arrange the levels.</span></p>
+    <h1 class="c8" id="h.9if3wochcvjs"><span class="c12">BackStory</span></h1>
+    <p class="c5"><span>Sadako is a little girl who is having bad dreams after her uncle played her the movie:
+        </span><span class="c10">The Ring</span><span class="c0">.</span></p>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <p class="c5"><span>She&rsquo;s having nightmares! And, she&rsquo;s </span><span class="c10">living
+        </span><span>those nightmares.</span></p>
+    <h1 class="c8" id="h.k2e73kivyzm8"><span class="c12">Objective</span></h1>
+    <p class="c5"><span class="c0">Sadako&rsquo;s goal is to find her Teddy bear in the nightmare. Sadako will face
+            enemies such as demons and ghosts in her nightmare, and she will need to avoid these dangers. </span></p>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <p class="c5"><span class="c0">She&rsquo;ll have to navigate her way through the nightmare via jumps, double jumps,
+            physics puzzles, and even some light combat.</span></p>
+    <h1 class="c8" id="h.ev1jdm6ahkdk"><span class="c12">Gameplay</span></h1>
+    <p class="c5"><span class="c0">The game will work like a side scroller, with Sadako able to run left and right, and
+            jump up or double jump. Sadako also can push blocks, pull ropes, and even light fires to solve
+            puzzles.</span></p>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <p class="c5"><span class="c0">Terror level &nbsp;-- &nbsp;0% - 100%</span></p>
+    <ul class="c1 lst-kix_2n7hxfe2hqzy-0 start">
+        <li class="c5 c9 c6"><span class="c0">Once Sadako collides with an enemy, the terror level will increase by the
+                value associated with the enemy. </span></li>
+    </ul>
+    <ul class="c1 lst-kix_2n7hxfe2hqzy-1 start">
+        <li class="c5 c7"><span class="c0">If Sadako keeps touching the enemy, the terror level will increase in a
+                constant speed (1 enemy unit of terror per 3 seconds). If Sadako is not being chased by any enemy, her
+                terror level will slowly restore. </span></li>
+        <li class="c5 c7"><span class="c0">Sadako is immune to all terror damage for 3 seconds after taking
+                damage.</span></li>
+        <li class="c5 c7"><span class="c0">On collide, the screen will briefly darken around the screen and shake
+                (random chance for a scream)</span></li>
+    </ul>
+    <ul class="c1 lst-kix_2n7hxfe2hqzy-0">
+        <li class="c5 c9 c6"><span class="c0">If terror reaches 100%, Sadako becomes terrified and cannot
+                continue.</span></li>
+    </ul>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <p class="c5"><span class="c0">Consumable Items:</span></p>
+    <ul class="c1 lst-kix_wsxq455y30l2-0 start">
+        <li class="c5 c9 c6"><span class="c0">Haunted doll -- Take the killing blow and teleport Sadako forward (Can go
+                through walls)</span></li>
+        <li class="c5 c9 c6"><span class="c0">Golden star sticker -- Makes Sadako invincible and can kill enemies on
+                collision, limited duration</span></li>
+        <li class="c5 c9 c6"><span class="c0">Milk Glass -- Instantly lowers terror by half</span></li>
+        <li class="c5 c9 c6"><span class="c0">Cookies and Milk -- Instantly sets terror to 0%</span></li>
+        <li class="c3 c9"><span class="c0"></span></li>
+    </ul>
+    <p class="c5 c14 c11"><span class="c0"></span></p>
+    <p class="c5"><span class="c0">Physics/Held Items:</span></p>
+    <ul class="c1 lst-kix_wf457zjvzpdm-0 start">
+        <li class="c5 c9 c6"><span class="c0">Ropes -- Movable, Climbable</span></li>
+        <li class="c5 c9 c6"><span class="c0">Blocks/Boxes/Planks/Balls/Triangles -- Movable, Walkable Platform, Moves
+                other physics objects</span></li>
+        <li class="c5 c9 c6"><span class="c0">Balloons -- Movable, Floating, Included Rope, Moves other physics objects
+            </span></li>
+        <li class="c5 c9 c6"><span class="c0">Uncle&rsquo;s Lighter -- Holding the lighter will slow Sadako down, repel
+                Ghosts / attract Moths</span></li>
+    </ul>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <p class="c5"><span>Checkpoint -- Keeps enemies away and acts as a new respawn point in the level.</span></p>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <p class="c5"><span class="c0">Enemies/Obstacles:</span></p>
+    <ul class="c1 lst-kix_3biiziyp2c1j-0 start">
+        <li class="c5 c9 c6"><span class="c0">Ghosts -- Cause a 10% increase in terror.</span></li>
+        <li class="c5 c9 c6"><span class="c0">Spikes -- Cause a 25% increase in terror, moves Sadako to the
+                spike&rsquo;s return position.</span></li>
+        <li class="c5 c9 c6"><span class="c0">Tables -- Hide from all enemies, enemy AI moves along, moving away from
+                hiding place.</span></li>
+        <li class="c5 c9 c6"><span class="c0">Moths -- Cause a 5% increase in terror per 3 seconds, but doesn&rsquo;t
+                activate damage immunity.</span></li>
+        <li class="c5 c9 c6"><span class="c0">Evil Uncle -- Cause a 25% increase in terror when rushing starts</span>
+        </li>
+    </ul>
+    <ul class="c1 lst-kix_3biiziyp2c1j-1 start">
+        <li class="c5 c7"><span class="c0">If he collides with Sadako, she gets a 50% terror damage, he stops for 3
+                seconds and she automatically moves a short distance towards the nearest table</span></li>
+    </ul>
+    <h1 class="c8" id="h.7kbsrbs5mudl"><span class="c12">Controls</span></h1>
+    <p class="c5"><span class="c4">A, S, D / &lt;, v, &gt;</span><span class="c0">&nbsp; &nbsp;-- &nbsp;Left, Down,
+            Right</span></p>
+    <p class="c5"><span class="c4">E / Shift / J</span><span class="c0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;--
+            &nbsp;Grab</span></p>
+    <p class="c5"><span class="c4">W / Space / ^</span><span class="c0">&nbsp; &nbsp; &nbsp;-- &nbsp;Jump</span></p>
+    <p class="c5"><span class="c4">R / L</span><span class="c0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp;-- &nbsp;Use Lighter (Toggle)</span></p>
+    <p class="c5"><span class="c4">ESC</span><span>&nbsp;/ </span><span class="c4">Pause</span><span>&nbsp; &nbsp;
+            &nbsp; -- &nbsp;</span><span class="c0">Pauses the game and displays the pause menu.</span></p>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <h1 class="c8" id="h.9m3bejw4a4bg"><span class="c12">Graphical User Interface</span></h1>
+    <p class="c5"><span class="c2">Splash Screen</span></p>
+    <p class="c5 c6"><span>The splash screen GUI simply presents the game logo and &ldquo;press any key to start&rdquo;.
+            Once pressed, a picture and some texts will fade in and tell the backstory of the game. There will also be a
+            &ldquo;Press ESC to skip&rdquo;. After a few seconds, it will jump to the main menu.</span></p>
+    <p class="c5"><span class="c4">In-Game Main Menu</span></p>
+    <p class="c5"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New game -- Start a new game at the
+            level selected</span></p>
+    <p class="c5"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Help -- Display control keys and item
+            introductions</span></p>
+    <p class="c5 c14"><span class="c0">About -- Show the information about the game developers</span></p>
+    <p class="c5 c11"><span class="c2"></span></p>
+    <p class="c5"><span class="c2">Help Screen</span></p>
+    <p class="c5"><span class="c4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Display
+            control instructions and item descriptions</span></p>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <p class="c5"><span class="c2">About Screen</span></p>
+    <p class="c5"><span class="c4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Display the
+            backstory, important character and development members</span></p>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <p class="c5"><span class="c2">In-Game Level-Completed Menu</span></p>
+    <p class="c5"><span class="c4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Next Level --
+            Start the next level</span></p>
+    <p class="c5"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Main Menu -- Go back to the main
+            menu</span></p>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <p class="c5"><span class="c2">In-Game Level-Failed Menu</span></p>
+    <p class="c5"><span class="c4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Retry Level
+            -- Retry the level</span></p>
+    <p class="c5"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Main Menu -- Go back to the main
+            menu</span></p>
+    <p class="c5 c11"><span class="c2"></span></p>
+    <p class="c5"><span class="c2">In-Game Pause Menu</span></p>
+    <p class="c5"><span class="c4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Resume --
+            Resume paused game</span></p>
+    <p class="c5"><span class="c4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Restart --
+            Restart the level from the beginning</span></p>
+    <p class="c5"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Help -- Display control keys and item
+            introductions</span></p>
+    <p class="c5"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Main Menu -- Go to the main
+            menu</span></p>
+    <p class="c5 c11"><span class="c2"></span></p>
+    <p class="c5"><span class="c2">In-Game GUI </span></p>
+    <p class="c5 c6"><span class="c0">Terror level bar -- Always above Sadako. Not shown if the terror level is 0. The
+            bar increases from the center and goes toward both ends. Once the bar reaches both ends, it means the terror
+            level is 100.</span></p>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <p class="c5 c6"><span class="c0">Pause button -- Always at the top-right of the screen. Once clicked, the game will
+            pause and pop out a pause menu (does the same thing as the escape button on keyboard). </span></p>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <p class="c5 c6"><span class="c0">Tutorial -- Tutorial text will only be displayed in the tutorial level. It will
+            show instructions and details about some game mechanisms.</span></p>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <h1 class="c8" id="h.mrxi1mcby142"><span class="c12">Artwork</span></h1>
+    <p class="c5"><span class="c0">All artwork will be original and include the following:</span></p>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-0 start">
+        <li class="c5 c9 c6"><span class="c0">Sadako - wears pajamas.</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-1 start">
+        <li class="c5 c7"><span class="c0">Walking Right</span></li>
+        <li class="c5 c7"><span class="c0">Walking Left</span></li>
+        <li class="c5 c7"><span class="c0">Jumping Right</span></li>
+        <li class="c5 c7"><span class="c0">Jumping Left</span></li>
+        <li class="c5 c7"><span class="c0">Pushing Right</span></li>
+        <li class="c5 c7"><span class="c0">Pushing Left</span></li>
+        <li class="c5 c7"><span class="c0">Grab Right</span></li>
+        <li class="c5 c7"><span class="c0">Grab Left</span></li>
+        <li class="c5 c7"><span class="c0">Using Lighter Left/Right</span></li>
+        <li class="c5 c7"><span class="c0">Taking Terror Damage</span></li>
+        <li class="c5 c7"><span class="c0">Terrified</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-0">
+        <li class="c5 c9 c6"><span class="c0">Ghosts</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-1 start">
+        <li class="c5 c7"><span class="c0">Moving/Facing Right</span></li>
+        <li class="c5 c7"><span class="c0">Moving/Facing Left</span></li>
+        <li class="c5 c7"><span class="c0">Dying</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-0">
+        <li class="c5 c9 c6"><span class="c0">Evil Uncle</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-1 start">
+        <li class="c5 c7"><span class="c0">Walking Left</span></li>
+        <li class="c5 c7"><span class="c0">Walking Right</span></li>
+        <li class="c5 c7"><span class="c0">Rushing Left</span></li>
+        <li class="c5 c7"><span class="c0">Rushing Right</span></li>
+        <li class="c5 c7"><span class="c0">Looking Around</span></li>
+        <li class="c5 c7"><span class="c0">Dying</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-0">
+        <li class="c5 c9 c6"><span class="c0">Checkpoint - Shrine centered on photo of Sadako&rsquo;s teddy bear,
+                complete with candles and incense</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-1 start">
+        <li class="c5 c7"><span class="c0">Active </span></li>
+        <li class="c5 c7"><span class="c0">Inactive</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-0">
+        <li class="c5 c9 c6"><span class="c0">Rope</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-1 start">
+        <li class="c5 c7"><span class="c0">Segment</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-0">
+        <li class="c5 c9 c6"><span class="c0">Balloon</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-1 start">
+        <li class="c5 c7"><span class="c0">Filling</span></li>
+        <li class="c5 c7"><span class="c0">Popping</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-0">
+        <li class="c5 c9 c6"><span class="c0">Blocks, Planks, Boxes, Balls, Triangles</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-1 start">
+        <li class="c5 c7"><span class="c0">Various sized/colored rectangles/shapes that stand out against the
+                background</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-0">
+        <li class="c5 c9 c6"><span class="c0">Moths</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-1 start">
+        <li class="c5 c7"><span class="c0">Flutter</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-0">
+        <li class="c5 c9 c6"><span class="c0">Spikes</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-1 start">
+        <li class="c5 c7"><span class="c0">Small</span></li>
+        <li class="c5 c7"><span class="c0">Large</span></li>
+        <li class="c5 c7"><span class="c0">Flying (Blow dart)</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-0">
+        <li class="c5 c9 c6"><span class="c0">Ceiling, Platforms, Walls</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-1 start">
+        <li class="c5 c7"><span class="c0">Simple tile-sized rectangles that stand out against the background</span>
+        </li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-0">
+        <li class="c5 c9 c6"><span class="c0">Fire</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-1 start">
+        <li class="c5 c7"><span class="c0">Simple lighting via Phaser will create a slight glow, while the flame and
+                glow color will be light yellow</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-0">
+        <li class="c5 c9 c6"><span class="c0">Background Tiles</span></li>
+    </ul>
+    <ul class="c1 lst-kix_ccfzovz9fbd7-1 start">
+        <li class="c5 c7"><span>This nightmare world is a little darker than ours</span></li>
+    </ul>
+    <h1 class="c8" id="h.axdb01aoj7hy"><span class="c12">Sounds &amp; Music</span></h1>
+    <p class="c5"><span class="c0">Appropriately haunting music will be added as time permits.</span></p>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <p class="c5"><span class="c0">Sound FX will be added to the following events:</span></p>
+    <p class="c5 c11"><span class="c0"></span></p>
+    <ul class="c1 lst-kix_z660y6arwxx-0 start">
+        <li class="c5 c9 c6"><span class="c0">Walking</span></li>
+        <li class="c5 c9 c6"><span class="c0">Jumping / Double Jumping</span></li>
+        <li class="c5 c9 c6"><span class="c0">Landing</span></li>
+        <li class="c5 c9 c6"><span class="c0">Using lighter</span></li>
+        <li class="c5 c6 c9"><span class="c0">Grab / Climbing</span></li>
+        <li class="c5 c9 c6"><span class="c0">Becoming Terrified</span></li>
+        <li class="c5 c9 c6"><span class="c0">Taking Terror Damage</span></li>
+        <li class="c5 c9 c6"><span class="c0">Pushing</span></li>
+        <li class="c5 c9 c6"><span class="c0">Burning</span></li>
+        <li class="c5 c9 c6"><span class="c0">Ghost warbling</span></li>
+        <li class="c5 c9 c6"><span class="c0">Moth swooshing</span></li>
+        <li class="c5 c9 c6"><span class="c0">Uncle noises</span></li>
+        <li class="c5 c9 c6"><span>Level Clear</span></li>
+    </ul><h1 class="c8" id="h.mrxi1mcby142"><span class="c12">Mock-Up GUI</span></h1>
+    <p class="c5 c11"><span class="c2"></span></p>
+    <p class="c5"><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Help pg. 1</span></p>
+    <p class="c5 c6"><span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 350.67px;"><img
+                alt="" src="images/image5.png"
+                style="width: 624.00px; height: 350.67px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                title=""></span></p>
+    <hr>
+    <p class="c3"><span class="c2"></span></p>
+    <p class="c5"><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Help pg. 2</span></p>
+    <p class="c5 c6"><span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 350.67px;"><img
+                alt="" src="images/image6.png"
+                style="width: 624.00px; height: 350.67px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                title=""></span></p>
+    <hr>
+    <p class="c3"><span class="c2"></span></p>
+    <p class="c5 c6"><span class="c4">Paused</span><span>:</span><span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 350.67px;"><img
+                alt="" src="images/image1.png"
+                style="width: 624.00px; height: 350.67px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                title=""></span></p>
+    <hr>
+    <p class="c3"><span class="c2"></span></p>
+    <p class="c5 c6"><span class="c2">In-Game:</span></p>
+    <p class="c5 c6"><span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 350.67px;"><img
+                alt="" src="images/image11.png"
+                style="width: 624.00px; height: 350.67px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                title=""></span></p>
+    <hr>
+    <p class="c3"><span class="c2"></span></p>
+    <p class="c5 c6"><span class="c2">Level Select:</span></p>
+    <p class="c5 c6"><span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 350.67px;"><img
+                alt="" src="images/image3.png"
+                style="width: 624.00px; height: 350.67px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                title=""></span></p>
+    <hr>
+    <p class="c3"><span class="c2"></span></p>
+    <p class="c5 c6"><span class="c2">Level-Failed Menu:</span></p>
+    <p class="c5 c6"><span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 350.67px;"><img
+                alt="" src="images/image9.png"
+                style="width: 624.00px; height: 350.67px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                title=""></span></p>
+    <hr>
+    <p class="c3"><span class="c2"></span></p>
+    <p class="c5 c6"><span class="c2">Main Menu:</span></p>
+    <p class="c5 c6"><span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 350.67px;"><img
+                alt="" src="images/image7.png"
+                style="width: 624.00px; height: 350.67px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                title=""></span></p>
+    <hr>
+    <p class="c3"><span class="c2"></span></p>
+    <p class="c5 c6"><span class="c2">Splash Screen Animation:</span></p>
+    <p class="c5 c6"><span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 350.67px;"><img
+                alt="" src="images/image4.png"
+                style="width: 624.00px; height: 350.67px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                title=""></span></p>
+    <hr>
+    <p class="c3"><span class="c2"></span></p>
+    <p class="c5 c6"><span class="c2">Splash Screen:</span></p>
+    <p class="c5 c6"><span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 350.67px;"><img
+                alt="" src="images/image10.png"
+                style="width: 624.00px; height: 350.67px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                title=""></span></p>
+    <hr>
+    <p class="c3"><span class="c2"></span></p>
+    <p class="c5 c6"><span class="c2">Level-Complete Menu:</span></p>
+    <p class="c5 c6"><span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 350.67px;"><img
+                alt="" src="images/image8.png"
+                style="width: 624.00px; height: 350.67px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                title=""></span></p>
+    <hr>
+    <p class="c3"><span class="c2"></span></p>
+    <p class="c5 c6"><span class="c2">About page:</span></p>
+    <p class="c5 c6"><span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 350.67px;"><img
+                alt="" src="images/image2.png"
+                style="width: 624.00px; height: 350.67px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                title=""></span></p>
+				<hr>
+    <p class="c3"><span class="c2"></span></p>
+    <p class="c5 c6"><span class="c2">Logo:</span></p>
+    <p class="c5 c6"><span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 256.00px; height: 256.00px;"><img
+                alt="" src="images/logo.jpeg"
+                style="width: 256.00px; height: 256.00px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                title=""></span></p></body>
+</html>

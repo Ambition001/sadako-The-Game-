@@ -1,2 +1,3 @@
-# sadako
-CSE 380 Game
+Sadako - Nightmares of The Ring
+
+https://sadako-c368d.firebaseapp.com
