@@ -6,9 +6,13 @@ sadako.MainMenu = function () {};
 var playButton;
 var helpButton;
 var aboutButton;
+var completed = false;
 
 
 sadako.MainMenu.prototype = {
+    init: function(complete) {
+        completed = complete;
+    },
     preload: function () {
 
 
@@ -28,10 +32,18 @@ sadako.MainMenu.prototype = {
         playButton.events.onInputDown.add(this.levelSelect, this);
 
         // TODO: change helpButton sprite to 'helpButtonA' if completed all levels
-        helpButton = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY+250, 'helpButtonT');
-        helpButton.anchor.setTo(0.5);
-        helpButton.inputEnabled = true;
-        helpButton.events.onInputDown.add(this.helpMenu, this);
+        if(completed){
+            helpButton = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY+250, 'helpButtonA');
+            helpButton.anchor.setTo(0.5);
+            helpButton.inputEnabled = true;
+            helpButton.events.onInputDown.add(this.helpMenu, this);
+        }else{
+            helpButton = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY+250, 'helpButtonT');
+            helpButton.anchor.setTo(0.5);
+            helpButton.inputEnabled = true;
+            helpButton.events.onInputDown.add(this.helpMenu, this);
+        }
+
 
         aboutButton = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY+500, 'aboutButton');
         aboutButton.anchor.setTo(0.5);
@@ -65,6 +77,6 @@ sadako.MainMenu.prototype = {
         this.game.state.start("HelpMenu");
     },
     aboutMenu: function() {
-        
+        this.game.state.start("AboutMenu");
     }
 };

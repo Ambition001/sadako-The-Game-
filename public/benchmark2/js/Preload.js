@@ -28,6 +28,8 @@ sadako.Preload.prototype = {
         this.load.image('leftArrow', 'assets/images/helpMenu/leftArrow.png');
         this.load.image('backButton', 'assets/images/helpMenu/backButton.png');
         
+        // Load for aboutMenu
+        this.load.image('aboutMenu', 'assets/images/aboutMenu/about.png');
 
         load = true;
 
@@ -67,7 +69,7 @@ sadako.Preload.prototype = {
     },
     update: function () {
         if (backstory && load) {
-            this.game.state.start('MainMenu');
+            this.game.state.start('MainMenu', true, false, false);
         }
     }
 };

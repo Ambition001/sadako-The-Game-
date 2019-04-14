@@ -7,9 +7,13 @@ var backButton;
 var arrowButton;
 var helpimg;
 var arrowCounter;
+var completed;
 
 
 sadako.HelpMenu.prototype = {
+    init: function(complete) {
+        completed = complete;
+    },
     create: function () {
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 800, 'mainMenuTitle');
         mainMenuTitle.anchor.setTo(0.5, 0.5);
@@ -57,7 +61,7 @@ sadako.HelpMenu.prototype = {
         }
     },
     back: function () {
-        this.game.state.start('MainMenu');
+        this.game.state.start('MainMenu', true, false, completed);
     }
 
 };
