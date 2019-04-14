@@ -49,6 +49,9 @@ sadako.Game.prototype = {
         //create a player
         var result = this.findObjectsByType('playerStart', this.map, 'ObjectLayer');
         this.player = this.game.add.sprite(result[0].x,result[0].y-128,'ghost');
+        this.restartx = result[0].x;
+        this.restarty = result[0].y-128;
+        console.log(this.restarty);
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.gravity.y = 250;
         this.game.camera.follow(this.player);
@@ -131,12 +134,13 @@ sadako.Game.prototype = {
     },
     update: function () {
         this.game.physics.arcade.collide(this.player, this.blockedLayer);
-        this.game.physics.arcade.overlap(this.player,this.checkPoints,this.test,null,this);
+        this.game.physics.arcade.overlap(this.player,this.checkPoints,this.passCheckPoint,null,this);
+        this.game.physics.arcade.overlap(this.player,this.spikes,this.stepOnSpike,null,this);
         this.player.body.velocity.x = 0;
         if(cursors.left.isDown){
-            this.player.body.velocity.x = -250;
+            this.player.body.velocity.x = -500;
         }else if(cursors.right.isDown){
-            this.player.body.velocity.x = 250;
+            this.player.body.velocity.x = 500;
         }
 
         if(this.player.body.onFloor()){
@@ -155,6 +159,16 @@ sadako.Game.prototype = {
         if(this.spaceKey.isUp){
             jumpFlag = false;
         }
+    },
+    passCheckPoint: function (player, checkPoint){
+        this.restartx = checkPoint.position.x+128;
+        this.restarty = checkPoint.position.y-128;
+        console.log(this.restarty);
+    },
+    stepOnSpike: function (){
+        this.player.position.x = this.restartx;
+        this.player.position.y = this.restarty;
     }
+
 
 };
