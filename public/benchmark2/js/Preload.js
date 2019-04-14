@@ -6,6 +6,8 @@ sadako.Preload = function () {};
 var load = false;
 var backstory = false;
 var escapeKey;
+var lv = 1;
+var cheatKey;
 
 sadako.Preload.prototype = {
     preload: function () {
@@ -13,13 +15,13 @@ sadako.Preload.prototype = {
 
 
         // TODO: load game assets(tilemap/image/sprites/audio)
-        
+
         // Load for mainMenu
         this.load.image('mainMenuTitle', 'assets/images/mainMenu/title.png');
-        this.load.spritesheet('playButton', 'assets/images/mainMenu/playButton.png',512,300);
-        this.load.spritesheet('helpButtonT', 'assets/images/mainMenu/helpButtonT.png',512,300);
-        this.load.spritesheet('helpButtonA', 'assets/images/mainMenu/helpButtonA.png',512,300);
-        this.load.spritesheet('aboutButton', 'assets/images/mainMenu/aboutButton.png',512,300);
+        this.load.spritesheet('playButton', 'assets/images/mainMenu/playButton.png', 512, 300);
+        this.load.spritesheet('helpButtonT', 'assets/images/mainMenu/helpButtonT.png', 512, 300);
+        this.load.spritesheet('helpButtonA', 'assets/images/mainMenu/helpButtonA.png', 512, 300);
+        this.load.spritesheet('aboutButton', 'assets/images/mainMenu/aboutButton.png', 512, 300);
 
         // Load for helpMenu
         this.load.image('helpMenu1', 'assets/images/helpMenu/help1.png');
@@ -27,9 +29,21 @@ sadako.Preload.prototype = {
         this.load.image('rightArrow', 'assets/images/helpMenu/rightArrow.png');
         this.load.image('leftArrow', 'assets/images/helpMenu/leftArrow.png');
         this.load.image('backButton', 'assets/images/helpMenu/backButton.png');
-        
+
         // Load for aboutMenu
         this.load.image('aboutMenu', 'assets/images/aboutMenu/about.png');
+
+        // Load for levelSelect
+        this.load.spritesheet('levelSelect1', 'assets/images/levelSelect/level1.png', 250, 250);
+        this.load.spritesheet('levelSelect2', 'assets/images/levelSelect/level2.png', 250, 250);
+        this.load.spritesheet('levelSelect3', 'assets/images/levelSelect/level3.png', 250, 250);
+        this.load.spritesheet('levelSelect4', 'assets/images/levelSelect/level4.png', 250, 250);
+        this.load.spritesheet('levelSelect5', 'assets/images/levelSelect/level5.png', 250, 250);
+        this.load.spritesheet('levelSelect6', 'assets/images/levelSelect/level6.png', 250, 250);
+
+        // Load for real game
+        this.load.spritesheet('pauseButton', 'assets/images/game/pause.png', 250, 250);
+
 
         load = true;
 
@@ -65,11 +79,16 @@ sadako.Preload.prototype = {
             backstory = true;
         }, this);
 
+        cheatKey = this.game.input.keyboard.addKey(Phaser.Keyboard.C);
+        cheatKey.onDown.add(function () {
+            lv = 6;
+        }, this);
+
         this.game.time.events.add(Phaser.Timer.SECOND * 20, backstorytoggle, this);
     },
     update: function () {
         if (backstory && load) {
-            this.game.state.start('MainMenu', true, false, false);
+            this.game.state.start('MainMenu', true, false, false, lv);
         }
     }
 };

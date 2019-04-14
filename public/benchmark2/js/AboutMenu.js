@@ -6,11 +6,13 @@ sadako.AboutMenu = function () {};
 var backButton;
 var aboutimg;
 var completed;
+var lv;
 
 
 sadako.AboutMenu.prototype = {
-    init: function(complete) {
+    init: function (complete, level) {
         completed = complete;
+        lv = level;
     },
     create: function () {
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 800, 'mainMenuTitle');
@@ -28,7 +30,7 @@ sadako.AboutMenu.prototype = {
 
 
 
-        backButton = this.game.add.sprite(this.game.world.centerX-750, this.game.world.centerY+700, 'backButton');
+        backButton = this.game.add.sprite(this.game.world.centerX - 750, this.game.world.centerY + 700, 'backButton');
         backButton.anchor.setTo(0.5, 0.5);
         backButton.scale.setTo(0.5);
         backButton.inputEnabled = true;
@@ -38,7 +40,7 @@ sadako.AboutMenu.prototype = {
 
     },
     back: function () {
-        this.game.state.start('MainMenu', true, false, completed);
+        this.game.state.start('MainMenu', true, false, completed, lv);
     }
 
 };

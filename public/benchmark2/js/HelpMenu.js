@@ -8,11 +8,13 @@ var arrowButton;
 var helpimg;
 var arrowCounter;
 var completed;
+var lv;
 
 
 sadako.HelpMenu.prototype = {
-    init: function(complete) {
+    init: function (complete, level) {
         completed = complete;
+        lv = level;
     },
     create: function () {
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 800, 'mainMenuTitle');
@@ -35,7 +37,7 @@ sadako.HelpMenu.prototype = {
         arrowButton.events.onInputDown.add(this.arrowClicked, this);
         arrowCounter = 0;
 
-        backButton = this.game.add.sprite(this.game.world.centerX-750, this.game.world.centerY+700, 'backButton');
+        backButton = this.game.add.sprite(this.game.world.centerX - 750, this.game.world.centerY + 700, 'backButton');
         backButton.anchor.setTo(0.5, 0.5);
         backButton.scale.setTo(0.5);
         backButton.inputEnabled = true;
@@ -45,23 +47,23 @@ sadako.HelpMenu.prototype = {
 
     },
     update: function () {
-        if(arrowCounter == 0){
+        if (arrowCounter == 0) {
             arrowButton.loadTexture('rightArrow');
             helpimg.loadTexture('helpMenu1');
-        }else{
+        } else {
             arrowButton.loadTexture('leftArrow');
             helpimg.loadTexture('helpMenu2');
         }
     },
     arrowClicked: function () {
-        if(arrowCounter == 0){
+        if (arrowCounter == 0) {
             arrowCounter = 1;
-        }else{
+        } else {
             arrowCounter = 0;
         }
     },
     back: function () {
-        this.game.state.start('MainMenu', true, false, completed);
+        this.game.state.start('MainMenu', true, false, completed, lv);
     }
 
 };

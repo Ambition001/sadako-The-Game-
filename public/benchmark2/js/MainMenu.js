@@ -7,15 +7,14 @@ var playButton;
 var helpButton;
 var aboutButton;
 var completed = false;
+var lv;
 
 
 sadako.MainMenu.prototype = {
-    init: function(complete) {
+    init: function (complete, level) {
         completed = complete;
-    },
-    preload: function () {
-
-
+        lv = level;
+        alert(lv);
     },
     create: function () {
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 400, 'mainMenuTitle');
@@ -32,51 +31,51 @@ sadako.MainMenu.prototype = {
         playButton.events.onInputDown.add(this.levelSelect, this);
 
         // TODO: change helpButton sprite to 'helpButtonA' if completed all levels
-        if(completed){
-            helpButton = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY+250, 'helpButtonA');
+        if (completed) {
+            helpButton = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY + 250, 'helpButtonA');
             helpButton.anchor.setTo(0.5);
             helpButton.inputEnabled = true;
             helpButton.events.onInputDown.add(this.helpMenu, this);
-        }else{
-            helpButton = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY+250, 'helpButtonT');
+        } else {
+            helpButton = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY + 250, 'helpButtonT');
             helpButton.anchor.setTo(0.5);
             helpButton.inputEnabled = true;
             helpButton.events.onInputDown.add(this.helpMenu, this);
         }
 
 
-        aboutButton = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY+500, 'aboutButton');
+        aboutButton = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY + 500, 'aboutButton');
         aboutButton.anchor.setTo(0.5);
         aboutButton.inputEnabled = true;
         aboutButton.events.onInputDown.add(this.aboutMenu, this);
 
     },
     update: function () {
-        if(playButton.input.pointerOver()){
+        if (playButton.input.pointerOver()) {
             playButton.frame = 1;
-        }else{
+        } else {
             playButton.frame = 0;
         }
 
-        if(helpButton.input.pointerOver()){
+        if (helpButton.input.pointerOver()) {
             helpButton.frame = 1;
-        }else{
+        } else {
             helpButton.frame = 0;
         }
 
-        if(aboutButton.input.pointerOver()){
+        if (aboutButton.input.pointerOver()) {
             aboutButton.frame = 1;
-        }else{
+        } else {
             aboutButton.frame = 0;
         }
     },
-    levelSelect: function(){
-        alert("play");
+    levelSelect: function () {
+        this.game.state.start("LevelSelect", true, false, completed, lv);
     },
-    helpMenu: function() {
-        this.game.state.start("HelpMenu");
+    helpMenu: function () {
+        this.game.state.start("HelpMenu", true, false, completed, lv);
     },
-    aboutMenu: function() {
-        this.game.state.start("AboutMenu");
+    aboutMenu: function () {
+        this.game.state.start("AboutMenu", true, false, completed, lv);
     }
 };

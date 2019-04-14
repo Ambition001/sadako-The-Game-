@@ -7,6 +7,7 @@ sadako.game.state.add('Preload', sadako.Preload);
 sadako.game.state.add('MainMenu', sadako.MainMenu);
 sadako.game.state.add('HelpMenu', sadako.HelpMenu);
 sadako.game.state.add('AboutMenu', sadako.AboutMenu);
+sadako.game.state.add('LevelSelect', sadako.LevelSelect);
 sadako.game.state.add('Game', sadako.Game);
 
 sadako.game.state.start('Boot');
