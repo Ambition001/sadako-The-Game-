@@ -7,6 +7,8 @@ var completed;
 var lv;
 var mute;
 var cursors;
+var jumpCounter = 0;
+var jumpFlag;
 
 sadako.Game.prototype = {
     init: function (complete, level, sound) {
@@ -48,10 +50,10 @@ sadako.Game.prototype = {
         var result = this.findObjectsByType('playerStart', this.map, 'ObjectLayer');
         this.player = this.game.add.sprite(result[0].x,result[0].y,'ghost');
         //this.player.scale.setTo(2);
-        // this.game.physics.arcade.gravity.y = 250;
+        this.game.physics.arcade.gravity.y = 250;
 
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
-        // this.player.body.gravity.y = 250;
+        this.game.camera.follow(this.player);
 
         cursors = this.game.input.keyboard.createCursorKeys();
 
@@ -123,6 +125,7 @@ sadako.Game.prototype = {
         }, this);
     },
     update: function () {
+        this.game.physics.arcade.collide(this.player, this.blockedLayer);
         this.player.body.velocity.x = 0;
         if(cursors.left.isDown){
             this.player.body.velocity.x = -250;
@@ -130,9 +133,21 @@ sadako.Game.prototype = {
             this.player.body.velocity.x = 250;
         }
 
-        if(this.spaceKey.isDown){
-            this.player.body.velocity.y = -250;
+        if(this.player.body.onFloor()){
+            jumpCounter = 0;
+        }
 
+        if(this.spaceKey.isDown && this.player.body.onFloor()){
+            this.player.body.velocity.y = -400;
+            jumpCounter = 1;
+            jumpFlag = true;
+        }else if(this.spaceKey.isDown && jumpCounter == 1 && !jumpFlag){
+            this.player.body.velocity.y = -400;
+            jumpCounter = 2;
+        }
+
+        if(this.spaceKey.isUp){
+            jumpFlag = false;
         }
     }
 
