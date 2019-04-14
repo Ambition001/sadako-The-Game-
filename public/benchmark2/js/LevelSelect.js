@@ -175,7 +175,7 @@ sadako.LevelSelect.prototype = {
         this.game.state.start('MainMenu', true, false, completed, lv, mute);
     }, // TODO: define these functions
     level1: function () {
-        alert("sdfsdf");
+        this.game.state.start('Game', true, false, completed, lv, mute);
     },
     level2: function () {
         alert("sdfsdf");
