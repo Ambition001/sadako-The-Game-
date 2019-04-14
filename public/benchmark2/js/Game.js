@@ -49,10 +49,8 @@ sadako.Game.prototype = {
         //create a player
         var result = this.findObjectsByType('playerStart', this.map, 'ObjectLayer');
         this.player = this.game.add.sprite(result[0].x,result[0].y-128,'ghost');
-        //this.player.scale.setTo(2);
-        this.game.physics.arcade.gravity.y = 250;
-
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
+        this.player.body.gravity.y = 250;
         this.game.camera.follow(this.player);
 
         cursors = this.game.input.keyboard.createCursorKeys();
@@ -69,19 +67,19 @@ sadako.Game.prototype = {
         return result;
     },
     createCheckPoints: function() {
-        this.items = this.game.add.group();
-        this.items.enableBody = true;
+        this.checkPoints = this.game.add.group();
+        this.checkPoints.enableBody = true;
         result = this.findObjectsByType('checkPoint', this.map, 'ObjectLayer');
         result.forEach(function(element){
-            this.items.create(element.x, element.y, element.properties.sprite);
+            this.createFromTiledObject(element, this.checkPoints,'checkPoint');
         }, this);
     },
     createSpikes: function() {
-        this.items = this.game.add.group();
-        this.items.enableBody = true;
+        this.spikes = this.game.add.group();
+        this.spikes.enableBody = true;
         result = this.findObjectsByType('spike', this.map, 'ObjectLayer');
         result.forEach(function(element){
-            this.items.create(element.x, element.y, element.properties.sprite);
+            this.spikes.create(element.x, element.y, 'spike');
         }, this);
     },
     createBox: function() {
@@ -124,8 +122,16 @@ sadako.Game.prototype = {
             this.items.create(element.x, element.y, element.properties.sprite);
         }, this);
     },
+    createFromTiledObject: function(element, group,name) {
+        var sprite = group.create(element.x, element.y, name);
+    
+          Object.keys(element.properties).forEach(function(key){
+            sprite[key] = element.properties[key];
+          });
+    },
     update: function () {
         this.game.physics.arcade.collide(this.player, this.blockedLayer);
+        this.game.physics.arcade.overlap(this.player,this.checkPoints,this.test,null,this);
         this.player.body.velocity.x = 0;
         if(cursors.left.isDown){
             this.player.body.velocity.x = -250;
