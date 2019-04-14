@@ -48,7 +48,7 @@ sadako.Game.prototype = {
 
         //create a player
         var result = this.findObjectsByType('playerStart', this.map, 'ObjectLayer');
-        this.player = this.game.add.sprite(result[0].x,result[0].y,'ghost');
+        this.player = this.game.add.sprite(result[0].x,result[0].y-128,'ghost');
         //this.player.scale.setTo(2);
         this.game.physics.arcade.gravity.y = 250;
 
