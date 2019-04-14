@@ -6,15 +6,18 @@ sadako.MainMenu = function () {};
 var playButton;
 var helpButton;
 var aboutButton;
+var soundButton;
 var completed = false;
 var lv;
+var mute = false;
 
 
 sadako.MainMenu.prototype = {
-    init: function (complete, level) {
+    init: function (complete, level, sound) {
         completed = complete;
         lv = level;
-        alert(lv);
+        mute = sound;
+
     },
     create: function () {
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 400, 'mainMenuTitle');
@@ -49,6 +52,17 @@ sadako.MainMenu.prototype = {
         aboutButton.inputEnabled = true;
         aboutButton.events.onInputDown.add(this.aboutMenu, this);
 
+        soundButton = this.game.add.sprite(this.game.world.centerX + 900, this.game.world.centerY - 950, 'soundButton');
+        soundButton.anchor.setTo(0.5);
+        soundButton.scale.setTo(0.5);
+        soundButton.inputEnabled = true;
+        soundButton.events.onInputDown.add(this.soundToggle, this);
+        if(mute){
+            soundButton.frame = 1;
+        }else{
+            soundButton.frame = 0;
+        }
+
     },
     update: function () {
         if (playButton.input.pointerOver()) {
@@ -70,12 +84,21 @@ sadako.MainMenu.prototype = {
         }
     },
     levelSelect: function () {
-        this.game.state.start("LevelSelect", true, false, completed, lv);
+        this.game.state.start("LevelSelect", true, false, completed, lv, mute);
     },
     helpMenu: function () {
-        this.game.state.start("HelpMenu", true, false, completed, lv);
+        this.game.state.start("HelpMenu", true, false, completed, lv, mute);
     },
     aboutMenu: function () {
-        this.game.state.start("AboutMenu", true, false, completed, lv);
+        this.game.state.start("AboutMenu", true, false, completed, lv, mute);
+    },
+    soundToggle: function () {
+        if(mute){
+            soundButton.frame = 0;
+            mute = false;
+        }else{
+            soundButton.frame = 1;
+            mute = true;
+        }
     }
 };

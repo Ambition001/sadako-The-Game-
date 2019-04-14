@@ -12,11 +12,13 @@ var lv4;
 var lv5;
 var lv6;
 var lv;
+var mute;
 
 sadako.LevelSelect.prototype = {
-    init: function (complete, level) {
+    init: function (complete, level, sound) {
         completed = complete;
         lv = level;
+        mute = sound;
     },
     create: function () {
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 800, 'mainMenuTitle');
@@ -83,6 +85,7 @@ sadako.LevelSelect.prototype = {
         backButton.inputEnabled = true;
         backButton.events.onInputDown.add(this.back, this);
 
+
         switch (lv) {
             case 6:
                 lv6.inputEnabled = true;
@@ -98,7 +101,16 @@ sadako.LevelSelect.prototype = {
                 break;
         }
 
-
+        soundButton = this.game.add.sprite(this.game.world.centerX + 900, this.game.world.centerY - 950, 'soundButton');
+        soundButton.anchor.setTo(0.5);
+        soundButton.scale.setTo(0.5);
+        soundButton.inputEnabled = true;
+        soundButton.events.onInputDown.add(this.soundToggle, this);
+        if(mute){
+            soundButton.frame = 1;
+        }else{
+            soundButton.frame = 0;
+        }
 
     },
     update: function () {
@@ -160,7 +172,7 @@ sadako.LevelSelect.prototype = {
 
     },
     back: function () {
-        this.game.state.start('MainMenu', true, false, completed, lv);
+        this.game.state.start('MainMenu', true, false, completed, lv, mute);
     }, // TODO: define these functions
     level1: function () {
         alert("sdfsdf");
@@ -179,6 +191,15 @@ sadako.LevelSelect.prototype = {
     },
     level6: function () {
         alert("sdfsdf");
+    },
+    soundToggle: function () {
+        if(mute){
+            soundButton.frame = 0;
+            mute = false;
+        }else{
+            soundButton.frame = 1;
+            mute = true;
+        }
     }
 
 };

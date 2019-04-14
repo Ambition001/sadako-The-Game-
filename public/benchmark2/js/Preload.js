@@ -22,6 +22,7 @@ sadako.Preload.prototype = {
         this.load.spritesheet('helpButtonT', 'assets/images/mainMenu/helpButtonT.png', 512, 300);
         this.load.spritesheet('helpButtonA', 'assets/images/mainMenu/helpButtonA.png', 512, 300);
         this.load.spritesheet('aboutButton', 'assets/images/mainMenu/aboutButton.png', 512, 300);
+        this.load.spritesheet('soundButton', 'assets/images/mainMenu/soundButton.png', 250, 250);
 
         // Load for helpMenu
         this.load.image('helpMenu1', 'assets/images/helpMenu/help1.png');
@@ -88,7 +89,7 @@ sadako.Preload.prototype = {
     },
     update: function () {
         if (backstory && load) {
-            this.game.state.start('MainMenu', true, false, false, lv);
+            this.game.state.start('MainMenu', true, false, false, lv, false);
         }
     }
 };

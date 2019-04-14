@@ -9,12 +9,14 @@ var helpimg;
 var arrowCounter;
 var completed;
 var lv;
+var mute;
 
 
 sadako.HelpMenu.prototype = {
-    init: function (complete, level) {
+    init: function (complete, level, sound) {
         completed = complete;
         lv = level;
+        mute = sound;
     },
     create: function () {
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 800, 'mainMenuTitle');
@@ -43,6 +45,16 @@ sadako.HelpMenu.prototype = {
         backButton.inputEnabled = true;
         backButton.events.onInputDown.add(this.back, this);
 
+        soundButton = this.game.add.sprite(this.game.world.centerX + 900, this.game.world.centerY - 950, 'soundButton');
+        soundButton.anchor.setTo(0.5);
+        soundButton.scale.setTo(0.5);
+        soundButton.inputEnabled = true;
+        soundButton.events.onInputDown.add(this.soundToggle, this);
+        if(mute){
+            soundButton.frame = 1;
+        }else{
+            soundButton.frame = 0;
+        }
 
 
     },
@@ -63,7 +75,16 @@ sadako.HelpMenu.prototype = {
         }
     },
     back: function () {
-        this.game.state.start('MainMenu', true, false, completed, lv);
+        this.game.state.start('MainMenu', true, false, completed, lv, mute);
+    },
+    soundToggle: function () {
+        if(mute){
+            soundButton.frame = 0;
+            mute = false;
+        }else{
+            soundButton.frame = 1;
+            mute = true;
+        }
     }
 
 };
