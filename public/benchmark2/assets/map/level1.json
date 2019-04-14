@@ -197,7 +197,7 @@
                  "name":"Bear",
                  "properties":
                         {
-                         "type":"string"
+                         "type":"bear"
                         },
                  "rotation":0,
                  "type":"",
