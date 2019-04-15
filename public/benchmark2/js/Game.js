@@ -56,7 +56,7 @@ sadako.Game.prototype = {
         this.game.camera.follow(this.player);
 
         cursors = this.game.input.keyboard.createCursorKeys();
-        this.player.position.x = 16500;
+        this.player.position.x = 19000;
     },
     findObjectsByType: function(type, map, layer) {
         var result = new Array();
@@ -117,11 +117,11 @@ sadako.Game.prototype = {
         },this);
     },
     createBear: function() {
-        this.items = this.game.add.group();
-        this.items.enableBody = true;
+        this.bear = this.game.add.group();
+        this.bear.enableBody = true;
         result = this.findObjectsByType('bear', this.map, 'ObjectLayer');
         result.forEach(function(element){
-            this.items.create(element.x, element.y, element.properties.sprite);
+            this.bear.create(element.x, element.y, 'bear');
         }, this);
     },
     createGhost: function() {
@@ -157,7 +157,7 @@ sadako.Game.prototype = {
         this.game.physics.arcade.collide(this.player,this.box);
         this.game.physics.arcade.overlap(this.box,this.button,this.boxOnButton,null,this);
         this.game.physics.arcade.collide(this.blockedLayer, this.door);
-            door.frame = 0;
+        this.game.physics.arcade.overlap(this.player,this.bear,this.winningBear,null,this);
         if(button.frame == 0){
             this.game.physics.arcade.collide(this.player, this.door);
             door.frame = 0;
@@ -231,6 +231,9 @@ sadako.Game.prototype = {
                 element.body.velocity.y = 400;
             }
         },this)
+    },
+    winningBear: function(){
+        
     }
 
 
