@@ -9,6 +9,7 @@ var mute;
 var cursors;
 var jumpCounter = 0;
 var jumpFlag;
+var lighting = false;
 
 sadako.Game.prototype = {
     init: function (complete, level, sound) {
@@ -56,7 +57,7 @@ sadako.Game.prototype = {
         this.game.camera.follow(this.player);
 
         cursors = this.game.input.keyboard.createCursorKeys();
-        this.player.position.x = 19000;
+        this.player.position.x = 12000;
     },
     findObjectsByType: function(type, map, layer) {
         var result = new Array();
@@ -132,7 +133,13 @@ sadako.Game.prototype = {
             this.ghost.create(element.x, element.y, 'ghost');
         }, this);
         this.ghost.children.forEach(function(element){
-            element.body.velocity.y = 200;
+            element.animations.add('floatingleft',[0,1,2,3]);
+            element.animations.add('floatingright',[4,5,6,7]);
+            element.animations.add('chasingleft',[8,9,10,11]);
+            element.animations.add('chaseingright',[12,13,14,15]);
+            element.animations.add('scaredleft',[16,17,18,19]);
+            element.animations.add('scaredright',[20,21,22,23]);
+            element.animations.add('winning',[24,25]);
         },this);
     },
     createFromTiledObject: function(element, group,name) {
@@ -188,19 +195,30 @@ sadako.Game.prototype = {
         if(this.spaceKey.isUp){
             jumpFlag = false;
         }
-        this.ghostMovement();
 
+        if(this.rKey.isDown && this.player.body.onFloor()){
+            lighting = true;
+        }
+
+        if(this.rKey.isUp){
+            lighting = false;
+        }
+
+        this.ghostMovement();
         //reset velocity
         this.reset();
     },
+    //check point event
     passCheckPoint: function (player, checkPoint){
         this.restartx = checkPoint.position.x+128;
         this.restarty = checkPoint.position.y-128;
     },
+    //step on spike event
     stepOnSpike: function (){
         this.player.position.x = this.restartx;
         this.player.position.y = this.restarty;
     },
+    //pushing box event
     moveBox: function (player,box){
         if(player.x<=box.position.x-256 || player.x>=box.position.x+256){
             if(box.position.x>this.player.x){
@@ -211,7 +229,9 @@ sadako.Game.prototype = {
             }
         }
     },
+    //reset
     reset: function(){
+        this.lighting = false;
         this.box.children.forEach(function(element){
             element.body.velocity.x = 0;
         },this);
@@ -219,19 +239,50 @@ sadako.Game.prototype = {
             element.body.velocity.x = 0;
         },this);
     },
+    //button activation event
     boxOnButton: function(box,button){
         button.frame = 1;
     },
+    //ghost movement
     ghostMovement: function(){
         this.ghost.children.forEach(function(element){
-            if(element.y>1664){
-                element.body.velocity.y = -400;
+            if(this.player.position.x < element.body.position.x && this.player.position.x +1280>element.body.position.x){
+                this.game.physics.arcade.moveToObject(element,this.player,200);
+                if(lighting){
+                    element.body.velocity.x *= -1;
+                    element.body.velocity.y *= -1;
+                    element.animations.play('scaredright',10,true);
+                }
+                else{
+                    element.animations.play('chasingleft',10,true);
+                }
             }
-            else if(element.y<256){
+            else if(this.player.position.x > element.body.position.x && this.player.position.x -1280<element.body.position.x){
+                this.game.physics.arcade.moveToObject(element,this.player,200);
+                if(lighting){
+                    element.body.velocity.x *= -1;
+                    element.body.velocity.y *= -1;
+                    element.animations.play('scaredleft',10,true);
+                }
+                else{
+                    element.animations.play('chasingright',10,true);
+                }
+            }
+            else{
                 element.body.velocity.y = 400;
+                element.animations.play('floatingleft',10,true);
+                if(element.y>1664){
+                    element.body.velocity.y = -400;
+                    element.animations.play('floatingright',10,true);
+                }
+                else if(element.y<256){
+                    element.body.velocity.y = 400;
+                    element.animations.play('floatingleft',10,true);
+                }
             }
         },this)
     },
+    //winning event
     winningBear: function(){
         
     }
