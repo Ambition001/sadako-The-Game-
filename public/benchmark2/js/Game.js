@@ -136,7 +136,7 @@ sadako.Game.prototype = {
             element.animations.add('floatingleft',[0,1,2,3]);
             element.animations.add('floatingright',[4,5,6,7]);
             element.animations.add('chasingleft',[8,9,10,11]);
-            element.animations.add('chaseingright',[12,13,14,15]);
+            element.animations.add('chasingright',[12,13,14,15]);
             element.animations.add('scaredleft',[16,17,18,19]);
             element.animations.add('scaredright',[20,21,22,23]);
             element.animations.add('winning',[24,25]);
@@ -250,7 +250,7 @@ sadako.Game.prototype = {
                 this.game.physics.arcade.moveToObject(element,this.player,200);
                 if(lighting){
                     element.body.velocity.x *= -1;
-                    element.body.velocity.y *= -1;
+                    element.body.velocity.y = -200;
                     element.animations.play('scaredright',10,true);
                 }
                 else{
@@ -261,10 +261,11 @@ sadako.Game.prototype = {
                 this.game.physics.arcade.moveToObject(element,this.player,200);
                 if(lighting){
                     element.body.velocity.x *= -1;
-                    element.body.velocity.y *= -1;
+                    element.body.velocity.y = -200;
                     element.animations.play('scaredleft',10,true);
                 }
                 else{
+                    console.log(666);
                     element.animations.play('chasingright',10,true);
                 }
             }
