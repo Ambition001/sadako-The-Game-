@@ -140,10 +140,12 @@ sadako.Game.prototype = {
     },
     update: function () {
         this.game.physics.arcade.collide(this.player, this.blockedLayer);
-        this.game.physics.arcade.collide(this.box,this.blockedLayer,this.boxCollision,null,this);
+        this.game.physics.arcade.collide(this.box,this.blockedLayer);
         this.game.physics.arcade.overlap(this.player,this.checkPoints,this.passCheckPoint,null,this);
         this.game.physics.arcade.overlap(this.player,this.spikes,this.stepOnSpike,null,this);
         this.game.physics.arcade.collide(this.player,this.box,this.moveBox,null,this);
+        this.game.physics.arcade.collide(this.box,this.blockedLayer);
+        this.game.physics.arcade.collide(this.player,this.box);
         this.game.physics.arcade.overlap(this.box,this.button,this.boxOnButton,null,this);
         this.player.body.velocity.x = 0;
         if(cursors.left.isDown){
@@ -193,9 +195,9 @@ sadako.Game.prototype = {
         this.box.children.forEach(function(element){
             element.body.velocity.x = 0;
         },this)
-        this.button.children.forEach(function(element){
-            element.frame = 0;
-        },this)
+        // this.button.children.forEach(function(element){
+        //     element.frame = 0;
+        // },this)
     },
     boxOnButton: function(box,button){
         button.frame = 1;
