@@ -105,12 +105,16 @@ sadako.Game.prototype = {
         }, this);
     },
     createDoor: function() {
-        this.items = this.game.add.group();
-        this.items.enableBody = true;
+        this.door = this.game.add.group();
+        this.door.enableBody = true;
         result = this.findObjectsByType('door', this.map, 'ObjectLayer');
         result.forEach(function(element){
-            this.items.create(element.x, element.y, element.properties.sprite);
+            this.door.create(element.x, element.y, 'sadakoDoor');
         }, this);
+        this.door.children.forEach(function(element){
+            element.body.immovable = true;
+            element.body.moves = false;
+        },this);
     },
     createBear: function() {
         this.items = this.game.add.group();
@@ -139,6 +143,11 @@ sadako.Game.prototype = {
           });
     },
     update: function () {
+        var button = this.button.children[0];
+        var door = this.door.children[0];
+        //reset button in every frame
+        button.frame = 0;
+
         this.game.physics.arcade.collide(this.player, this.blockedLayer);
         this.game.physics.arcade.collide(this.box,this.blockedLayer);
         this.game.physics.arcade.overlap(this.player,this.checkPoints,this.passCheckPoint,null,this);
@@ -147,6 +156,15 @@ sadako.Game.prototype = {
         this.game.physics.arcade.collide(this.box,this.blockedLayer);
         this.game.physics.arcade.collide(this.player,this.box);
         this.game.physics.arcade.overlap(this.box,this.button,this.boxOnButton,null,this);
+        this.game.physics.arcade.collide(this.blockedLayer, this.door);
+            door.frame = 0;
+        if(button.frame == 0){
+            this.game.physics.arcade.collide(this.player, this.door);
+            door.frame = 0;
+        }
+        else{
+            door.frame = 1;
+        }
         this.player.body.velocity.x = 0;
         if(cursors.left.isDown){
             this.player.body.velocity.x = -600;
@@ -171,6 +189,8 @@ sadako.Game.prototype = {
             jumpFlag = false;
         }
         this.ghostMovement();
+
+        //reset velocity
         this.reset();
     },
     passCheckPoint: function (player, checkPoint){
@@ -194,10 +214,10 @@ sadako.Game.prototype = {
     reset: function(){
         this.box.children.forEach(function(element){
             element.body.velocity.x = 0;
-        },this)
-        // this.button.children.forEach(function(element){
-        //     element.frame = 0;
-        // },this)
+        },this);
+        this.door.children.forEach(function(element){
+            element.body.velocity.x = 0;
+        },this);
     },
     boxOnButton: function(box,button){
         button.frame = 1;
