@@ -57,7 +57,7 @@ sadako.Game.prototype = {
         this.game.camera.follow(this.player);
 
         cursors = this.game.input.keyboard.createCursorKeys();
-        this.player.position.x = 12000;
+        this.player.position.x = 19000;
     },
     findObjectsByType: function(type, map, layer) {
         var result = new Array();
