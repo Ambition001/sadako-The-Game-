@@ -48,7 +48,7 @@ sadako.Game.prototype = {
         
         //create a player
         var result = this.findObjectsByType('playerStart', this.map, 'ObjectLayer');
-        this.player = this.game.add.sprite(result[0].x,result[0].y-128,'ghost');
+        this.player = this.game.add.sprite(result[0].x,result[0].y-128,'sadako');
         this.restartx = result[0].x;
         this.restarty = result[0].y-128;
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
@@ -94,7 +94,7 @@ sadako.Game.prototype = {
         this.box.children.forEach(function(element){
             this.game.physics.enable(element, Phaser.Physics.ARCADE);
             element.body.gravity.y = 1000;
-        },this)
+        },this);
     },
     createButton: function() {
         this.button = this.game.add.group();
@@ -121,12 +121,15 @@ sadako.Game.prototype = {
         }, this);
     },
     createGhost: function() {
-        this.items = this.game.add.group();
-        this.items.enableBody = true;
+        this.ghost = this.game.add.group();
+        this.ghost.enableBody = true;
         result = this.findObjectsByType('ghost', this.map, 'ObjectLayer');
         result.forEach(function(element){
-            this.items.create(element.x, element.y, element.properties.sprite);
+            this.ghost.create(element.x, element.y, 'ghost');
         }, this);
+        this.ghost.children.forEach(function(element){
+            element.body.velocity.y = 200;
+        },this);
     },
     createFromTiledObject: function(element, group,name) {
         var sprite = group.create(element.x, element.y, name);
@@ -165,6 +168,7 @@ sadako.Game.prototype = {
         if(this.spaceKey.isUp){
             jumpFlag = false;
         }
+        this.ghostMovement();
         this.reset();
     },
     passCheckPoint: function (player, checkPoint){
@@ -195,6 +199,16 @@ sadako.Game.prototype = {
     },
     boxOnButton: function(box,button){
         button.frame = 1;
+    },
+    ghostMovement: function(){
+        this.ghost.children.forEach(function(element){
+            if(element.y>1664){
+                element.body.velocity.y = -400;
+            }
+            else if(element.y<256){
+                element.body.velocity.y = 400;
+            }
+        },this)
     }
 
 

@@ -52,6 +52,7 @@ sadako.Preload.prototype = {
         this.load.image('sadakoDoor', 'assets/images/SadakoDoor.png');
         this.load.image('spike','assets/images/Spike.png');
         this.load.image('checkPoint','assets/images/CheckPoint.png');
+        this.load.spritesheet('sadako', 'assets/sprites/ghost.png', 256, 256);
         this.load.spritesheet('ghost', 'assets/sprites/ghost.png', 256, 256);
 
 
