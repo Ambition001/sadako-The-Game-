@@ -45,24 +45,23 @@ sadako.Game.prototype = {
         this.createSpikes();
         this.createBear();
         this.createGhost();
-
+        
         //create a player
         var result = this.findObjectsByType('playerStart', this.map, 'ObjectLayer');
         this.player = this.game.add.sprite(result[0].x,result[0].y-128,'ghost');
         this.restartx = result[0].x;
         this.restarty = result[0].y-128;
-        console.log(this.restarty);
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.gravity.y = 250;
         this.game.camera.follow(this.player);
 
         cursors = this.game.input.keyboard.createCursorKeys();
-
+        this.player.position.x = 16500;
     },
     findObjectsByType: function(type, map, layer) {
         var result = new Array();
         map.objects[layer].forEach(function(element){
-          if(element.properties.type === type) {
+          if(element.properties[0].value === type) {
             element.y -= map.tileHeight;
             result.push(element);
           }      
@@ -86,19 +85,23 @@ sadako.Game.prototype = {
         }, this);
     },
     createBox: function() {
-        this.items = this.game.add.group();
-        this.items.enableBody = true;
+        this.box = this.game.add.group();
+        this.box.enableBody = true;
         result = this.findObjectsByType('box', this.map, 'ObjectLayer');
         result.forEach(function(element){
-            this.items.create(element.x, element.y, element.properties.sprite);
+            this.box.create(element.x, element.y, 'sadakoWoodenCrate');
         }, this);
+        this.box.children.forEach(function(element){
+            this.game.physics.enable(element, Phaser.Physics.ARCADE);
+            element.body.gravity.y = 1000;
+        },this)
     },
     createButton: function() {
-        this.items = this.game.add.group();
-        this.items.enableBody = true;
+        this.button = this.game.add.group();
+        this.button.enableBody = true;
         result = this.findObjectsByType('button', this.map, 'ObjectLayer');
         result.forEach(function(element){
-            this.items.create(element.x, element.y, element.properties.sprite);
+            this.button.create(element.x, element.y, 'sadakoButton');
         }, this);
     },
     createDoor: function() {
@@ -134,13 +137,16 @@ sadako.Game.prototype = {
     },
     update: function () {
         this.game.physics.arcade.collide(this.player, this.blockedLayer);
+        this.game.physics.arcade.collide(this.box,this.blockedLayer,this.boxCollision,null,this);
         this.game.physics.arcade.overlap(this.player,this.checkPoints,this.passCheckPoint,null,this);
         this.game.physics.arcade.overlap(this.player,this.spikes,this.stepOnSpike,null,this);
+        this.game.physics.arcade.collide(this.player,this.box,this.moveBox,null,this);
+        this.game.physics.arcade.overlap(this.box,this.button,this.boxOnButton,null,this);
         this.player.body.velocity.x = 0;
         if(cursors.left.isDown){
-            this.player.body.velocity.x = -500;
+            this.player.body.velocity.x = -600;
         }else if(cursors.right.isDown){
-            this.player.body.velocity.x = 500;
+            this.player.body.velocity.x = 600;
         }
 
         if(this.player.body.onFloor()){
@@ -159,15 +165,36 @@ sadako.Game.prototype = {
         if(this.spaceKey.isUp){
             jumpFlag = false;
         }
+        this.reset();
     },
     passCheckPoint: function (player, checkPoint){
         this.restartx = checkPoint.position.x+128;
         this.restarty = checkPoint.position.y-128;
-        console.log(this.restarty);
     },
     stepOnSpike: function (){
         this.player.position.x = this.restartx;
         this.player.position.y = this.restarty;
+    },
+    moveBox: function (player,box){
+        if(player.x<=box.position.x-256 || player.x>=box.position.x+256){
+            if(box.position.x>this.player.x){
+                box.body.velocity.x += 32;
+            }
+            else{
+                box.body.velocity.x -= 32;
+            }
+        }
+    },
+    reset: function(){
+        this.box.children.forEach(function(element){
+            element.body.velocity.x = 0;
+        },this)
+        this.button.children.forEach(function(element){
+            element.frame = 0;
+        },this)
+    },
+    boxOnButton: function(box,button){
+        button.frame = 1;
     }
 
 
