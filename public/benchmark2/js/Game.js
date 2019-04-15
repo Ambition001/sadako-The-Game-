@@ -173,9 +173,9 @@ sadako.Game.prototype = {
             door.frame = 1;
         }
         this.player.body.velocity.x = 0;
-        if(cursors.left.isDown){
+        if(cursors.left.isDown || this.aKey.isDown){
             this.player.body.velocity.x = -600;
-        }else if(cursors.right.isDown){
+        }else if(cursors.right.isDown || this.dKey.isDown){
             this.player.body.velocity.x = 600;
         }
 
