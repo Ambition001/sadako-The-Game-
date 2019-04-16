@@ -21,7 +21,8 @@ var pauseHelp;
 var pauseNext;
 var t;
 var terror = 0;
-var changeState = false;
+var winState = false;
+
 
 sadako.Game.prototype = {
     init: function (complete, level, sound) {
@@ -32,7 +33,8 @@ sadako.Game.prototype = {
     create: function () {
         game = this.game;
         t = this;
-
+        winState = false;
+        terror = 0;
         this.aKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
         this.dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.wKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -329,7 +331,9 @@ sadako.Game.prototype = {
     },
     //winning event
     winningBear: function () {
+        winState = true;
         t.bear.destroy();
+        pauseButton.destroy();
         pauseWhite = game.add.sprite(game.camera.x + 1024, 1024, 'white');
         pauseWhite.anchor.setTo(0.5, 0.5);
         pauseWhite.alpha = 0.5;
@@ -347,7 +351,10 @@ sadako.Game.prototype = {
         pauseNext.anchor.setTo(0.5);
         pauseNext.inputEnabled = true;
         pauseNext.events.onInputDown.add(function () {
-            game.state.restart();
+            if(lv < 2){
+                lv = 2;
+            }
+            game.state.start('MainMenu', true, false, completed, lv, mute);
         },t);
 
         pauseMenu = game.add.sprite(game.camera.x + 1024, 1250, 'mainMenuButton');
@@ -361,50 +368,53 @@ sadako.Game.prototype = {
         },t);
     },
     pauseGame: function () {
-        game.physics.arcade.isPaused = (game.physics.arcade.isPaused) ? false : true;
-        if(game.physics.arcade.isPaused){
-            pauseWhite = game.add.sprite(game.camera.x + 1024, 1024, 'white');
-            pauseWhite.anchor.setTo(0.5, 0.5);
-            pauseWhite.alpha = 0.5;
+        if(!winState){
+            game.physics.arcade.isPaused = (game.physics.arcade.isPaused) ? false : true;
+            if(game.physics.arcade.isPaused){
+                pauseWhite = game.add.sprite(game.camera.x + 1024, 1024, 'white');
+                pauseWhite.anchor.setTo(0.5, 0.5);
+                pauseWhite.alpha = 0.5;
 
-            var textStyle = {
-                font: "100px Arial",
-                fill: "#000000",
-                align: "center"
-            };
+                var textStyle = {
+                    font: "100px Arial",
+                    fill: "#000000",
+                    align: "center"
+                };
 
-            text = game.add.text(game.camera.x + 1024, 500, "Paused", textStyle);
-            text.anchor.setTo(0.5, 0.5);
+                text = game.add.text(game.camera.x + 1024, 500, "Paused", textStyle);
+                text.anchor.setTo(0.5, 0.5);
 
-            pauseResume = game.add.sprite(game.camera.x + 1024, 750, 'resumeButton');
-            pauseResume.anchor.setTo(0.5);
-            pauseResume.inputEnabled = true;
-            pauseResume.events.onInputDown.add(t.pauseGame, t);
+                pauseResume = game.add.sprite(game.camera.x + 1024, 750, 'resumeButton');
+                pauseResume.anchor.setTo(0.5);
+                pauseResume.inputEnabled = true;
+                pauseResume.events.onInputDown.add(t.pauseGame, t);
 
-            pauseRestart = game.add.sprite(game.camera.x + 1024, 1050, 'restartButton');
-            pauseRestart.anchor.setTo(0.5);
-            pauseRestart.inputEnabled = true;
-            pauseRestart.events.onInputDown.add(function () {
-                t.pauseGame();
-                game.state.restart();
-            },t);
-            
-            pauseMenu = game.add.sprite(game.camera.x + 1024, 1350, 'mainMenuButton');
-            pauseMenu.anchor.setTo(0.5);
-            pauseMenu.inputEnabled = true;
-            pauseMenu.events.onInputDown.add(function () { 
-                game.state.start('MainMenu', true, false, completed, lv, mute);
+                pauseRestart = game.add.sprite(game.camera.x + 1024, 1050, 'restartButton');
+                pauseRestart.anchor.setTo(0.5);
+                pauseRestart.inputEnabled = true;
+                pauseRestart.events.onInputDown.add(function () {
+                    t.pauseGame();
+                    game.state.start('Game', true, false, completed, lv, mute);
+                },t);
+                
+                pauseMenu = game.add.sprite(game.camera.x + 1024, 1350, 'mainMenuButton');
+                pauseMenu.anchor.setTo(0.5);
+                pauseMenu.inputEnabled = true;
+                pauseMenu.events.onInputDown.add(function () { 
+                    t.pauseGame();
+                    game.state.start('MainMenu', true, false, completed, lv, mute);
 
-            },t);
+                },t);
 
 
 
-        }else{
-            pauseWhite.destroy();
-            text.destroy();
-            pauseResume.destroy();
-            pauseRestart.destroy();
-            pauseMenu.destroy();
+            }else{
+                pauseWhite.destroy();
+                text.destroy();
+                pauseResume.destroy();
+                pauseRestart.destroy();
+                pauseMenu.destroy();
+            }
         }
 
 
