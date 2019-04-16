@@ -60,6 +60,8 @@ sadako.Preload.prototype = {
         this.load.spritesheet('restartButton', 'assets/images/game/restart.png', 512, 300);
         this.load.spritesheet('resumeButton', 'assets/images/game/resume.png', 512, 300);
         this.load.image('white', 'assets/images/game/white.png');
+        this.load.image('bar', 'assets/images/preloader-bar.png');
+        this.load.image('brackets', 'assets/images/game/terrorBrackets.png');
 
         load = true;
 
