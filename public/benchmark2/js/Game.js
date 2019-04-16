@@ -89,11 +89,6 @@ sadako.Game.prototype = {
         this.restarty = result[0].y-128;
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.gravity.y = 250;
-<<<<<<< HEAD
-        this.player.position.x = 19000;
-=======
-
->>>>>>> 916780559811af24f991e525f257c64a8fbdefe1
         this.game.camera.follow(this.player);
         
         cursors = this.game.input.keyboard.createCursorKeys();
@@ -289,13 +284,6 @@ sadako.Game.prototype = {
             this.player.body.velocity.y = -400;
             jumpCounter = 1;
             jumpFlag = true;
-<<<<<<< HEAD
-            if(this.player.animations.frame > 40)
-                this.player.animations.play("jumpupright", 10);
-            else
-                this.player.animations.play("jumpupleft", 10);
-        }else if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
-=======
 
             if(this.player.animations.frame >= 40)
                     this.player.animations.play("jumpupright", 10);
@@ -303,7 +291,6 @@ sadako.Game.prototype = {
                 this.player.animations.play("jumpupleft", 10);
         }else if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
 
->>>>>>> 916780559811af24f991e525f257c64a8fbdefe1
             this.player.body.velocity.y = -400;
             jumpCounter = 2;
         }
