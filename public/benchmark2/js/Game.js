@@ -18,9 +18,10 @@ var pauseResume;
 var pauseRestart;
 var pauseMenu;
 var pauseHelp;
+var pauseNext;
 var t;
 var terror = 0;
-
+var changeState = false;
 
 sadako.Game.prototype = {
     init: function (complete, level, sound) {
@@ -230,7 +231,7 @@ sadako.Game.prototype = {
             this.player.body.velocity.y = -400;
             jumpCounter = 1;
             jumpFlag = true;
-        }else if(this.spaceKey.isDown && jumpCounter == 1 && !jumpFlag){
+        }else if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
             this.player.body.velocity.y = -400;
             jumpCounter = 2;
         }
@@ -342,17 +343,20 @@ sadako.Game.prototype = {
         text = game.add.text(game.camera.x + 1024, 500, "Win", textStyle);
         text.anchor.setTo(0.5, 0.5);
 
-        pauseRestart = game.add.sprite(game.camera.x + 1024, 900, 'restartButton');
-            pauseRestart.anchor.setTo(0.5);
-            pauseRestart.inputEnabled = true;
-            pauseRestart.events.onInputDown.add(function () {
-                game.state.start('Game', true, false, completed, lv, mute);
-            },t);
+        pauseNext = game.add.sprite(game.camera.x + 1024, 900, 'nextLevelButton');
+        pauseNext.anchor.setTo(0.5);
+        pauseNext.inputEnabled = true;
+        pauseNext.events.onInputDown.add(function () {
+            game.state.restart();
+        },t);
 
         pauseMenu = game.add.sprite(game.camera.x + 1024, 1250, 'mainMenuButton');
         pauseMenu.anchor.setTo(0.5);
         pauseMenu.inputEnabled = true;
         pauseMenu.events.onInputDown.add(function () {
+            if(lv < 2){
+                lv = 2;
+            }
             game.state.start('MainMenu', true, false, completed, lv, mute);
         },t);
     },
@@ -382,14 +386,15 @@ sadako.Game.prototype = {
             pauseRestart.inputEnabled = true;
             pauseRestart.events.onInputDown.add(function () {
                 t.pauseGame();
-                game.state.start('Game', true, false, completed, lv, mute);
+                game.state.restart();
             },t);
             
             pauseMenu = game.add.sprite(game.camera.x + 1024, 1350, 'mainMenuButton');
             pauseMenu.anchor.setTo(0.5);
             pauseMenu.inputEnabled = true;
-            pauseMenu.events.onInputDown.add(function () {
+            pauseMenu.events.onInputDown.add(function () { 
                 game.state.start('MainMenu', true, false, completed, lv, mute);
+
             },t);
 
 
@@ -403,7 +408,9 @@ sadako.Game.prototype = {
         }
 
 
+    },
+    shutdown: function () {
+        game.world.setBounds(0, 0, 2048, 2048);
     }
-
 
 };
