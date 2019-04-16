@@ -285,19 +285,13 @@ sadako.Game.prototype = {
             this.player.body.velocity.y = -400;
             jumpCounter = 1;
             jumpFlag = true;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
             if(this.player.animations.frame >= 40)
                     this.player.animations.play("jumpupright", 10);
             else
                 this.player.animations.play("jumpupleft", 10);
-        }else if(this.spaceKey.isDown && jumpCounter == 1 && !jumpFlag){
-=======
         }else if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
->>>>>>> 53ad43735ef300656dcc1b0bcb1e5941e7b348a8
-=======
-        }else if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
->>>>>>> 53ad43735ef300656dcc1b0bcb1e5941e7b348a8
+
             this.player.body.velocity.y = -400;
             jumpCounter = 2;
         }
