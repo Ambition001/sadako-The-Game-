@@ -23,7 +23,7 @@ sadako.LevelSelect.prototype = {
     create: function () {
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 800, 'mainMenuTitle');
         mainMenuTitle.anchor.setTo(0.5, 0.5);
-        mainMenuTitle.scale.setTo(0.4)
+        mainMenuTitle.scale.setTo(0.4);
         mainMenuTitle.alpha = 0;
         var mainMenuTitleTween = this.game.add.tween(mainMenuTitle);
         mainMenuTitleTween.to({

@@ -17,6 +17,7 @@ sadako.MainMenu.prototype = {
         completed = complete;
         lv = level;
         mute = sound;
+        
 
     },
     create: function () {
@@ -27,7 +28,7 @@ sadako.MainMenu.prototype = {
         mainMenuTitleTween.to({
             alpha: 1
         }, 1000, Phaser.Easing.Linear.None, true, 0, 0, false);
-
+        
         playButton = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'playButton');
         playButton.anchor.setTo(0.5);
         playButton.inputEnabled = true;
