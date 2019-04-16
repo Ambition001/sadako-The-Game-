@@ -239,57 +239,77 @@ sadako.Game.prototype = {
         else{
             door.frame = 1;
         }
-
-        if(this.player.body.velocity.x > 0){
-            if(!lighting)
-                this.player.animations.play("idleright", 10 , true);
-            else
-                this.player.animations.play("idlelighterright", 10, true);
-        }
-
-        else if (this.player.body.velocity.x < 0){
-            if(!lighting)
-                this.player.animations.play("idleleft", 10 , true);
-            else
-                this.player.animations.play("idlelighterleft", 10, true);
-        }
         
+        savedVelocity = this.player.body.velocity.x;
         this.player.body.velocity.x = 0;
 
         if(cursors.left.isDown || this.aKey.isDown){
             this.player.body.velocity.x = -600;
             if(!lighting)
-                this.player.animations.play("walkleft", 10, true);
+                if(this.player.animations.currentAnim.name.includes("idle") || this.player.animations.currentAnim.name.includes("right") 
+                || (!this.player.animations.currentAnim.isPlaying))
+                    this.player.animations.play("walkleft", 10);
             else
-                this.player.animations.play("walklighterleft", 10, true);
+                if(this.player.animations.currentAnim.name.includes("idle")  || this.player.animations.currentAnim.name.includes("right")
+                || (!this.player.animations.currentAnim.isPlaying))
+                    this.player.animations.play("walklighterleft", 10);
         }else if(cursors.right.isDown || this.dKey.isDown){
             this.player.body.velocity.x = 600;
             if(!lighting)
-                this.player.animations.play("walkright", 10, true);
+                if(this.player.animations.currentAnim.name.includes("idle")  || this.player.animations.currentAnim.name.includes("left")
+                || (!this.player.animations.currentAnim.isPlaying))
+                    this.player.animations.play("walkright", 10);
             else
-                this.player.animations.play("walklighterright", 10, true);
+                if(this.player.animations.currentAnim.name.includes("idle") || this.player.animations.currentAnim.name.includes("left")
+                || (!this.player.animations.currentAnim.isPlaying))
+                    this.player.animations.play("walklighterright", 10);
+        }else {
+
+            if((this.player.animations.currentAnim.name.includes("walk") && this.player.animations.currentAnim.name.includes("right")) || (!this.player.animations.currentAnim.isPlaying && savedVelocity >= 0 
+                && this.player.animations.currentAnim.name.includes("right"))){
+                if(!lighting)
+                    this.player.animations.play("idleright", 10);
+                else
+                    this.player.animations.play("idlelighterright", 10);
+            }
+    
+            else if ((this.player.animations.currentAnim.name.includes("walk") && this.player.animations.currentAnim.name.includes("left")) || (!this.player.animations.currentAnim.isPlaying && savedVelocity <= 0 
+                && this.player.animations.currentAnim.name.includes("left"))){
+                if(!lighting)
+                    this.player.animations.play("idleleft", 10 , true);
+                else
+                    this.player.animations.play("idlelighterleft", 10, true);
+            }
         }
 
         if(this.player.body.onFloor()){
             if(jumpCounter > 0){
-                if(this.player.animations.frame > 40)
-                    this.player.animations.play("jumpdownright", 10);
-                else
+                if(this.player.animations.currentAnim.name.includes("left"))
                     this.player.animations.play("jumpdownleft", 10);
+                else
+                    this.player.animations.play("jumpdownright", 10);
             }
             jumpCounter = 0;
         }
 
         if(this.spaceKey.isDown && this.player.body.onFloor()){
+
+            if(this.player.animations.currentAnim.name.includes("left"))
+                    this.player.animations.play("jumpupleft", 10);
+            else if(this.player.animations.currentAnim.name.includes("right"))
+                this.player.animations.play("jumpupright", 10);
+
             this.player.body.velocity.y = -400;
             jumpCounter = 1;
             jumpFlag = true;
 
-            if(this.player.animations.frame >= 40)
-                    this.player.animations.play("jumpupright", 10);
-            else
-                this.player.animations.play("jumpupleft", 10);
+            
         }else if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
+
+            if(this.player.animations.currentAnim.name.includes("left"))
+                    this.player.animations.play("jumpupleft", 10);
+            else if(this.player.animations.currentAnim.name.includes("right"))
+                this.player.animations.play("jumpupright", 10);
 
             this.player.body.velocity.y = -400;
             jumpCounter = 2;
