@@ -20,8 +20,11 @@ var pauseMenu;
 var pauseHelp;
 var pauseNext;
 var t;
-var terror = 0;
+var terror;
 var winState = false;
+var terrorBar;
+var terrorWidth;
+var terrorBrackets;
 
 
 sadako.Game.prototype = {
@@ -35,6 +38,7 @@ sadako.Game.prototype = {
         t = this;
         winState = false;
         terror = 0;
+        terrorWidth = 300;
         this.aKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
         this.dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.wKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -85,10 +89,13 @@ sadako.Game.prototype = {
         this.restarty = result[0].y-128;
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.gravity.y = 250;
+<<<<<<< HEAD
         this.player.position.x = 19000;
+=======
+
+>>>>>>> 916780559811af24f991e525f257c64a8fbdefe1
         this.game.camera.follow(this.player);
         
-
         cursors = this.game.input.keyboard.createCursorKeys();
         pauseButton = this.game.add.sprite(2000, 100, 'pauseButton');
         pauseButton.anchor.setTo(0.5);
@@ -99,7 +106,10 @@ sadako.Game.prototype = {
 
         this.escKey.onDown.add(this.pauseGame);
 
-
+        terrorBar = this.player.addChild(game.make.sprite(64, -50, 'bar'));
+        terrorBar.width = 0;
+        terrorBrackets = this.player.addChild(game.make.sprite(-91, -55,'brackets'));
+        
     },
     findObjectsByType: function(type, map, layer) {
         var result = new Array();
@@ -207,17 +217,20 @@ sadako.Game.prototype = {
         this.game.physics.arcade.overlap(this.box,this.button,this.boxOnButton,null,this);
         this.game.physics.arcade.collide(this.blockedLayer, this.door);
         this.game.physics.arcade.overlap(this.player,this.bear,this.winningBear,null,this);
+        this.game.physics.arcade.overlap(this.player, this.ghost, this.ghostTouch, null, this);
 
-        // TODO: add hover to pause menu
-        // if(!typeof(pauseResume) == "undefined"){
-        //     if(pauseResume.input.pointerOver()){
-        //         pauseResume.frame = 1;
-        //     }else{
-        //         pauseResume.frame = 0;
-        //     }
-        // }
+        
+        terrorBar.width = (terror / 100) * terrorWidth;
+        if(terrorBar.width>300){
+            terrorBar.width = 300;
+        }
+        terrorBar.x = 64 - terrorBar.width / 2;
 
 
+        if(terror == 100){
+            this.terrified();
+        }
+        console.log(terrorBar.width);
         if(pauseButton.input.pointerOver()){
             pauseButton.frame = 1;
         }else{
@@ -276,11 +289,21 @@ sadako.Game.prototype = {
             this.player.body.velocity.y = -400;
             jumpCounter = 1;
             jumpFlag = true;
+<<<<<<< HEAD
             if(this.player.animations.frame > 40)
                 this.player.animations.play("jumpupright", 10);
             else
                 this.player.animations.play("jumpupleft", 10);
         }else if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
+=======
+
+            if(this.player.animations.frame >= 40)
+                    this.player.animations.play("jumpupright", 10);
+            else
+                this.player.animations.play("jumpupleft", 10);
+        }else if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
+
+>>>>>>> 916780559811af24f991e525f257c64a8fbdefe1
             this.player.body.velocity.y = -400;
             jumpCounter = 2;
         }
@@ -300,7 +323,17 @@ sadako.Game.prototype = {
         this.ghostMovement();
         //reset velocity
         this.reset();
-    },
+    },// TODO: add hover to pause menu
+    // pauseUpdate: function () {
+    //     console.log("111");
+    //     if(!typeof(pauseResume) == "undefined"){
+    //         if(pauseResume.input.pointerOver()){
+    //             pauseResume.frame = 1;
+    //         }else{
+    //             pauseResume.frame = 0;
+    //         }
+    //     }
+    // },
     //check point event
     passCheckPoint: function (player, checkPoint){
         this.restartx = checkPoint.position.x+128;
@@ -378,6 +411,9 @@ sadako.Game.prototype = {
             }
         },this)
     },
+    ghostTouch: function () {
+        terror += 1;
+    }, 
     //winning event
     winningBear: function () {
         winState = true;
@@ -413,6 +449,36 @@ sadako.Game.prototype = {
             if(lv < 2){
                 lv = 2;
             }
+            game.state.start('MainMenu', true, false, completed, lv, mute);
+        },t);
+    },
+    terrified: function (){
+        winState = true;
+        pauseButton.destroy();
+        pauseWhite = game.add.sprite(game.camera.x + 1024, 1024, 'white');
+        pauseWhite.anchor.setTo(0.5, 0.5);
+        pauseWhite.alpha = 0.5;
+
+        var textStyle = {
+            font: "100px Arial",
+            fill: "#ff0000",
+            align: "center"
+        };
+
+        text = game.add.text(game.camera.x + 1024, 500, "Terrified", textStyle);
+        text.anchor.setTo(0.5, 0.5);
+
+        pauseRestart = game.add.sprite(game.camera.x + 1024, 900, 'restartButton');
+        pauseRestart.anchor.setTo(0.5);
+        pauseRestart.inputEnabled = true;
+        pauseRestart.events.onInputDown.add(function () {
+            game.state.start('Game', true, false, completed, lv, mute);
+        },t);
+
+        pauseMenu = game.add.sprite(game.camera.x + 1024, 1250, 'mainMenuButton');
+        pauseMenu.anchor.setTo(0.5);
+        pauseMenu.inputEnabled = true;
+        pauseMenu.events.onInputDown.add(function () {
             game.state.start('MainMenu', true, false, completed, lv, mute);
         },t);
     },
