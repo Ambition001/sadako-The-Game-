@@ -67,25 +67,25 @@ sadako.Game.prototype = {
         //create a player
         var result = this.findObjectsByType('playerStart', this.map, 'ObjectLayer');
         this.player = this.game.add.sprite(result[0].x,result[0].y-128,'sadako');
-        this.player.animations.add('idleleft',[0,1,2,3,4,5]);
-        this.player.animations.add('walkleft',[6,7,8,9,10,11,12]);
-        this.player.animations.add('jumpupleft',[13,14,15,16]);
-        this.player.animations.add('jumpdownleft',[18,19]);
-        this.player.animations.add('idlelighterleft',[20,21,22,23,24]);
-        this.player.animations.add('walklighterleft',[25,26,27,28,29,30,31]);
-        this.player.animations.add('walkgrableft',[33,34,35,36,37,38,39,40]);
-        this.player.animations.add('idleright',[41,42,43,44,45]);
-        this.player.animations.add('walkright',[46,47,48,49,50,51,52]);
-        this.player.animations.add('jumpupright',[53,54,55,56]);
-        this.player.animations.add('jumpdownright',[58,59]);
-        this.player.animations.add('idlelighterright',[60,61,62,63,64]);
-        this.player.animations.add('walklighterright',[65,66,67,68,69,70,71]);
-        this.player.animations.add('walkgrabright',[73,74,75,76,77,78,79,80,81]);
+        this.player.animations.add('idleleft',[0,1,2,3,4]);
+        this.player.animations.add('walkleft',[5,6,7,8,9,10,11,12]);
+        this.player.animations.add('jumpupleft',[13,14,15]);
+        this.player.animations.add('jumpdownleft',[17,18]);
+        this.player.animations.add('idlelighterleft',[19,20,21,22,23,24,25]);
+        this.player.animations.add('walklighterleft',[24,25,26,27,28,29,30]);
+        this.player.animations.add('walkgrableft',[32,33,34,35,36,37,38,39]);
+        this.player.animations.add('idleright',[40,41,42,43,44]);
+        this.player.animations.add('walkright',[45,46,47,48,49,50,51]);
+        this.player.animations.add('jumpupright',[52,53,54,55]);
+        this.player.animations.add('jumpdownright',[57,58]);
+        this.player.animations.add('idlelighterright',[59,60,61,62,63]);
+        this.player.animations.add('walklighterright',[64,65,66,67,68,69,70]);
+        this.player.animations.add('walkgrabright',[72,73,74,75,76,77,78,79,80]);
         this.restartx = result[0].x;
         this.restarty = result[0].y-128;
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.gravity.y = 250;
-        this.player.position.x = 20500;
+        this.player.position.x = 19000;
         this.game.camera.follow(this.player);
         
 
@@ -264,7 +264,7 @@ sadako.Game.prototype = {
 
         if(this.player.body.onFloor()){
             if(jumpCounter > 0){
-                if(this.player.animations.frame >= 40)
+                if(this.player.animations.frame > 40)
                     this.player.animations.play("jumpdownright", 10);
                 else
                     this.player.animations.play("jumpdownleft", 10);
@@ -276,19 +276,11 @@ sadako.Game.prototype = {
             this.player.body.velocity.y = -400;
             jumpCounter = 1;
             jumpFlag = true;
-<<<<<<< HEAD
-<<<<<<< HEAD
-            if(this.player.animations.frame >= 40)
-                    this.player.animations.play("jumpupright", 10);
+            if(this.player.animations.frame > 40)
+                this.player.animations.play("jumpupright", 10);
             else
                 this.player.animations.play("jumpupleft", 10);
-        }else if(this.spaceKey.isDown && jumpCounter == 1 && !jumpFlag){
-=======
         }else if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
->>>>>>> 53ad43735ef300656dcc1b0bcb1e5941e7b348a8
-=======
-        }else if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
->>>>>>> 53ad43735ef300656dcc1b0bcb1e5941e7b348a8
             this.player.body.velocity.y = -400;
             jumpCounter = 2;
         }
