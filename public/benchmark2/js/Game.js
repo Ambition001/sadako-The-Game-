@@ -456,7 +456,7 @@ sadako.Game.prototype = {
         text = game.add.text(game.camera.x + 1024, 500, "Terrified", textStyle);
         text.anchor.setTo(0.5, 0.5);
 
-        pauseRestart = game.add.sprite(game.camera.x + 1024, 1050, 'restartButton');
+        pauseRestart = game.add.sprite(game.camera.x + 1024, 900, 'restartButton');
         pauseRestart.anchor.setTo(0.5);
         pauseRestart.inputEnabled = true;
         pauseRestart.events.onInputDown.add(function () {
