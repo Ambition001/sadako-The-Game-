@@ -85,6 +85,12 @@ sadako.Game.prototype = {
         this.player.animations.add('idlelighterright',[59,60,61,62,63]);
         this.player.animations.add('walklighterright',[64,65,66,67,68,69,70]);
         this.player.animations.add('walkgrabright',[72,73,74,75,76,77,78,79,80]);
+        this.player.animations.add('gainterrorright',[81,82,83,84,85]);
+        this.player.animations.add('gainterrorleft',[86,87,88,89,90]);
+        this.player.animations.add('toterrifiedleft',[91,92]);
+        this.player.animations.add('interrifiedleft',[93,94,95,96]);
+        this.player.animations.add('toterrifiedright',[97,98]);
+        this.player.animations.add('interrifiedright',[99,100,101,102]);
         this.restartx = result[0].x;
         this.restarty = result[0].y-128;
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
