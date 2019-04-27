@@ -45,6 +45,7 @@ sadako.Preload.prototype = {
         // Load for real game
         this.load.spritesheet('pauseButton', 'assets/images/game/pause.png', 250, 250);
         this.load.tilemap('level1', 'assets/map/level1.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('level3', 'assets/map/level3.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('basicColor', 'assets/images/BasicColor.png');
         this.load.image('sadakoFullTileSet', 'assets/images/SadakoFullTileSet.png');
         this.load.image('sadakoWoodenCrate', 'assets/images/SadakoWoodenCrate.png');

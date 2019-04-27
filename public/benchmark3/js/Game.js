@@ -49,7 +49,7 @@ sadako.Game.prototype = {
         this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
-        this.map = this.game.add.tilemap('level1');
+        this.map = this.game.add.tilemap('level3');
 
         this.map.addTilesetImage('SadakoFullTileSet','sadakoFullTileSet');
         this.map.addTilesetImage('BasicColor','basicColor');
@@ -94,7 +94,7 @@ sadako.Game.prototype = {
         this.restartx = result[0].x;
         this.restarty = result[0].y-128;
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
-        this.player.body.gravity.y = 250;
+        this.player.body.gravity.y = 400;
         this.game.camera.follow(this.player);
         
         cursors = this.game.input.keyboard.createCursorKeys();
@@ -203,10 +203,16 @@ sadako.Game.prototype = {
           });
     },
     update: function () {
-        var button = this.button.children[0];
-        var door = this.door.children[0];
+        if(this.button.length > 0){
+            var button = this.button.children[0];
+            button.frame = 0;
+        }
+        //var button = this.button.children[0];
         //reset button in every frame
-        button.frame = 0;
+        //button.frame = 0;
+        if(this.door.length > 0){
+            var door = this.door.children[0];
+        }
 
         this.game.physics.arcade.collide(this.player, this.blockedLayer);
         this.game.physics.arcade.collide(this.box,this.blockedLayer);
@@ -231,19 +237,22 @@ sadako.Game.prototype = {
         if(terror == 100){
             this.terrified();
         }
-        console.log(terrorBar.width);
+        //console.log(terrorBar.width);
         if(pauseButton.input.pointerOver()){
             pauseButton.frame = 1;
         }else{
             pauseButton.frame = 0;
         }
 
-        if(button.frame == 0){
-            this.game.physics.arcade.collide(this.player, this.door);
-            door.frame = 0;
-        }
-        else{
-            door.frame = 1;
+
+        if(this.button.length > 0 && this.door.length>0){
+            if(button.frame == 0){
+                this.game.physics.arcade.collide(this.player, this.door);
+                door.frame = 0;
+            }
+            else{
+                door.frame = 1;
+            }
         }
         
         savedVelocity = this.player.body.velocity.x;
@@ -299,26 +308,26 @@ sadako.Game.prototype = {
         }
 
         if(this.spaceKey.isDown && this.player.body.onFloor()){
-
+            console.log(jumpCounter,jumpFlag);
             if(this.player.animations.currentAnim.name.includes("left"))
                     this.player.animations.play("jumpupleft", 10);
             else if(this.player.animations.currentAnim.name.includes("right"))
                 this.player.animations.play("jumpupright", 10);
 
-            this.player.body.velocity.y = -400;
+            this.player.body.velocity.y = -500;
             jumpCounter = 1;
             jumpFlag = true;
 
             
         }else if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
-
+            console.log(jumpCounter,jumpFlag);
             if(this.player.animations.currentAnim.name.includes("left"))
                     this.player.animations.play("jumpupleft", 10);
             else if(this.player.animations.currentAnim.name.includes("right"))
                 this.player.animations.play("jumpupright", 10);
 
-            this.player.body.velocity.y = -400;
-            jumpCounter = 2;
+            this.player.body.velocity.y = -500;
+            jumpCounter += 1;
         }
 
         if(this.spaceKey.isUp){
@@ -406,7 +415,6 @@ sadako.Game.prototype = {
                     element.animations.play('scaredleft',10,true);
                 }
                 else{
-                    console.log(666);
                     element.animations.play('chasingright',10,true);
                 }
             }
