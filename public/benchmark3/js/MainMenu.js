@@ -21,6 +21,8 @@ sadako.MainMenu.prototype = {
 
     },
     create: function () {
+        this.bgMusic = this.game.add.audio('bgMusic1');
+        this.bgMusic.play();
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 400, 'mainMenuTitle');
         mainMenuTitle.anchor.setTo(0.5, 0.5);
         mainMenuTitle.alpha = 0;
