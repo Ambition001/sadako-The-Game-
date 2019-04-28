@@ -19,6 +19,13 @@ sadako.HelpMenu.prototype = {
         mute = sound;
     },
     create: function () {
+        this.bgMusic = this.game.add.audio('bgMusic1');
+        if(!mute){
+            this.bgMusic.stop();
+            this.bgMusic.play();
+        }else{
+            this.bgMusic.stop();
+        }
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 800, 'mainMenuTitle');
         mainMenuTitle.anchor.setTo(0.5, 0.5);
         mainMenuTitle.scale.setTo(0.4)
@@ -81,9 +88,11 @@ sadako.HelpMenu.prototype = {
         if(mute){
             soundButton.frame = 0;
             mute = false;
+            this.bgMusic.play();
         }else{
             soundButton.frame = 1;
             mute = true;
+            this.bgMusic.stop();
         }
     }
 
