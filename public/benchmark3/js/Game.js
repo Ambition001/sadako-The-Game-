@@ -9,8 +9,7 @@ var mute;
 var cursors;
 var jumpCounter = 0;
 var jumpHeight = -400;
-var gravity = 400;
-var yMultiplyer = 2;
+var gravity = 600;
 var jumpFlag;
 var lighting = false;
 var pauseButton;
@@ -31,10 +30,11 @@ var terrorBrackets;
 
 
 sadako.Game.prototype = {
-    init: function (complete, level, sound) {
+    init: function (complete, level, sound, map) {
         completed = complete;
         lv = level;
         mute = sound;
+        mapname = map;
     },
     create: function () {
         game = this.game;
@@ -52,7 +52,7 @@ sadako.Game.prototype = {
         this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
-        this.map = this.game.add.tilemap('level3');
+        this.map = this.game.add.tilemap(mapname);
 
         this.map.addTilesetImage('SadakoFullTileSet','sadakoFullTileSet');
         this.map.addTilesetImage('BasicColor','basicColor');
@@ -311,19 +311,7 @@ sadako.Game.prototype = {
             jumpCounter = 0;
         }
 
-        /* if(this.spaceKey.isDown && jumpCounter <=1){
-            console.log(jumpCounter,jumpFlag);
-            if(this.player.animations.currentAnim.name.includes("left"))
-                    this.player.animations.play("jumpupleft", 10);
-            else if(this.player.animations.currentAnim.name.includes("right"))
-                this.player.animations.play("jumpupright", 10);
-
-            this.player.body.velocity.y = -500;
-            jumpCounter += 1;
-            jumpFlag = true;
-
-            
-        }else */ if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
+        if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
             console.log(jumpCounter,jumpFlag);
             if(this.player.animations.currentAnim.name.includes("left"))
                     this.player.animations.play("jumpupleft", 10);

@@ -175,22 +175,22 @@ sadako.LevelSelect.prototype = {
         this.game.state.start('MainMenu', true, false, completed, lv, mute);
     }, // TODO: define these functions
     level1: function () {
-        this.game.state.start('Game', true, false, completed, lv, mute);
+        this.game.state.start('Game', true, false, completed, lv, mute,'level1');
     },
     level2: function () {
-        alert("sdfsdf");
+        this.game.state.start('Game', true, false, completed, lv, mute,'level2');
     },
     level3: function () {
-        alert("sdfsdf");
+        this.game.state.start('Game', true, false, completed, lv, mute,'level3');
     },
     level4: function () {
-        alert("sdfsdf");
+        this.game.state.start('Game', true, false, completed, lv, mute,'level4');
     },
     level5: function () {
-        alert("sdfsdf");
+        this.game.state.start('Game', true, false, completed, lv, mute,'level5');
     },
     level6: function () {
-        alert("sdfsdf");
+        this.game.state.start('Game', true, false, completed, lv, mute,'level6');
     },
     soundToggle: function () {
         if(mute){
