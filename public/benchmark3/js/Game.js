@@ -8,6 +8,9 @@ var lv;
 var mute;
 var cursors;
 var jumpCounter = 0;
+var jumpHeight = -400;
+var gravity = 400;
+var yMultiplyer = 2;
 var jumpFlag;
 var lighting = false;
 var pauseButton;
@@ -94,7 +97,8 @@ sadako.Game.prototype = {
         this.restartx = result[0].x;
         this.restarty = result[0].y-128;
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
-        this.player.body.gravity.y = 400;
+        this.player.body.gravity.y = gravity;
+        this.player.body.collideWorldBounds = true;
         this.game.camera.follow(this.player);
         
         cursors = this.game.input.keyboard.createCursorKeys();
@@ -307,7 +311,7 @@ sadako.Game.prototype = {
             jumpCounter = 0;
         }
 
-        if(this.spaceKey.isDown && this.player.body.onFloor()){
+        /* if(this.spaceKey.isDown && jumpCounter <=1){
             console.log(jumpCounter,jumpFlag);
             if(this.player.animations.currentAnim.name.includes("left"))
                     this.player.animations.play("jumpupleft", 10);
@@ -315,11 +319,11 @@ sadako.Game.prototype = {
                 this.player.animations.play("jumpupright", 10);
 
             this.player.body.velocity.y = -500;
-            jumpCounter = 1;
+            jumpCounter += 1;
             jumpFlag = true;
 
             
-        }else if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
+        }else */ if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
             console.log(jumpCounter,jumpFlag);
             if(this.player.animations.currentAnim.name.includes("left"))
                     this.player.animations.play("jumpupleft", 10);
@@ -327,6 +331,7 @@ sadako.Game.prototype = {
                 this.player.animations.play("jumpupright", 10);
 
             this.player.body.velocity.y = -500;
+            jumpFlag = true;
             jumpCounter += 1;
         }
 
