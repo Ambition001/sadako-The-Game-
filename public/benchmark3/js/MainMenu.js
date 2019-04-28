@@ -22,7 +22,13 @@ sadako.MainMenu.prototype = {
     },
     create: function () {
         this.bgMusic = this.game.add.audio('bgMusic1');
-        this.bgMusic.play();
+        if(!mute){
+            this.bgMusic.stop();
+            this.bgMusic.play();
+        }else{
+            this.bgMusic.stop();
+        }
+        
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 400, 'mainMenuTitle');
         mainMenuTitle.anchor.setTo(0.5, 0.5);
         mainMenuTitle.alpha = 0;
@@ -88,20 +94,25 @@ sadako.MainMenu.prototype = {
     },
     levelSelect: function () {
         this.game.state.start("LevelSelect", true, false, completed, lv, mute);
+        this.bgMusic.stop();
     },
     helpMenu: function () {
         this.game.state.start("HelpMenu", true, false, completed, lv, mute);
+        this.bgMusic.stop();
     },
     aboutMenu: function () {
         this.game.state.start("AboutMenu", true, false, completed, lv, mute);
+        this.bgMusic.stop();
     },
     soundToggle: function () {
         if(mute){
             soundButton.frame = 0;
             mute = false;
+            this.bgMusic.play();
         }else{
             soundButton.frame = 1;
             mute = true;
+            this.bgMusic.stop();
         }
     }
 };
