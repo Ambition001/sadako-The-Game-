@@ -26,6 +26,7 @@ sadako.HelpMenu.prototype = {
         }else{
             this.bgMusic.stop();
         }
+        this.bgMusic.loop = true;
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 800, 'mainMenuTitle');
         mainMenuTitle.anchor.setTo(0.5, 0.5);
         mainMenuTitle.scale.setTo(0.4)
@@ -83,6 +84,7 @@ sadako.HelpMenu.prototype = {
     },
     back: function () {
         this.game.state.start('MainMenu', true, false, completed, lv, mute);
+        this.bgMusic.stop();
     },
     soundToggle: function () {
         if(mute){
