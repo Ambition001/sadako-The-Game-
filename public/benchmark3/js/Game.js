@@ -56,7 +56,10 @@ sadako.Game.prototype = {
 
         this.map.addTilesetImage('SadakoFullTileSet','sadakoFullTileSet');
         this.map.addTilesetImage('BasicColor','basicColor');
+        //this.background = this.game.add.tileSprite(0,0,4096,2048,'background1');
         this.backgroundlayer = this.map.createLayer('Background');
+        this.background = this.game.add.tileSprite(0,0,4096,2048,'background1');
+        this.background.fixedToCamera = true;
         this.blockedLayer = this.map.createLayer('BlockLayer');
 
         this.map.setCollisionBetween(1, 10000, true, 'BlockLayer');
@@ -114,7 +117,6 @@ sadako.Game.prototype = {
         terrorBar = this.player.addChild(game.make.sprite(64, -50, 'bar'));
         terrorBar.width = 0;
         terrorBrackets = this.player.addChild(game.make.sprite(-91, -55,'brackets'));
-        
     },
     findObjectsByType: function(type, map, layer) {
         var result = new Array();
@@ -217,7 +219,6 @@ sadako.Game.prototype = {
         if(this.door.length > 0){
             var door = this.door.children[0];
         }
-
         this.game.physics.arcade.collide(this.player, this.blockedLayer);
         this.game.physics.arcade.collide(this.box,this.blockedLayer);
         this.game.physics.arcade.overlap(this.player,this.checkPoints,this.passCheckPoint,null,this);
@@ -333,6 +334,13 @@ sadako.Game.prototype = {
 
         if(this.rKey.isUp){
             lighting = false;
+        }
+
+        if(this.player.body.velocity.x > 0 && !this.player.body.blocked.right){
+            this.background.tilePosition.x -= 0.5;
+        }
+        else if(this.player.body.velocity.x < 0 && !this.player.body.blocked.left){
+            this.background.tilePosition.x += 0.5;
         }
 
         this.ghostMovement();
@@ -527,7 +535,7 @@ sadako.Game.prototype = {
                 pauseRestart.inputEnabled = true;
                 pauseRestart.events.onInputDown.add(function () {
                     t.pauseGame();
-                    game.state.start('Game', true, false, completed, lv, mute);
+                    game.state.start('Game', true, false, completed, lv, mute,mapname);
                 },t);
                 
                 pauseMenu = game.add.sprite(game.camera.x + 1024, 1350, 'mainMenuButton');

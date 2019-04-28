@@ -65,6 +65,7 @@ sadako.Preload.prototype = {
         this.load.image('bar', 'assets/images/preloader-bar.png');
         this.load.image('brackets', 'assets/images/game/terrorBrackets.png');
 
+        this.load.image('background1','assets/backgrounds/background1.png');
         load = true;
 
 
