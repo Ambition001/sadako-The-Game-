@@ -925,14 +925,68 @@
     "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
     "sourceSize": { "w": 128, "h": 256 },
     "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 103.aseprite",
+    "frame": { "x": 1664, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 104.aseprite",
+    "frame": { "x": 1792, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 105.aseprite",
+    "frame": { "x": 1920, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 106.aseprite",
+    "frame": { "x": 2048, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 107.aseprite",
+    "frame": { "x": 2176, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 108.aseprite",
+    "frame": { "x": 0, "y": 1536, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
    }
  ],
  "meta": {
   "app": "http://www.aseprite.org/",
   "version": "1.2.9-x64",
-  "image": "H:\\Desktop\\Playground\\CSE380\\sadako\\public\\benchmark2\\assets\\images\\SadakoSprite.png",
+  "image": "H:\\Desktop\\Playground\\CSE380\\sadako\\public\\benchmark3\\assets\\images\\SadakoSprite.png",
   "format": "RGBA8888",
-  "size": { "w": 2304, "h": 1536 },
+  "size": { "w": 2304, "h": 1792 },
   "scale": "1",
   "frameTags": [
   ],
@@ -940,6 +994,7 @@
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
    { "name": "Dress", "opacity": 255, "blendMode": "normal" },
    { "name": "arms", "opacity": 255, "blendMode": "normal" },
+   { "name": "lighter", "opacity": 255, "blendMode": "normal" },
    { "name": "hair&eyes", "opacity": 255, "blendMode": "normal" },
    { "name": "legs", "opacity": 255, "blendMode": "normal" }
   ],
