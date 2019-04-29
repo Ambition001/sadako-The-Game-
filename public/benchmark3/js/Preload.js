@@ -71,6 +71,7 @@ sadako.Preload.prototype = {
         this.load.audio('blockLanding', 'assets/sounds/blockLanding.ogg');
 
         this.load.image('background1','assets/backgrounds/background1.png');
+        this.load.image('background3','assets/backgrounds/background3.png');
         load = true;
 
 

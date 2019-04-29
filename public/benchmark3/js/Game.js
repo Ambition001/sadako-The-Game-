@@ -68,9 +68,8 @@ sadako.Game.prototype = {
 
         this.map.addTilesetImage('SadakoFullTileSet','sadakoFullTileSet');
         this.map.addTilesetImage('BasicColor','basicColor');
-        //this.background = this.game.add.tileSprite(0,0,4096,2048,'background1');
         this.backgroundlayer = this.map.createLayer('Background');
-        this.background = this.game.add.tileSprite(0,0,4096,2048,'background1');
+        this.background = this.game.add.tileSprite(0,0,4096,2048,'background'+mapNum);
         this.background.fixedToCamera = true;
         this.blockedLayer = this.map.createLayer('BlockLayer');
 
@@ -129,8 +128,8 @@ sadako.Game.prototype = {
         terrorBar = this.player.addChild(game.make.sprite(64, -50, 'bar'));
         terrorBar.width = 0;
         terrorBrackets = this.player.addChild(game.make.sprite(-91, -55,'brackets'));
-        this.player.position.x = 18000;
-        this.player.position.y = 0;
+        //this.player.position.x = 18000;
+        //this.player.position.y = 0;
     },
     findObjectsByType: function(type, map, layer) {
         var result = new Array();
@@ -328,7 +327,7 @@ sadako.Game.prototype = {
         }
 
         if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
-            console.log(jumpCounter,jumpFlag);
+            //console.log(jumpCounter,jumpFlag);
             if(this.player.animations.currentAnim.name.includes("left"))
                     this.player.animations.play("jumpupleft", 10);
             else if(this.player.animations.currentAnim.name.includes("right"))
@@ -369,7 +368,7 @@ sadako.Game.prototype = {
                 boxLandingSound = game.add.audio('blockLanding');
                 boxLandingSound.play();
             }
-            console.log(boxOnFloor);
+            //console.log(boxOnFloor);
         },this);
 
         this.ghostMovement();
