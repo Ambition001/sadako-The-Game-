@@ -13,22 +13,20 @@ var mute = false;
 
 
 sadako.MainMenu.prototype = {
-    init: function (complete, level, sound) {
+    init: function (complete, level, sound, bgMusic) {
         completed = complete;
         lv = level;
         mute = sound;
-        
+        this.bgMusic = bgMusic;
 
     },
     create: function () {
-        this.bgMusic = this.game.add.audio('bgMusic1');
-        if(!mute){
-            this.bgMusic.stop();
+        var firstTime = this.bgMusic == undefined;
+
+        if(firstTime){
+            this.bgMusic = this.game.add.audio('bgMusic1');
             this.bgMusic.play();
-        }else{
-            this.bgMusic.stop();
         }
-        this.bgMusic.loop = true;
         
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 400, 'mainMenuTitle');
         mainMenuTitle.anchor.setTo(0.5, 0.5);
@@ -94,16 +92,13 @@ sadako.MainMenu.prototype = {
         }
     },
     levelSelect: function () {
-        this.game.state.start("LevelSelect", true, false, completed, lv, mute);
-        this.bgMusic.stop();
+        this.game.state.start("LevelSelect", true, false, completed, lv, mute, this.bgMusic);
     },
     helpMenu: function () {
-        this.game.state.start("HelpMenu", true, false, completed, lv, mute);
-        this.bgMusic.stop();
+        this.game.state.start("HelpMenu", true, false, completed, lv, mute, this.bgMusic);
     },
     aboutMenu: function () {
-        this.game.state.start("AboutMenu", true, false, completed, lv, mute);
-        this.bgMusic.stop();
+        this.game.state.start("AboutMenu", true, false, completed, lv, mute, this.bgMusic);
     },
     soundToggle: function () {
         if(mute){

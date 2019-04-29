@@ -15,20 +15,13 @@ var lv;
 var mute;
 
 sadako.LevelSelect.prototype = {
-    init: function (complete, level, sound) {
+    init: function (complete, level, sound, bgMusic) {
         completed = complete;
         lv = level;
         mute = sound;
+        this.bgMusic = bgMusic;
     },
     create: function () {
-        this.bgMusic = this.game.add.audio('bgMusic1');
-        if(!mute){
-            this.bgMusic.stop();
-            this.bgMusic.play();
-        }else{
-            this.bgMusic.stop();
-        }
-        this.bgMusic.loop = true;
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 800, 'mainMenuTitle');
         mainMenuTitle.anchor.setTo(0.5, 0.5);
         mainMenuTitle.scale.setTo(0.4);
@@ -180,32 +173,25 @@ sadako.LevelSelect.prototype = {
 
     },
     back: function () {
-        this.game.state.start('MainMenu', true, false, completed, lv, mute);
-        this.bgMusic.stop();
-    }, // TODO: define these functions
+        this.game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
+    },
     level1: function () {
-        this.game.state.start('Game', true, false, completed, lv, mute,'level1');
-        this.bgMusic.stop();
+        this.game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level1');
     },
     level2: function () {
-        this.game.state.start('Game', true, false, completed, lv, mute,'level2');
-        this.bgMusic.stop();
+        this.game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level2');
     },
     level3: function () {
-        this.game.state.start('Game', true, false, completed, lv, mute,'level3');
-        this.bgMusic.stop();
+        this.game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level3');
     },
     level4: function () {
-        this.game.state.start('Game', true, false, completed, lv, mute,'level4');
-        this.bgMusic.stop();
+        this.game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level4');
     },
     level5: function () {
-        this.game.state.start('Game', true, false, completed, lv, mute,'level5');
-        this.bgMusic.stop();
+        this.game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level5');
     },
     level6: function () {
-        this.game.state.start('Game', true, false, completed, lv, mute,'level6');
-        this.bgMusic.stop();
+        this.game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level6');
     },
     soundToggle: function () {
         if(mute){
