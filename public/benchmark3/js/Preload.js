@@ -74,10 +74,11 @@ sadako.Preload.prototype = {
         this.load.audio('takeDamage', 'assets/sounds/takeDamage.ogg');
         this.load.audio('terrified', 'assets/sounds/terrified.ogg');
         this.load.audio('blockLanding', 'assets/sounds/blockLanding.ogg');
-        this.load.audio('blockMoving', 'assets/sounds/boxMove.ogg');
+        this.load.audio('boxMoving', 'assets/sounds/boxMove.ogg');
         this.load.audio('doorOpen', 'assets/sounds/doorOpen.ogg');
-        this.load.audio('gashaponUse', 'assets/sounds/gachaponUse.ogg');
+        this.load.audio('gachaponUse', 'assets/sounds/gachaponUse.ogg');
         this.load.audio('lighterOpen', 'assets/sounds/lighterOpen.ogg');
+    
 
         this.load.image('background1','assets/backgrounds/background1.png');
         this.load.image('background3','assets/backgrounds/background3.png');
