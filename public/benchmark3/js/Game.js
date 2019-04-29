@@ -361,11 +361,13 @@ sadako.Game.prototype = {
     passCheckPoint: function (player, checkPoint){
         this.restartx = checkPoint.position.x+128;
         this.restarty = checkPoint.position.y-128;
+        this.tilepx = this.background.tilePosition.x;
     },
     //step on spike event
     stepOnSpike: function (){
         this.player.position.x = this.restartx;
         this.player.position.y = this.restarty;
+        this.background.tilePosition.x = this.tilepx;
     },
     //pushing box event
     moveBox: function (player,box){
@@ -480,6 +482,9 @@ sadako.Game.prototype = {
     },
     terrified: function (){
         winState = true;
+        this.ghost.children.forEach(function(element){
+            element.animations.play('winning',10,true);
+        });
         pauseButton.destroy();
         pauseWhite = game.add.sprite(game.camera.x + 1024, 1024, 'white');
         pauseWhite.anchor.setTo(0.5, 0.5);
@@ -498,7 +503,7 @@ sadako.Game.prototype = {
         pauseRestart.anchor.setTo(0.5);
         pauseRestart.inputEnabled = true;
         pauseRestart.events.onInputDown.add(function () {
-            game.state.start('Game', true, false, completed, lv, mute);
+            game.state.start('Game', true, false, completed, lv, mute,mapname);
         },t);
 
         pauseMenu = game.add.sprite(game.camera.x + 1024, 1250, 'mainMenuButton');
