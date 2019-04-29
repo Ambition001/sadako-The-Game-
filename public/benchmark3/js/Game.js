@@ -35,6 +35,7 @@ var ghostTouchFlag;
 var ghostSound;
 var boxOnFloor;
 var boxLandList;
+var cheatDone = false;
 
 sadako.Game.prototype = {
     init: function (complete, level, sound, bgMusic, map) {
@@ -61,7 +62,11 @@ sadako.Game.prototype = {
         this.sKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
         this.rKey = this.game.input.keyboard.addKey(Phaser.Keyboard.R);
         this.jKey = this.game.input.keyboard.addKey(Phaser.Keyboard.J);
+        this.pKey = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
+        this.oneKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+        this.twoKey = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO);
         this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.shiftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
         this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
         this.map = this.game.add.tilemap(mapname);
@@ -108,6 +113,8 @@ sadako.Game.prototype = {
         this.player.animations.add('interrifiedleft',[93,94,95,96]);
         this.player.animations.add('toterrifiedright',[97,98]);
         this.player.animations.add('interrifiedright',[99,100,101,102]);
+        this.player.animations.add('spikedleft',[103,104,105]);
+        this.player.animations.add('spikedright',[106,107,108]);
         this.restartx = result[0].x;
         this.restarty = result[0].y-128;
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
@@ -234,6 +241,23 @@ sadako.Game.prototype = {
           });
     },
     update: function () {
+
+        //Cheat code Handler
+        if(this.shiftKey.isDown) {
+            if(this.pKey.isDown)
+            {
+                this.cheatDone = true;
+                this.cheatgashapon = this.game.add.sprite(player.x+256, player.y-36, 'cheatGashapon');
+                this.cheatgashapon.enableBody = true;
+                this.cheatgashapon.body.allowGravity = true;
+                this.cheatgashapon.animations.add('useGashapon', [0,1,2,3,4]);
+                this.cheatgashapon.body.immovable = true;
+                this.cheatgashapon.body.moves = false;
+            }
+        }
+
+
+
         ghostTouchFlag = false;
         if(this.button.length > 0){
             var button = this.button.children[0];
@@ -256,6 +280,8 @@ sadako.Game.prototype = {
         this.game.physics.arcade.collide(this.blockedLayer, this.door);
         this.game.physics.arcade.overlap(this.player,this.bear,this.winningBear,null,this);
         this.game.physics.arcade.overlap(this.player, this.ghost, this.ghostTouch, null, this);
+        if(cheatDone)
+            this.game.physics.arcade.overlap(this.player, this.cheatgashapon, this.useCheatGashapon, null, this);
         
         
         terrorBar.width = (terror / 100) * terrorWidth;
@@ -400,12 +426,13 @@ sadako.Game.prototype = {
     //check point event
     passCheckPoint: function (player, checkPoint){
         this.restartx = checkPoint.position.x+128;
-        this.restarty = checkPoint.position.y-128;
+        this.restarty = checkPoint.position.y-192;
         this.tilepx = this.background.tilePosition.x;
         terror = 0;
     },
     //step on spike event
     stepOnSpike: function (){
+
         this.player.position.x = this.restartx;
         this.player.position.y = this.restarty;
         this.background.tilePosition.x = this.tilepx;
@@ -422,6 +449,10 @@ sadako.Game.prototype = {
                 this.player.animations.play("walkgrableft", 10, true);
             }
         }
+    },
+    useCheatGashapon: function(){
+
+
     },
     //reset
     reset: function(){

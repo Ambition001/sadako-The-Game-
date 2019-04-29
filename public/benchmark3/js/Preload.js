@@ -58,6 +58,10 @@ sadako.Preload.prototype = {
         this.load.spritesheet('sadako', 'assets/sprites/Sadako.png', 128, 256);
         this.load.spritesheet('ghost', 'assets/sprites/ghost.png', 256, 256);
         this.load.spritesheet('moth', 'assets/sprites/moth.png', 128, 128);
+        this.load.image('goldStar', 'assets/images/goldstar.png');
+        this.load.spritesheet('hidingSpot', 'assets/images/HidingSpot.png', 192, 262);
+        this.load.image('hauntedDoll', 'assets/images/HauntedDoll.png');
+        this.load.spritesheet('gashapon', 'assets/images/Gashapon.png', 192, 288);
         this.load.spritesheet('mainMenuButton', 'assets/images/game/mainMenu.png', 512, 300);
         this.load.spritesheet('nextLevelButton', 'assets/images/game/next.png', 512, 300);
         this.load.spritesheet('restartButton', 'assets/images/game/restart.png', 512, 300);
@@ -70,6 +74,10 @@ sadako.Preload.prototype = {
         this.load.audio('takeDamage', 'assets/sounds/takeDamage.ogg');
         this.load.audio('terrified', 'assets/sounds/terrified.ogg');
         this.load.audio('blockLanding', 'assets/sounds/blockLanding.ogg');
+        this.load.audio('blockMoving', 'assets/sounds/boxMove.ogg');
+        this.load.audio('doorOpen', 'assets/sounds/doorOpen.ogg');
+        this.load.audio('gashaponUse', 'assets/sounds/gachaponUse.ogg');
+        this.load.audio('lighterOpen', 'assets/sounds/lighterOpen.ogg');
 
         this.load.image('background1','assets/backgrounds/background1.png');
         this.load.image('background3','assets/backgrounds/background3.png');
