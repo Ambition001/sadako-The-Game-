@@ -214,6 +214,18 @@ sadako.Game.prototype = {
             element.animations.add('winning',[24,25]);
         },this);
     },
+    createMoth: function() {
+        this.moths = this.game.add.group();
+        this.moths.enableBody = true;
+        result = this.findObjectsByType('moth', this.map, 'ObjectLayer');
+        result.forEach(function(element){
+            this.ghost.create(element.x, element.y, 'moth');
+        }, this);
+        this.ghost.children.forEach(function(element){
+            element.animations.add('flyingLeft',[0,1]);
+            element.animations.add('flyringRight',[2,3]);
+        },this);
+    },
     createFromTiledObject: function(element, group,name) {
         var sprite = group.create(element.x, element.y, name);
     
@@ -494,6 +506,11 @@ sadako.Game.prototype = {
             })
         }
     }, 
+    mothMovement: function(){
+        this.ghost.children.forEach(function(element){
+            
+        });
+    },
     //winning event
     winningBear: function () {
         winState = true;

@@ -57,6 +57,7 @@ sadako.Preload.prototype = {
         this.load.image('bear','assets/images/SadakoBear.png');
         this.load.spritesheet('sadako', 'assets/sprites/Sadako.png', 128, 256);
         this.load.spritesheet('ghost', 'assets/sprites/ghost.png', 256, 256);
+        this.load.spritesheet('moth', 'assets/sprites/moth.png', 128, 128);
         this.load.spritesheet('mainMenuButton', 'assets/images/game/mainMenu.png', 512, 300);
         this.load.spritesheet('nextLevelButton', 'assets/images/game/next.png', 512, 300);
         this.load.spritesheet('restartButton', 'assets/images/game/restart.png', 512, 300);
