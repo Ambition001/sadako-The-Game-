@@ -197,11 +197,11 @@ sadako.LevelSelect.prototype = {
         if(mute){
             soundButton.frame = 0;
             mute = false;
-            this.bgMusic.play();
+            this.bgMusic.resume();
         }else{
             soundButton.frame = 1;
             mute = true;
-            this.bgMusic.stop();
+            this.bgMusic.pause();  
         }
     }
 

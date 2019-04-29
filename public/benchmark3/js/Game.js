@@ -251,7 +251,9 @@ sadako.Game.prototype = {
         }else{
             pauseButton.frame = 0;
         }
-
+        if(terror > 0){
+            terror -= 0.2;
+        }
 
         if(this.button.length > 0 && this.door.length>0){
             if(button.frame == 0){
@@ -365,6 +367,7 @@ sadako.Game.prototype = {
         this.restartx = checkPoint.position.x+128;
         this.restarty = checkPoint.position.y-128;
         this.tilepx = this.background.tilePosition.x;
+        terror = 0;
     },
     //step on spike event
     stepOnSpike: function (){

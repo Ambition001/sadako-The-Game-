@@ -26,6 +26,7 @@ sadako.MainMenu.prototype = {
         if(firstTime){
             this.bgMusic = this.game.add.audio('bgMusic1');
             this.bgMusic.play();
+            this.bgMusic.onStop.add(function(){this.bgMusic.play();},this);
         }
         
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 400, 'mainMenuTitle');
@@ -73,6 +74,7 @@ sadako.MainMenu.prototype = {
 
     },
     update: function () {
+        
         if (playButton.input.pointerOver()) {
             playButton.frame = 1;
         } else {
@@ -104,11 +106,11 @@ sadako.MainMenu.prototype = {
         if(mute){
             soundButton.frame = 0;
             mute = false;
-            this.bgMusic.play();
+            this.bgMusic.resume();
         }else{
             soundButton.frame = 1;
             mute = true;
-            this.bgMusic.stop();
+            this.bgMusic.pause();  
         }
     }
 };
