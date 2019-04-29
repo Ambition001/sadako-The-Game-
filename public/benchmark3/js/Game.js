@@ -35,6 +35,10 @@ var ghostTouchFlag;
 var ghostSound;
 var boxOnFloor;
 var boxLandList;
+var boxMoveSoundFlag;
+var doorOpenSoundFlag;
+var lighterOpenSoundFlag;
+
 
 sadako.Game.prototype = {
     init: function (complete, level, sound, bgMusic, map) {
@@ -47,6 +51,10 @@ sadako.Game.prototype = {
         mapNum = parseInt(mapname.slice(mapname.length-1));
         ghostSoundFlag = false;
         boxLandList = [];
+        boxMoveSoundFlag = false;
+        doorOpenSoundFlag = false;
+        lighterOpenSoundFlag = false;
+
     },
     create: function () {
         game = this.game;
@@ -128,8 +136,8 @@ sadako.Game.prototype = {
         terrorBar = this.player.addChild(game.make.sprite(64, -50, 'bar'));
         terrorBar.width = 0;
         terrorBrackets = this.player.addChild(game.make.sprite(-91, -55,'brackets'));
-        //this.player.position.x = 18000;
-        //this.player.position.y = 0;
+        this.player.position.x = 18000;
+        this.player.position.y = 0;
     },
     findObjectsByType: function(type, map, layer) {
         var result = new Array();
@@ -356,10 +364,16 @@ sadako.Game.prototype = {
 
         if(this.rKey.isDown && this.player.body.onFloor()){
             lighting = true;
+            if(!lighterOpenSoundFlag && !mute){
+                lighterOpenSoundFlag = true;
+                var lighterOpenSound = this.game.add.audio('lighterOpen');
+                lighterOpenSound.play();
+            }
         }
 
         if(this.rKey.isUp){
             lighting = false;
+            lighterOpenSoundFlag = false;
         }
 
         if(this.player.body.velocity.x > 0 && !this.player.body.blocked.right){
@@ -412,6 +426,14 @@ sadako.Game.prototype = {
     },
     //pushing box event
     moveBox: function (player,box){
+        if(!boxMoveSoundFlag && !mute){
+            var boxMoveSound = game.add.audio('boxMoving');
+            boxMoveSoundFlag = true;
+            boxMoveSound.play();
+            boxMoveSound.onStop.add(function () {
+                boxMoveSoundFlag = false;
+            })
+        }
         if(player.x<=box.position.x-256 || player.x>=box.position.x+256){
             if(box.position.x>this.player.x){
                 box.body.velocity.x += 32;
@@ -436,6 +458,12 @@ sadako.Game.prototype = {
     //button activation event
     boxOnButton: function(box,button){
         button.frame = 1;
+        if(!doorOpenSoundFlag && !mute){
+            var doorOpenSound = game.add.audio('doorOpen');
+            doorOpenSoundFlag = true;
+            doorOpenSound.play();
+            
+        }
     },
     //ghost movement
     ghostMovement: function(){
