@@ -34,6 +34,7 @@ var takeDamageSoundFlag;
 var ghostTouchFlag;
 var ghostSound;
 var boxOnFloor;
+var boxLandList;
 
 sadako.Game.prototype = {
     init: function (complete, level, sound, bgMusic, map) {
@@ -45,6 +46,7 @@ sadako.Game.prototype = {
         backgroundMusic = this.bgMusic;
         mapNum = parseInt(mapname.slice(mapname.length-1));
         ghostSoundFlag = false;
+        boxLandList = [];
     },
     create: function () {
         game = this.game;
@@ -127,6 +129,8 @@ sadako.Game.prototype = {
         terrorBar = this.player.addChild(game.make.sprite(64, -50, 'bar'));
         terrorBar.width = 0;
         terrorBrackets = this.player.addChild(game.make.sprite(-91, -55,'brackets'));
+        this.player.position.x = 18000;
+        this.player.position.y = 0;
     },
     findObjectsByType: function(type, map, layer) {
         var result = new Array();
@@ -356,12 +360,14 @@ sadako.Game.prototype = {
 
         this.box.children.forEach(function(element){
             if(!element.body.blocked.down){
-                boxOnFloor = false;
+                if(boxLandList.indexOf(element)==-1){
+                    boxLandList.push(element);
+                }
             }
-            if(!boxOnFloor && element.body.blocked.down){
+            if(boxLandList.indexOf(element)!=-1 && element.body.blocked.down){
+                boxLandList.splice(boxLandList.indexOf(element));
                 boxLandingSound = game.add.audio('blockLanding');
                 boxLandingSound.play();
-                boxOnFloor = true;
             }
             console.log(boxOnFloor);
         },this);
