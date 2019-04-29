@@ -28,7 +28,12 @@ var terrorBar;
 var terrorWidth;
 var terrorBrackets;
 var mapNum;
-
+var backgroundMusic;
+var ghostSoundFlag;
+var takeDamageSoundFlag;
+var ghostTouchFlag;
+var ghostSound;
+var boxOnFloor;
 
 sadako.Game.prototype = {
     init: function (complete, level, sound, bgMusic, map) {
@@ -37,7 +42,9 @@ sadako.Game.prototype = {
         mute = sound;
         mapname = map;
         this.bgMusic = bgMusic;
+        backgroundMusic = this.bgMusic;
         mapNum = parseInt(mapname.slice(mapname.length-1));
+        ghostSoundFlag = false;
     },
     create: function () {
         game = this.game;
@@ -212,6 +219,7 @@ sadako.Game.prototype = {
           });
     },
     update: function () {
+        ghostTouchFlag = false;
         if(this.button.length > 0){
             var button = this.button.children[0];
             button.frame = 0;
@@ -233,7 +241,7 @@ sadako.Game.prototype = {
         this.game.physics.arcade.collide(this.blockedLayer, this.door);
         this.game.physics.arcade.overlap(this.player,this.bear,this.winningBear,null,this);
         this.game.physics.arcade.overlap(this.player, this.ghost, this.ghostTouch, null, this);
-
+        
         
         terrorBar.width = (terror / 100) * terrorWidth;
         if(terrorBar.width>300){
@@ -251,9 +259,7 @@ sadako.Game.prototype = {
         }else{
             pauseButton.frame = 0;
         }
-        if(terror > 0){
-            terror -= 0.2;
-        }
+    
 
         if(this.button.length > 0 && this.door.length>0){
             if(button.frame == 0){
@@ -348,6 +354,18 @@ sadako.Game.prototype = {
             this.background.tilePosition.x += 0.5;
         }
 
+        this.box.children.forEach(function(element){
+            if(!element.body.blocked.down){
+                boxOnFloor = false;
+            }
+            if(!boxOnFloor && element.body.blocked.down){
+                boxLandingSound = game.add.audio('blockLanding');
+                boxLandingSound.play();
+                boxOnFloor = true;
+            }
+            console.log(boxOnFloor);
+        },this);
+
         this.ghostMovement();
         //reset velocity
         this.reset();
@@ -415,6 +433,15 @@ sadako.Game.prototype = {
                 else{
                     element.animations.play('chasingleft',10,true);
                 }
+                
+                if(!ghostSoundFlag && !mute){
+                    ghostSound = game.add.audio('ghostSound');
+                    ghostSoundFlag = true;
+                    ghostSound.play();
+                    ghostSound.onStop.add(function () {
+                        ghostSoundFlag = false;
+                    })
+                }
             }
             else if(this.player.position.x > element.body.position.x && this.player.position.x -1280<element.body.position.x){
                 this.game.physics.arcade.moveToObject(element,this.player,200);
@@ -425,6 +452,15 @@ sadako.Game.prototype = {
                 }
                 else{
                     element.animations.play('chasingright',10,true);
+                }
+
+                if(!ghostSoundFlag && !mute){
+                    ghostSound = game.add.audio('ghostSound');
+                    ghostSoundFlag = true;
+                    ghostSound.play();
+                    ghostSound.onStop.add(function () {
+                        ghostSoundFlag = false;
+                    })
                 }
             }
             else{
@@ -443,10 +479,29 @@ sadako.Game.prototype = {
     },
     ghostTouch: function () {
         terror += 1;
+        ghostTouchFlag = true;
+        if(!takeDamageSoundFlag && !mute && !winState){
+            var takeDamageSound = game.add.audio('takeDamage');
+            takeDamageSoundFlag = true;
+            takeDamageSound.play();
+            takeDamageSound.onStop.add(function () {
+                takeDamageSoundFlag = false;
+            })
+        }
     }, 
     //winning event
     winningBear: function () {
         winState = true;
+        if(!mute){
+            var winMusic = game.add.audio('winMusic');
+            backgroundMusic.pause();
+            winMusic.play();
+            winMusic.onStop.add(function(){
+                if(!mute){
+                    backgroundMusic.resume();
+                }
+            });
+        }
         t.bear.destroy();
         this.ghost.children.forEach(function(element){
         
@@ -473,10 +528,12 @@ sadako.Game.prototype = {
             if(mapNum == 6){
                 lv = 6;
                 game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
+                ghostSound.stop();
             }
             else if(lv < mapNum + 1){
                 lv = mapNum + 1;
                 game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level'+lv.toString());
+                ghostSound.stop();
             }
             // TODO: Go to next level
         },t);
@@ -492,6 +549,7 @@ sadako.Game.prototype = {
                 lv = mapNum + 1;
             }
             game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
+            ghostSound.stop();
         },t);
     },
     terrified: function (){
@@ -503,6 +561,16 @@ sadako.Game.prototype = {
         pauseWhite = game.add.sprite(game.camera.x + 1024, 1024, 'white');
         pauseWhite.anchor.setTo(0.5, 0.5);
         pauseWhite.alpha = 0.5;
+        if(!mute){
+            var terrifiedMusic = game.add.audio('terrified');
+            backgroundMusic.pause();
+            terrifiedMusic.play();
+            terrifiedMusic.onStop.add(function(){
+                if(!mute){
+                    backgroundMusic.resume();
+                }
+            });
+        }
 
         var textStyle = {
             font: "100px Arial",
@@ -518,6 +586,7 @@ sadako.Game.prototype = {
         pauseRestart.inputEnabled = true;
         pauseRestart.events.onInputDown.add(function () {
             game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, mapname);
+            ghostSound.stop();
         },t);
 
         pauseMenu = game.add.sprite(game.camera.x + 1024, 1250, 'mainMenuButton');
@@ -525,6 +594,7 @@ sadako.Game.prototype = {
         pauseMenu.inputEnabled = true;
         pauseMenu.events.onInputDown.add(function () {
             game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
+            ghostSound.stop();
         },t);
     },
     pauseGame: function () {
@@ -555,6 +625,7 @@ sadako.Game.prototype = {
                 pauseRestart.events.onInputDown.add(function () {
                     t.pauseGame();
                     game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, mapname);
+                    ghostSound.stop();
                 },t);
                 
                 pauseMenu = game.add.sprite(game.camera.x + 1024, 1350, 'mainMenuButton');
@@ -563,6 +634,7 @@ sadako.Game.prototype = {
                 pauseMenu.events.onInputDown.add(function () { 
                     t.pauseGame();
                     game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
+                    ghostSound.stop();
 
                 },t);
 

@@ -64,6 +64,11 @@ sadako.Preload.prototype = {
         this.load.image('white', 'assets/images/game/white.png');
         this.load.image('bar', 'assets/images/preloader-bar.png');
         this.load.image('brackets', 'assets/images/game/terrorBrackets.png');
+        this.load.audio('winMusic', 'assets/sounds/win.ogg');
+        this.load.audio('ghostSound', 'assets/sounds/ghost.ogg');
+        this.load.audio('takeDamage', 'assets/sounds/takeDamage.ogg');
+        this.load.audio('terrified', 'assets/sounds/terrified.ogg');
+        this.load.audio('blockLanding', 'assets/sounds/blockLanding.ogg');
 
         this.load.image('background1','assets/backgrounds/background1.png');
         load = true;
