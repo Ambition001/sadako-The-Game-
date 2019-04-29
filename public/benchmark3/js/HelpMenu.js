@@ -11,22 +11,15 @@ var completed;
 var lv;
 var mute;
 
-
 sadako.HelpMenu.prototype = {
-    init: function (complete, level, sound) {
+    init: function (complete, level, sound, bgMusic) {
         completed = complete;
         lv = level;
         mute = sound;
+        this.bgMusic = bgMusic;
     },
     create: function () {
-        this.bgMusic = this.game.add.audio('bgMusic1');
-        if(!mute){
-            this.bgMusic.stop();
-            this.bgMusic.play();
-        }else{
-            this.bgMusic.stop();
-        }
-        this.bgMusic.loop = true;
+
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 800, 'mainMenuTitle');
         mainMenuTitle.anchor.setTo(0.5, 0.5);
         mainMenuTitle.scale.setTo(0.4)
@@ -83,18 +76,17 @@ sadako.HelpMenu.prototype = {
         }
     },
     back: function () {
-        this.game.state.start('MainMenu', true, false, completed, lv, mute);
-        this.bgMusic.stop();
+        this.game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
     },
     soundToggle: function () {
         if(mute){
             soundButton.frame = 0;
             mute = false;
-            this.bgMusic.play();
+            this.bgMusic.resume();
         }else{
             soundButton.frame = 1;
             mute = true;
-            this.bgMusic.stop();
+            this.bgMusic.pause();  
         }
     }
 

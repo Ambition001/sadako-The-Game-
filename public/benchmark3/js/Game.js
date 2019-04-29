@@ -27,14 +27,17 @@ var winState = false;
 var terrorBar;
 var terrorWidth;
 var terrorBrackets;
+var mapNum;
 
 
 sadako.Game.prototype = {
-    init: function (complete, level, sound, map) {
+    init: function (complete, level, sound, bgMusic, map) {
         completed = complete;
         lv = level;
         mute = sound;
         mapname = map;
+        this.bgMusic = bgMusic;
+        mapNum = parseInt(mapname.slice(mapname.length-1));
     },
     create: function () {
         game = this.game;
@@ -248,7 +251,9 @@ sadako.Game.prototype = {
         }else{
             pauseButton.frame = 0;
         }
-
+        if(terror > 0){
+            terror -= 0.2;
+        }
 
         if(this.button.length > 0 && this.door.length>0){
             if(button.frame == 0){
@@ -362,6 +367,7 @@ sadako.Game.prototype = {
         this.restartx = checkPoint.position.x+128;
         this.restarty = checkPoint.position.y-128;
         this.tilepx = this.background.tilePosition.x;
+        terror = 0;
     },
     //step on spike event
     stepOnSpike: function (){
@@ -464,20 +470,28 @@ sadako.Game.prototype = {
         pauseNext.anchor.setTo(0.5);
         pauseNext.inputEnabled = true;
         pauseNext.events.onInputDown.add(function () {
-            if(lv < 2){
-                lv = 2;
+            if(mapNum == 6){
+                lv = 6;
+                game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
             }
-            game.state.start('MainMenu', true, false, completed, lv, mute);
+            else if(lv < mapNum + 1){
+                lv = mapNum + 1;
+                game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level'+lv.toString());
+            }
+            // TODO: Go to next level
         },t);
 
         pauseMenu = game.add.sprite(game.camera.x + 1024, 1250, 'mainMenuButton');
         pauseMenu.anchor.setTo(0.5);
         pauseMenu.inputEnabled = true;
         pauseMenu.events.onInputDown.add(function () {
-            if(lv < 2){
-                lv = 2;
+            if(mapNum == 6){
+                lv = 6;
             }
-            game.state.start('MainMenu', true, false, completed, lv, mute);
+            else if(lv < mapNum + 1){
+                lv = mapNum + 1;
+            }
+            game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
         },t);
     },
     terrified: function (){
@@ -503,14 +517,14 @@ sadako.Game.prototype = {
         pauseRestart.anchor.setTo(0.5);
         pauseRestart.inputEnabled = true;
         pauseRestart.events.onInputDown.add(function () {
-            game.state.start('Game', true, false, completed, lv, mute,mapname);
+            game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, mapname);
         },t);
 
         pauseMenu = game.add.sprite(game.camera.x + 1024, 1250, 'mainMenuButton');
         pauseMenu.anchor.setTo(0.5);
         pauseMenu.inputEnabled = true;
         pauseMenu.events.onInputDown.add(function () {
-            game.state.start('MainMenu', true, false, completed, lv, mute);
+            game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
         },t);
     },
     pauseGame: function () {
@@ -540,7 +554,7 @@ sadako.Game.prototype = {
                 pauseRestart.inputEnabled = true;
                 pauseRestart.events.onInputDown.add(function () {
                     t.pauseGame();
-                    game.state.start('Game', true, false, completed, lv, mute,mapname);
+                    game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, mapname);
                 },t);
                 
                 pauseMenu = game.add.sprite(game.camera.x + 1024, 1350, 'mainMenuButton');
@@ -548,7 +562,7 @@ sadako.Game.prototype = {
                 pauseMenu.inputEnabled = true;
                 pauseMenu.events.onInputDown.add(function () { 
                     t.pauseGame();
-                    game.state.start('MainMenu', true, false, completed, lv, mute);
+                    game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
 
                 },t);
 
