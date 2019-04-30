@@ -645,14 +645,14 @@ sadako.Game.prototype = {
     ghostTouch: function () {
         terror += 1;
         ghostTouchFlag = true;
-        if(this.player.animations.currentAnim.name.includes("left"))
+        /* if(this.player.animations.currentAnim.name.includes("left"))
         {
             this.player.animations.play('gainterrorleft', 10);
         }
         else
         {
             this.player.animations.play('gainterrorright', 10);
-        }
+        } */
         if(!takeDamageSoundFlag && !mute && !winState){
             var takeDamageSound = game.add.audio('takeDamage');
             takeDamageSoundFlag = true;
@@ -809,14 +809,14 @@ sadako.Game.prototype = {
         this.ghost.children.forEach(function(element){
             element.animations.play('winning',10,true);
         });
-        if(this.player.animations.currentAnim.name.includes("left"))
+        /* if(this.player.animations.currentAnim.name.includes("left"))
         {
             this.player.animations.play('interrifiedleft', 10, true);
         }
         else
         {
             this.player.animations.play('interrifiedright', 10, true);
-        }
+        } */
         pauseButton.destroy();
         pauseWhite = game.add.sprite(game.camera.x + 1024, 1024, 'white');
         pauseWhite.anchor.setTo(0.5, 0.5);
