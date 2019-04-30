@@ -460,8 +460,8 @@ sadako.Game.prototype = {
 
         if(starFlag && !winState)
         {
-            this.player.body.velocity.x *= 2;
-            this.player.body.velocity.y *= 1.15;
+            moveSpeed = 1000;
+            jumpHeight = -750;
             terror = 0;
             this.game.physics.arcade.collide(this.player, this.blockedLayer);
         }
