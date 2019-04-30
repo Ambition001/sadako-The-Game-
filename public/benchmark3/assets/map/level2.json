@@ -1148,24 +1148,6 @@
                 }, 
                 {
                  "gid":1,
-                 "height":256,
-                 "id":87,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"climbableDrawer"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":128,
-                 "x":14080,
-                 "y":1792
-                }, 
-                {
-                 "gid":1,
                  "height":128,
                  "id":88,
                  "name":"",
@@ -1181,6 +1163,42 @@
                  "width":128,
                  "x":14464,
                  "y":1152
+                }, 
+                {
+                 "gid":1,
+                 "height":256,
+                 "id":89,
+                 "name":"Box",
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"box"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":256,
+                 "x":13440,
+                 "y":1792
+                }, 
+                {
+                 "gid":365,
+                 "height":128,
+                 "id":90,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"moth"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":128,
+                 "x":10240,
+                 "y":640
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1189,7 +1207,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":89,
+ "nextobjectid":91,
  "orientation":"orthogonal",
  "renderorder":"left-down",
  "tiledversion":"1.2.3",
@@ -1202,6 +1220,19 @@
         {
          "firstgid":5,
          "source":"..\/..\/..\/..\/..\/SadakoTiles.tsx"
+        }, 
+        {
+         "columns":2,
+         "firstgid":365,
+         "image":"..\/images\/BasicColor.png",
+         "imageheight":256,
+         "imagewidth":256,
+         "margin":0,
+         "name":"BasicColor",
+         "spacing":0,
+         "tilecount":4,
+         "tileheight":128,
+         "tilewidth":128
         }],
  "tilewidth":128,
  "type":"map",

@@ -8,8 +8,10 @@ var lv;
 var mute;
 var cursors;
 var jumpCounter = 0;
-var jumpHeight = -400;
+var jumpHeight = -500;
+var moveSpeed = 600;
 var gravity = 600;
+var starFlag = false;
 var jumpFlag;
 var lighting = false;
 var pauseButton;
@@ -37,6 +39,7 @@ var boxOnFloor;
 var boxLandList;
 var cheatDone = false;
 var boxMoveSoundFlag;
+var gashaponSoundFlag;
 var doorOpenSoundFlag;
 var lighterOpenSoundFlag;
 
@@ -79,12 +82,12 @@ sadako.Game.prototype = {
 
         this.map = this.game.add.tilemap(mapname);
 
-        this.map.addTilesetImage('SadakoFullTileSet','sadakoFullTileSet');
+        this.map.addTilesetImage('SadakoTiles','sadakoTiles');
         this.map.addTilesetImage('BasicColor','basicColor');
-        this.backgroundlayer = this.map.createLayer('Background');
         this.background = this.game.add.tileSprite(0,0,4096,2048,'background'+mapNum);
         this.background.fixedToCamera = true;
         this.blockedLayer = this.map.createLayer('BlockLayer');
+        this.backgroundlayer = this.map.createLayer('Background');
 
         this.map.setCollisionBetween(1, 10000, true, 'BlockLayer');
 
@@ -98,6 +101,7 @@ sadako.Game.prototype = {
         this.createBear();
         this.createGhost();
         this.createMoth();
+        this.createCatapult();
         
         //create a player
         var result = this.findObjectsByType('playerStart', this.map, 'ObjectLayer');
@@ -144,8 +148,8 @@ sadako.Game.prototype = {
         terrorBar = this.player.addChild(game.make.sprite(64, -50, 'bar'));
         terrorBar.width = 0;
         terrorBrackets = this.player.addChild(game.make.sprite(-91, -55,'brackets'));
-        this.player.position.x = 18000;
-        this.player.position.y = 0;
+        //this.player.position.x = 18000;
+        //this.player.position.y = 0;
     },
     findObjectsByType: function(type, map, layer) {
         var result = new Array();
@@ -193,6 +197,14 @@ sadako.Game.prototype = {
             this.button.create(element.x, element.y, 'sadakoButton');
         }, this);
     },
+    createCatapult: function() {
+        this.catapult = this.game.add.group();
+        this.catapult.enableBody = true;
+        result = this.findObjectsByType('catapult', this.map, 'ObjectLayer');
+        result.forEach(function(element){
+            this.button.create(element.x, element.y, 'catapult');
+        }, this);
+    },
     createDoor: function() {
         this.door = this.game.add.group();
         this.door.enableBody = true;
@@ -212,6 +224,15 @@ sadako.Game.prototype = {
         result.forEach(function(element){
             this.bear.create(element.x, element.y, 'bear');
         }, this);
+    },
+    createStar: function(x, y) {
+        if(this.star === null)
+        {
+            this.star = this.game.add.group();
+            this.star.enableBody = true;
+            this.star.body.bounce.set(0.7);
+        }
+        this.star.create(element.x, element.y, 'star');
     },
     createGhost: function() {
         this.ghost = this.game.add.group();
@@ -255,19 +276,17 @@ sadako.Game.prototype = {
 
         //Cheat code Handler
         if(this.shiftKey.isDown) {
-            if(this.pKey.isDown)
+            if(this.pKey.isDown && !this.cheatDone)
             {
                 this.cheatDone = true;
                 this.cheatgashapon = this.game.add.sprite(player.x+256, player.y-36, 'cheatGashapon');
                 this.cheatgashapon.enableBody = true;
                 this.cheatgashapon.body.allowGravity = true;
                 this.cheatgashapon.animations.add('useGashapon', [0,1,2,3,4]);
-                this.cheatgashapon.body.immovable = true;
-                this.cheatgashapon.body.moves = false;
+                this.cheatgashapon.stock = 1;
+                this.cheatgashapon.anchor.setTo(0.5);
             }
         }
-
-
 
         ghostTouchFlag = false;
         if(this.button.length > 0){
@@ -294,6 +313,7 @@ sadako.Game.prototype = {
         this.game.physics.arcade.collide(this.moths,this.blockedLayer);
         this.game.physics.arcade.collide(this.moths,this.box);
         this.game.physics.arcade.overlap(this.moths,this.player,this.mothTouch,null,this);
+        this.game.physics.arcade.overlap(this.star,this.player,this.useStar,null,this);
         if(cheatDone)
             this.game.physics.arcade.overlap(this.player, this.cheatgashapon, this.useCheatGashapon, null, this);
         
@@ -330,7 +350,7 @@ sadako.Game.prototype = {
         this.player.body.velocity.x = 0;
 
         if(cursors.left.isDown || this.aKey.isDown){
-            this.player.body.velocity.x = -600;
+            this.player.body.velocity.x = -1 * moveSpeed;
             if(!lighting)
                 if(this.player.animations.currentAnim.name.includes("idle") || this.player.animations.currentAnim.name.includes("right") 
                 || (!this.player.animations.currentAnim.isPlaying))
@@ -340,7 +360,7 @@ sadako.Game.prototype = {
                 || (!this.player.animations.currentAnim.isPlaying))
                     this.player.animations.play("walklighterleft", 10);
         }else if(cursors.right.isDown || this.dKey.isDown){
-            this.player.body.velocity.x = 600;
+            this.player.body.velocity.x = moveSpeed;
             if(!lighting)
                 if(this.player.animations.currentAnim.name.includes("idle")  || this.player.animations.currentAnim.name.includes("left")
                 || (!this.player.animations.currentAnim.isPlaying))
@@ -385,7 +405,7 @@ sadako.Game.prototype = {
             else if(this.player.animations.currentAnim.name.includes("right"))
                 this.player.animations.play("jumpupright", 10);
 
-            this.player.body.velocity.y = -500;
+            this.player.body.velocity.y = jumpHeight;
             jumpFlag = true;
             jumpCounter += 1;
         }
@@ -431,9 +451,20 @@ sadako.Game.prototype = {
 
         this.ghostMovement();
         this.mothMovement();
+
+
+        if(starFlag)
+        {
+            player.body.velocity.x *= 2;
+            player.body.velocity.y *= 1.25;
+            terror = 0;
+        }
+
+
         //reset velocity
         this.reset();
-    },// TODO: add hover to pause menu
+    },
+    // TODO: add hover to pause menu
     // pauseUpdate: function () {
     //     console.log("111");
     //     if(!typeof(pauseResume) == "undefined"){
@@ -454,9 +485,20 @@ sadako.Game.prototype = {
     //step on spike event
     stepOnSpike: function (){
 
-        this.player.position.x = this.restartx;
-        this.player.position.y = this.restarty;
-        this.background.tilePosition.x = this.tilepx;
+        if(!starFlag){
+            if (this.player.animations.currentAnim.name.includes("right"))
+            {
+                this.player.animations.play('spikedright', 10);
+            }
+            else
+            {
+                this.player.animations.play('spikedleft', 10);
+            }
+
+            this.player.position.x = this.restartx;
+            this.player.position.y = this.restarty;
+            this.background.tilePosition.x = this.tilepx;
+        }
     },
     //pushing box event
     moveBox: function (player,box){
@@ -472,17 +514,41 @@ sadako.Game.prototype = {
         if(player.x<=box.position.x-256 || player.x>=box.position.x+256){
             if(box.position.x>this.player.x){
                 box.body.velocity.x += 32;
-                this.player.animations.play("walkgrabright", 10, true);
+                this.player.animations.play("walkgrabright", 10);
             }
             else{
                 box.body.velocity.x -= 32;
-                this.player.animations.play("walkgrableft", 10, true);
+                this.player.animations.play("walkgrableft", 10);
             }
         }
     },
     useCheatGashapon: function(){
+        if(!gashaponSoundFlag && !mute){
+            var gashaponSound = game.add.audio('gachaponUse');
+            gashaponSound.volume = 0.1;
+            gashaponSoundFlag = true;
+            gashaponSound.play();
+            gashaponSound.onStop.add(function () {
+                gashaponSound = false;
+            })
+        }
+        if(this.cheatgashapon.stock > 0)
+        {
+            this.cheatgashapon.animations.play('useGashapon', 10)
+            createStar(this.cheatgashapon.x, this.cheatgashapon.y);
+            this.cheatgashapon.stock--;
+        }
+    },
 
-
+    useStar: function()
+    {
+        starFlag = true;
+        this.star.array.forEach(function(element){
+            if(element.overlap(this.player))
+            {
+                element.kill();
+            }
+        });
     },
     //reset
     reset: function(){

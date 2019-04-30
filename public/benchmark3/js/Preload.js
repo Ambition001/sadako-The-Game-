@@ -46,12 +46,14 @@ sadako.Preload.prototype = {
         // Load for real game
         this.load.spritesheet('pauseButton', 'assets/images/game/pause.png', 250, 250);
         this.load.tilemap('level1', 'assets/map/level1.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('level1', 'assets/map/level2.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('level3', 'assets/map/level3.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('basicColor', 'assets/images/BasicColor.png');
-        this.load.image('sadakoFullTileSet', 'assets/images/SadakoFullTileSet.png');
+        this.load.image('sadakoTiles', 'assets/images/SadakoFullTileSet.png');
         this.load.image('sadakoWoodenCrate', 'assets/images/SadakoWoodenCrate.png');
         this.load.spritesheet('sadakoButton', 'assets/images/SadakoButton.png',256,256);
         this.load.spritesheet('sadakoDoor', 'assets/images/SadakoDoor.png',256,384);
+        this.load.spritesheet('catapult', 'assets/images/Spring.png',128,128);
         this.load.image('spike','assets/images/Spike.png');
         this.load.image('checkPoint','assets/images/CheckPoint.png');
         this.load.image('bear','assets/images/SadakoBear.png');
@@ -81,6 +83,7 @@ sadako.Preload.prototype = {
     
 
         this.load.image('background1','assets/backgrounds/background1.png');
+        this.load.image('background2','assets/backgrounds/background2.png');
         this.load.image('background3','assets/backgrounds/background3.png');
         load = true;
 
