@@ -316,7 +316,6 @@ sadako.Game.prototype = {
         this.game.physics.arcade.overlap(this.moths,this.player,this.mothTouch,null,this);
         this.game.physics.arcade.overlap(this.star,this.player,this.useStar,null,this);
         this.game.physics.arcade.collide(this.star,this.blockedLayer);
-        this.game.physics.arcade.overlap(this.catapult,this.player,this.useCatapult,null,this);
         if(this.cheatDone)
         {
             //this.game.physics.arcade.overlap(this.player, this.cheatgashapon, this.useCheatGashapon, null, this);
@@ -394,7 +393,7 @@ sadako.Game.prototype = {
             }
         }
 
-        if(this.player.body.onFloor()){
+        if(this.player.body.onFloor() || this.player.body.touching.down == true){
             if(jumpCounter > 0){
                 if(this.player.animations.currentAnim.name.includes("left"))
                     this.player.animations.play("jumpdownleft", 10);
@@ -420,7 +419,7 @@ sadako.Game.prototype = {
             jumpFlag = false;
         }
 
-        if(this.rKey.isDown && this.player.body.onFloor()){
+        if(this.rKey.isDown && ( this.player.body.onFloor() || this.player.body.touching.down == true)){
             lighting = true;
             if(!lighterOpenSoundFlag && !mute){
                 lighterOpenSoundFlag = true;
@@ -469,6 +468,8 @@ sadako.Game.prototype = {
 
         this.player.bringToTop();
 
+        this.game.physics.arcade.overlap(this.player,this.catapult,this.useCatapult,null,this);
+
         //reset velocity
         this.reset();
     },
@@ -494,14 +495,14 @@ sadako.Game.prototype = {
     stepOnSpike: function (){
 
         if(!starFlag){
-            if (this.player.animations.currentAnim.name.includes("right"))
+            /* if (this.player.animations.currentAnim.name.includes("right"))
             {
                 this.player.animations.play('spikedright', 10);
             }
             else
             {
                 this.player.animations.play('spikedleft', 10);
-            }
+            } */
 
             this.player.position.x = this.restartx;
             this.player.position.y = this.restarty;
@@ -561,7 +562,7 @@ sadako.Game.prototype = {
     useCatapult: function()
     {
         terror+=5;
-        this.player.body.velocity.x = 800
+        this.player.body.velocity.x = 1000
         this.player.body.velocity.y = -800
     },
     //reset
@@ -588,7 +589,7 @@ sadako.Game.prototype = {
     ghostMovement: function(){
         this.ghost.children.forEach(function(element){
             if(this.player.position.x < element.body.position.x && this.player.position.x +1280>element.body.position.x){
-                this.game.physics.arcade.moveToObject(element,this.player,200);
+                this.game.physics.arcade.moveToObject(element,this.player,400);
                 if(lighting){
                     element.body.velocity.x *= -1;
                     element.body.velocity.y = -200;
@@ -810,11 +811,11 @@ sadako.Game.prototype = {
         });
         if(this.player.animations.currentAnim.name.includes("left"))
         {
-            player.animations.play('interrifiedleft', 10, true);
+            this.player.animations.play('interrifiedleft', 10, true);
         }
         else
         {
-            player.animations.play('interrifiedright', 10, true);
+            this.player.animations.play('interrifiedright', 10, true);
         }
         pauseButton.destroy();
         pauseWhite = game.add.sprite(game.camera.x + 1024, 1024, 'white');
