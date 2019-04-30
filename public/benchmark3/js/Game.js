@@ -149,8 +149,6 @@ sadako.Game.prototype = {
         terrorBar.width = 0;
         terrorBrackets = this.player.addChild(game.make.sprite(-91, -55,'brackets'));
         this.tilepx = this.background.tilePosition.x;
-        //this.player.position.x = 18000;
-        //this.player.position.y = 0;
     },
     findObjectsByType: function(type, map, layer) {
         var result = new Array();
@@ -561,10 +559,9 @@ sadako.Game.prototype = {
         
     },
     useCatapult: function()
-    {
-        terror+=5;
-        this.player.body.velocity.x = 1000
-        this.player.body.velocity.y = -800
+    {   
+        this.player.body.velocity.x = 1000;
+        this.player.body.velocity.y = -800;
     },
     //reset
     reset: function(){
@@ -745,6 +742,7 @@ sadako.Game.prototype = {
     //winning event
     winningBear: function () {
         winState = true;
+        game.physics.arcade.isPaused = true;
         if(!mute){
             var winMusic = game.add.audio('winMusic');
             backgroundMusic.pause();
@@ -778,6 +776,7 @@ sadako.Game.prototype = {
         pauseNext.anchor.setTo(0.5);
         pauseNext.inputEnabled = true;
         pauseNext.events.onInputDown.add(function () {
+            game.physics.arcade.isPaused = false;
             if(mapNum == 6){
                 lv = 6;
                 game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
@@ -788,13 +787,13 @@ sadako.Game.prototype = {
                 game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level'+lv.toString());
                 ghostSound.stop();
             }
-            // TODO: Go to next level
         },t);
 
         pauseMenu = game.add.sprite(game.camera.x + 1024, 1250, 'mainMenuButton');
         pauseMenu.anchor.setTo(0.5);
         pauseMenu.inputEnabled = true;
         pauseMenu.events.onInputDown.add(function () {
+            game.physics.arcade.isPaused = false;
             if(mapNum == 6){
                 lv = 6;
             }
