@@ -144,8 +144,8 @@ sadako.Game.prototype = {
         terrorBar = this.player.addChild(game.make.sprite(64, -50, 'bar'));
         terrorBar.width = 0;
         terrorBrackets = this.player.addChild(game.make.sprite(-91, -55,'brackets'));
-        // this.player.position.x = 18000;
-        // this.player.position.y = 0;
+        this.player.position.x = 18000;
+        this.player.position.y = 0;
     },
     findObjectsByType: function(type, map, layer) {
         var result = new Array();
@@ -588,7 +588,7 @@ sadako.Game.prototype = {
                     element.counter += 1;
                 }
                 //reset the counter
-                else if(element.counter >= 5){
+                else if(element.counter >= 20){
                     element.counter = 0;
                 }
                 else{
@@ -600,7 +600,7 @@ sadako.Game.prototype = {
                 if(element.body.position.x <= 128 && element.body.velocity.x <0){
                     element.body.velocity.x *= -1;
                 }
-                else if(element.body.position.x >= 128 && element.body.velocity.x <0){
+                else if(element.body.position.x >= this.map.width*127 && element.body.velocity.x >0){
                     element.body.velocity.x *= -1;
                 }
                 if(element.body.blocked.left || element.body.blocked.right){
@@ -610,7 +610,7 @@ sadako.Game.prototype = {
             else{
                 // Moth at left of the player
                 if(element.body.position.x > this.player.position.x - 1280 && element.body.position.x <this.player.position.x){
-                    this.game.physics.arcade.moveToObject(element,this.player,200);
+                    this.game.physics.arcade.moveToObject(element,this.player,300);
                     if(element.body.blocked.right){
                         element.body.velocity.x = 0;
                     }
@@ -620,7 +620,7 @@ sadako.Game.prototype = {
                 }
                 //Moth at right of the player
                 else if(this.player.position.x < element.body.position.x && this.player.position.x +1280>element.body.position.x){
-                    this.game.physics.arcade.moveToObject(element,this.player,200);
+                    this.game.physics.arcade.moveToObject(element,this.player,300);
                     if(element.body.blocked.left){
                         element.body.velocity.x = 0;
                         if(!element.body.blocked.top && element.body.velocity.y>0){
