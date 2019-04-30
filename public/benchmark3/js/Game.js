@@ -97,6 +97,7 @@ sadako.Game.prototype = {
         this.createSpikes();
         this.createBear();
         this.createGhost();
+        this.createMoth();
         
         //create a player
         var result = this.findObjectsByType('playerStart', this.map, 'ObjectLayer');
@@ -143,8 +144,8 @@ sadako.Game.prototype = {
         terrorBar = this.player.addChild(game.make.sprite(64, -50, 'bar'));
         terrorBar.width = 0;
         terrorBrackets = this.player.addChild(game.make.sprite(-91, -55,'brackets'));
-        this.player.position.x = 18000;
-        this.player.position.y = 0;
+        // this.player.position.x = 18000;
+        // this.player.position.y = 0;
     },
     findObjectsByType: function(type, map, layer) {
         var result = new Array();
@@ -233,12 +234,14 @@ sadako.Game.prototype = {
         this.moths = this.game.add.group();
         this.moths.enableBody = true;
         result = this.findObjectsByType('moth', this.map, 'ObjectLayer');
+        console.log(result);
         result.forEach(function(element){
-            this.ghost.create(element.x, element.y, 'moth');
+            this.moths.create(element.x, element.y, 'moth');
         }, this);
-        this.ghost.children.forEach(function(element){
+        this.moths.children.forEach(function(element){
             element.animations.add('flyingLeft',[0,1]);
-            element.animations.add('flyringRight',[2,3]);
+            element.animations.add('flyingRight',[2,3]);
+            element.counter = 0;
         },this);
     },
     createFromTiledObject: function(element, group,name) {
@@ -288,6 +291,9 @@ sadako.Game.prototype = {
         this.game.physics.arcade.collide(this.blockedLayer, this.door);
         this.game.physics.arcade.overlap(this.player,this.bear,this.winningBear,null,this);
         this.game.physics.arcade.overlap(this.player, this.ghost, this.ghostTouch, null, this);
+        this.game.physics.arcade.collide(this.moths,this.blockedLayer);
+        this.game.physics.arcade.collide(this.moths,this.box);
+        this.game.physics.arcade.overlap(this.moths,this.player,this.mothTouch,null,this);
         if(cheatDone)
             this.game.physics.arcade.overlap(this.player, this.cheatgashapon, this.useCheatGashapon, null, this);
         
@@ -424,6 +430,7 @@ sadako.Game.prototype = {
         },this);
 
         this.ghostMovement();
+        this.mothMovement();
         //reset velocity
         this.reset();
     },// TODO: add hover to pause menu
@@ -566,9 +573,83 @@ sadako.Game.prototype = {
         }
     }, 
     mothMovement: function(){
-        this.ghost.children.forEach(function(element){
-            
-        });
+        this.moths.children.forEach(function(element){
+            if(!lighting){
+                element.body.velocity.y = -400;
+                //initialize a speed every 10 frames
+                if(element.counter == 0){
+                    var c = Math.floor(Math.random() * 2);
+                    if(c == 0){
+                        element.body.velocity.x = -400;
+                    }
+                    else{
+                        element.body.velocity.x = 400;
+                    }
+                    element.counter += 1;
+                }
+                //reset the counter
+                else if(element.counter >= 5){
+                    element.counter = 0;
+                }
+                else{
+                    element.counter += 1;
+                }
+                if(element.body.position.y <= 128){
+                    element.body.velocity.y = 0;
+                }
+                if(element.body.position.x <= 128 && element.body.velocity.x <0){
+                    element.body.velocity.x *= -1;
+                }
+                else if(element.body.position.x >= 128 && element.body.velocity.x <0){
+                    element.body.velocity.x *= -1;
+                }
+                if(element.body.blocked.left || element.body.blocked.right){
+                    element.body.velocity.x = 0;
+                }
+            }
+            else{
+                // Moth at left of the player
+                if(element.body.position.x > this.player.position.x - 1280 && element.body.position.x <this.player.position.x){
+                    this.game.physics.arcade.moveToObject(element,this.player,200);
+                    if(element.body.blocked.right){
+                        element.body.velocity.x = 0;
+                    }
+                    if(element.body.blocked.down){
+                        element.body.velocity.y *= -1;
+                    }
+                }
+                //Moth at right of the player
+                else if(this.player.position.x < element.body.position.x && this.player.position.x +1280>element.body.position.x){
+                    this.game.physics.arcade.moveToObject(element,this.player,200);
+                    if(element.body.blocked.left){
+                        element.body.velocity.x = 0;
+                        if(!element.body.blocked.top && element.body.velocity.y>0){
+                            element.body.velocity.y*=-1;
+                        }
+                    }
+                    if(element.body.blocked.down){
+                        element.body.velocity.y *= -1;
+                    }
+                }
+            }
+            if(element.body.velocity.x>=0){
+                element.animations.play('flyingRight',10,true);
+            }
+            else{
+                element.animations.play('flyingLeft',10,true);
+            }
+        },this);
+    },
+    mothTouch: function(){
+        terror += 1;
+        if(!takeDamageSoundFlag && !mute && !winState){
+            var takeDamageSound = game.add.audio('takeDamage');
+            takeDamageSoundFlag = true;
+            takeDamageSound.play();
+            takeDamageSound.onStop.add(function () {
+                takeDamageSoundFlag = false;
+            })
+        }
     },
     //winning event
     winningBear: function () {
