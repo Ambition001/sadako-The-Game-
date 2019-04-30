@@ -774,23 +774,24 @@ sadako.Game.prototype = {
         text = game.add.text(game.camera.x + 1024, 500, "Win", textStyle);
         text.anchor.setTo(0.5, 0.5);
 
-        pauseNext = game.add.sprite(game.camera.x + 1024, 900, 'nextLevelButton');
-        pauseNext.anchor.setTo(0.5);
-        pauseNext.inputEnabled = true;
-        pauseNext.events.onInputDown.add(function () {
-            game.physics.arcade.isPaused = false;
-            if(mapNum == 6){
-                lv = 6;
-                game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
-                //ghostSound.stop();
-            }
-            else if(lv < mapNum + 1){
-                lv = mapNum + 1;
-                game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level'+lv.toString());
-                //ghostSound.stop();
-            }
-        },t);
-
+        if(mapNum<3){
+            pauseNext = game.add.sprite(game.camera.x + 1024, 900, 'nextLevelButton');
+            pauseNext.anchor.setTo(0.5);
+            pauseNext.inputEnabled = true;
+            pauseNext.events.onInputDown.add(function () {
+                game.physics.arcade.isPaused = false;
+                if(mapNum == 6){
+                    lv = 6;
+                    game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
+                    //ghostSound.stop();
+                }
+                else if(lv < mapNum + 1){
+                    lv = mapNum + 1;
+                    game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level'+lv.toString());
+                    //ghostSound.stop();
+                }
+            },t);
+        }   
         pauseMenu = game.add.sprite(game.camera.x + 1024, 1250, 'mainMenuButton');
         pauseMenu.anchor.setTo(0.5);
         pauseMenu.inputEnabled = true;
