@@ -100,7 +100,7 @@ sadako.Preload.prototype = {
             fill: "#000000",
             align: "center"
         };
-        var preloadtext = this.game.add.text(this.game.world.centerX, this.game.world.centerY, "Backstory here!!!!!!!", textStyle);
+        var preloadtext = this.game.add.text(this.game.world.centerX, this.game.world.centerY, "Sadako is a little girl who has bad dreams after \n her uncle played the horror movie: The Ring.\n And here starts her adventure.", textStyle);
         preloadtext.anchor.setTo(0.5, 0.5);
         preloadtext.alpha = 0;
         var t = this.game.add.tween(preloadtext);

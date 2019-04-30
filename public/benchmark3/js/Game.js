@@ -416,12 +416,12 @@ sadako.Game.prototype = {
         }
 
         this.box.children.forEach(function(element){
-            if(!element.body.blocked.down){
+            if(!element.body.blocked.down && !mute){
                 if(boxLandList.indexOf(element)==-1){
                     boxLandList.push(element);
                 }
             }
-            if(boxLandList.indexOf(element)!=-1 && element.body.blocked.down){
+            if(boxLandList.indexOf(element)!=-1 && element.body.blocked.down && !mute){
                 boxLandList.splice(boxLandList.indexOf(element));
                 boxLandingSound = game.add.audio('blockLanding');
                 boxLandingSound.play();
@@ -462,6 +462,7 @@ sadako.Game.prototype = {
     moveBox: function (player,box){
         if(!boxMoveSoundFlag && !mute){
             var boxMoveSound = game.add.audio('boxMoving');
+            boxMoveSound.volume = 0.1;
             boxMoveSoundFlag = true;
             boxMoveSound.play();
             boxMoveSound.onStop.add(function () {

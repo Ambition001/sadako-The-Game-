@@ -49,6 +49,7 @@ sadako.AboutMenu.prototype = {
         }else{
             soundButton.frame = 0;
         }
+        this.player = this.game.add.sprite(400,100,'sadako');
         
 
 

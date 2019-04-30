@@ -10,6 +10,8 @@ var arrowCounter;
 var completed;
 var lv;
 var mute;
+var sadakos;
+var items;
 
 sadako.HelpMenu.prototype = {
     init: function (complete, level, sound, bgMusic) {
@@ -17,6 +19,8 @@ sadako.HelpMenu.prototype = {
         lv = level;
         mute = sound;
         this.bgMusic = bgMusic;
+        sadakos = [];
+        items = [];
     },
     create: function () {
 
@@ -57,6 +61,54 @@ sadako.HelpMenu.prototype = {
             soundButton.frame = 0;
         }
 
+        this.player = this.game.add.sprite(935,710,'sadako');
+        this.player.scale.setTo(0.4);
+        this.player.animations.add('walkleft',[5,6,7,8,9,10,11,12]);
+        this.player.animations.play('walkleft',10,true);
+        sadakos.push(this.player);
+
+        this.player = this.game.add.sprite(1720,705,'sadako');
+        this.player.scale.setTo(0.4);
+        this.player.animations.add('idlelighterleft',[19,20,21,22,23,24,25]);
+        this.player.animations.play('idlelighterleft',10,true);
+        sadakos.push(this.player);
+
+        this.player = this.game.add.sprite(935,920,'sadako');
+        this.player.scale.setTo(0.4);
+        this.player.animations.add('jumpupleft',[13,14,15]);
+        this.player.animations.play('jumpupleft',3,true);
+        sadakos.push(this.player);
+
+        var item1 = this.game.add.sprite(925,715,'hauntedDoll');
+        item1.scale.setTo(0.9);
+        item1.visible = false;
+        items.push(item1);
+
+        var item2 = this.game.add.sprite(907,930,'goldStar');
+        item2.scale.setTo(0.9);
+        item2.visible = false;
+        items.push(item2);
+
+        // this.player.animations.add('jumpupleft',[13,14,15]);
+        // this.player.animations.add('jumpdownleft',[17,18]);
+        // this.player.animations.add('idlelighterleft',[19,20,21,22,23,24,25]);
+        // this.player.animations.add('walklighterleft',[24,25,26,27,28,29,30]);
+        // this.player.animations.add('walkgrableft',[32,33,34,35,36,37,38,39]);
+        // this.player.animations.add('idleright',[40,41,42,43,44]);
+        // this.player.animations.add('walkright',[45,46,47,48,49,50,51]);
+        // this.player.animations.add('jumpupright',[52,53,54,55]);
+        // this.player.animations.add('jumpdownright',[57,58]);
+        // this.player.animations.add('idlelighterright',[59,60,61,62,63]);
+        // this.player.animations.add('walklighterright',[64,65,66,67,68,69,70]);
+        // this.player.animations.add('walkgrabright',[72,73,74,75,76,77,78,79,80]);
+        // this.player.animations.add('gainterrorright',[81,82,83,84,85]);
+        // this.player.animations.add('gainterrorleft',[86,87,88,89,90]);
+        // this.player.animations.add('toterrifiedleft',[91,92]);
+        // this.player.animations.add('interrifiedleft',[93,94,95,96]);
+        // this.player.animations.add('toterrifiedright',[97,98]);
+        // this.player.animations.add('interrifiedright',[99,100,101,102]);
+        // this.player.animations.add('spikedleft',[103,104,105]);
+        // this.player.animations.add('spikedright',[106,107,108]);
 
     },
     update: function () {
@@ -71,8 +123,23 @@ sadako.HelpMenu.prototype = {
     arrowClicked: function () {
         if (arrowCounter == 0) {
             arrowCounter = 1;
+            for(let i = 0;i<sadakos.length;i++){
+                sadakos[i].visible = false;
+            }
+
+            for(let i = 0;i<items.length;i++){
+                items[i].visible = true;
+            }
         } else {
             arrowCounter = 0;
+            for(let i = 0;i<items.length;i++){
+                items[i].visible = false;
+            }
+
+            for(let i = 0;i<sadakos.length;i++){
+                sadakos[i].visible = true;
+            }
+            
         }
     },
     back: function () {
