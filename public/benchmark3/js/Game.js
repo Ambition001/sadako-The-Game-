@@ -589,7 +589,7 @@ sadako.Game.prototype = {
     ghostMovement: function(){
         this.ghost.children.forEach(function(element){
             if(this.player.position.x < element.body.position.x && this.player.position.x +1280>element.body.position.x){
-                this.game.physics.arcade.moveToObject(element,this.player,400);
+                this.game.physics.arcade.moveToObject(element,this.player, 300);
                 if(lighting){
                     element.body.velocity.x *= -1;
                     element.body.velocity.y = -200;
