@@ -652,8 +652,17 @@
          "tilewidth":128
         }, 
         {
+         "columns":12,
          "firstgid":5,
-         "source":"..\/..\/..\/..\/..\/SadakoTiles.tsx"
+         "image":"..\/images\/SadakoFullTileSet.png",
+         "imageheight":3840,
+         "imagewidth":1536,
+         "margin":0,
+         "name":"SadakoTiles",
+         "spacing":0,
+         "tilecount":360,
+         "tileheight":128,
+         "tilewidth":128
         }],
  "tilewidth":128,
  "type":"map",

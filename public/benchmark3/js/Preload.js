@@ -42,11 +42,12 @@ sadako.Preload.prototype = {
         this.load.spritesheet('levelSelect4', 'assets/images/levelSelect/level4.png', 250, 250);
         this.load.spritesheet('levelSelect5', 'assets/images/levelSelect/level5.png', 250, 250);
         this.load.spritesheet('levelSelect6', 'assets/images/levelSelect/level6.png', 250, 250);
+        this.load.spritesheet('cheatlevels', 'assets/images/levelSelect/cheat.png', 250, 250);
 
         // Load for real game
         this.load.spritesheet('pauseButton', 'assets/images/game/pause.png', 250, 250);
         this.load.tilemap('level1', 'assets/map/level1.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('level1', 'assets/map/level2.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('level2', 'assets/map/level2.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('level3', 'assets/map/level3.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('basicColor', 'assets/images/BasicColor.png');
         this.load.image('sadakoTiles', 'assets/images/SadakoFullTileSet.png');

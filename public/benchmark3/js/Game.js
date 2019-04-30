@@ -226,13 +226,12 @@ sadako.Game.prototype = {
         }, this);
     },
     createStar: function(x, y) {
-        if(this.star === null)
-        {
-            this.star = this.game.add.group();
-            this.star.enableBody = true;
-            this.star.body.bounce.set(0.7);
-        }
-        this.star.create(element.x, element.y, 'star');
+        
+        this.star = this.game.add.sprite(x, y, 'goldStar');
+        this.game.physics.enable(this.star, Phaser.Physics.ARCADE);
+        this.star.enableBody = true;
+        this.star.body.bounce.set(0.7);
+        this.star.body.gravity.y = 200;
     },
     createGhost: function() {
         this.ghost = this.game.add.group();
@@ -279,12 +278,14 @@ sadako.Game.prototype = {
             if(this.pKey.isDown && !this.cheatDone)
             {
                 this.cheatDone = true;
-                this.cheatgashapon = this.game.add.sprite(player.x+256, player.y-36, 'cheatGashapon');
+                this.cheatgashapon = this.game.add.sprite(this.player.x+256, this.player.y-36, 'gashapon');
+                this.game.physics.enable(this.cheatgashapon, Phaser.Physics.ARCADE);
                 this.cheatgashapon.enableBody = true;
-                this.cheatgashapon.body.allowGravity = true;
+                this.cheatgashapon.body.gravity.y = 1000;
                 this.cheatgashapon.animations.add('useGashapon', [0,1,2,3,4]);
                 this.cheatgashapon.stock = 1;
                 this.cheatgashapon.anchor.setTo(0.5);
+                this.useCheatGashapon();
             }
         }
 
@@ -314,9 +315,13 @@ sadako.Game.prototype = {
         this.game.physics.arcade.collide(this.moths,this.box);
         this.game.physics.arcade.overlap(this.moths,this.player,this.mothTouch,null,this);
         this.game.physics.arcade.overlap(this.star,this.player,this.useStar,null,this);
-        if(cheatDone)
-            this.game.physics.arcade.overlap(this.player, this.cheatgashapon, this.useCheatGashapon, null, this);
-        
+        this.game.physics.arcade.collide(this.star,this.blockedLayer);
+        this.game.physics.arcade.overlap(this.catapult,this.player,this.useCatapult,null,this);
+        if(this.cheatDone)
+        {
+            //this.game.physics.arcade.overlap(this.player, this.cheatgashapon, this.useCheatGashapon, null, this);
+            this.game.physics.arcade.collide(this.cheatgashapon, this.blockedLayer);
+        }
         
         terrorBar.width = (terror / 100) * terrorWidth;
         if(terrorBar.width>300){
@@ -348,6 +353,7 @@ sadako.Game.prototype = {
         
         savedVelocity = this.player.body.velocity.x;
         this.player.body.velocity.x = 0;
+        
 
         if(cursors.left.isDown || this.aKey.isDown){
             this.player.body.velocity.x = -1 * moveSpeed;
@@ -453,13 +459,15 @@ sadako.Game.prototype = {
         this.mothMovement();
 
 
-        if(starFlag)
+        if(starFlag && !winState)
         {
-            player.body.velocity.x *= 2;
-            player.body.velocity.y *= 1.25;
+            this.player.body.velocity.x *= 2;
+            this.player.body.velocity.y *= 1.15;
             terror = 0;
+            this.game.physics.arcade.collide(this.player, this.blockedLayer);
         }
 
+        this.player.bringToTop();
 
         //reset velocity
         this.reset();
@@ -535,7 +543,7 @@ sadako.Game.prototype = {
         if(this.cheatgashapon.stock > 0)
         {
             this.cheatgashapon.animations.play('useGashapon', 10)
-            createStar(this.cheatgashapon.x, this.cheatgashapon.y);
+            this.createStar(this.cheatgashapon.x, this.cheatgashapon.y);
             this.cheatgashapon.stock--;
         }
     },
@@ -543,12 +551,18 @@ sadako.Game.prototype = {
     useStar: function()
     {
         starFlag = true;
-        this.star.array.forEach(function(element){
-            if(element.overlap(this.player))
+        console.log(starFlag);
+        if(this.player.overlap(this.star))
             {
-                element.kill();
+                this.star.kill();
             }
-        });
+        
+    },
+    useCatapult: function()
+    {
+        terror+=5;
+        this.player.body.velocity.x = 800
+        this.player.body.velocity.y = -800
     },
     //reset
     reset: function(){
@@ -630,6 +644,14 @@ sadako.Game.prototype = {
     ghostTouch: function () {
         terror += 1;
         ghostTouchFlag = true;
+        if(this.player.animations.currentAnim.name.includes("left"))
+        {
+            this.player.animations.play('gainterrorleft', 10);
+        }
+        else
+        {
+            this.player.animations.play('gainterrorright', 10);
+        }
         if(!takeDamageSoundFlag && !mute && !winState){
             var takeDamageSound = game.add.audio('takeDamage');
             takeDamageSoundFlag = true;
@@ -786,6 +808,14 @@ sadako.Game.prototype = {
         this.ghost.children.forEach(function(element){
             element.animations.play('winning',10,true);
         });
+        if(this.player.animations.currentAnim.name.includes("left"))
+        {
+            player.animations.play('interrifiedleft', 10, true);
+        }
+        else
+        {
+            player.animations.play('interrifiedright', 10, true);
+        }
         pauseButton.destroy();
         pauseWhite = game.add.sprite(game.camera.x + 1024, 1024, 'white');
         pauseWhite.anchor.setTo(0.5, 0.5);

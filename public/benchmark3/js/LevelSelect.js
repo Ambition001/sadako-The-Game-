@@ -11,6 +11,7 @@ var lv3;
 var lv4;
 var lv5;
 var lv6;
+var cheat;
 var lv;
 var mute;
 
@@ -78,6 +79,11 @@ sadako.LevelSelect.prototype = {
         lv6.inputEnabled = true;
         lv6.events.onInputDown.add(this.level6, this);
         lv6.inputEnabled = false;
+
+        cheat = this.game.add.sprite(this.game.world.centerX + 50, this.game.world.centerY + 400, 'cheatlevels');
+        cheat.anchor.setTo(0.5);
+        cheat.inputEnabled = true;
+        cheat.events.onInputDown.add(this.cheat, this);
 
 
         backButton = this.game.add.sprite(this.game.world.centerX - 750, this.game.world.centerY + 700, 'backButton');
@@ -171,6 +177,12 @@ sadako.LevelSelect.prototype = {
             }
         }
 
+        if (cheat.input.pointerOver()) {
+            cheat.frame = 1;
+        } else {
+            cheat.frame = 0;
+        }
+
     },
     back: function () {
         this.game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
@@ -192,6 +204,13 @@ sadako.LevelSelect.prototype = {
     },
     level6: function () {
         this.game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level6');
+    },
+    cheat: function () {
+            //lv6.inputEnabled = true;
+            //lv5.inputEnabled = true;
+            //lv4.inputEnabled = true;
+            lv3.inputEnabled = true;
+            lv2.inputEnabled = true;
     },
     soundToggle: function () {
         if(mute){
