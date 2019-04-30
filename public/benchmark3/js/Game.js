@@ -148,6 +148,7 @@ sadako.Game.prototype = {
         terrorBar = this.player.addChild(game.make.sprite(64, -50, 'bar'));
         terrorBar.width = 0;
         terrorBrackets = this.player.addChild(game.make.sprite(-91, -55,'brackets'));
+        this.tilepx = this.background.tilePosition.x;
         //this.player.position.x = 18000;
         //this.player.position.y = 0;
     },
@@ -806,6 +807,7 @@ sadako.Game.prototype = {
     },
     terrified: function (){
         winState = true;
+        game.physics.arcade.isPaused = true;
         this.ghost.children.forEach(function(element){
             element.animations.play('winning',10,true);
         });
@@ -841,19 +843,41 @@ sadako.Game.prototype = {
         text = game.add.text(game.camera.x + 1024, 500, "Terrified", textStyle);
         text.anchor.setTo(0.5, 0.5);
 
-        pauseRestart = game.add.sprite(game.camera.x + 1024, 900, 'restartButton');
+        pauseRespawn = game.add.sprite(game.camera.x + 1024, 800, 'respawnButton');
+        pauseRespawn.anchor.setTo(0.5);
+        pauseRespawn.inputEnabled = true;
+        pauseRespawn.events.onInputDown.add(function () {
+            this.player.position.x = this.restartx;
+            this.player.position.y = this.restarty;
+            this.background.tilePosition.x = this.tilepx;
+            this.player.body.velocity.x = 0;
+            this.player.body.velocity.y = 0;
+            terror = 0;
+            pauseWhite.destroy();
+            text.destroy();
+            pauseRespawn.destroy();
+            pauseRestart.destroy();
+            pauseMenu.destroy();
+            game.physics.arcade.isPaused = false;
+            ghostSound.stop();
+        },t);
+
+
+        pauseRestart = game.add.sprite(game.camera.x + 1024, 1100, 'restartButton');
         pauseRestart.anchor.setTo(0.5);
         pauseRestart.inputEnabled = true;
         pauseRestart.events.onInputDown.add(function () {
             game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, mapname);
+            game.physics.arcade.isPaused = false;
             ghostSound.stop();
         },t);
 
-        pauseMenu = game.add.sprite(game.camera.x + 1024, 1250, 'mainMenuButton');
+        pauseMenu = game.add.sprite(game.camera.x + 1024, 1400, 'mainMenuButton');
         pauseMenu.anchor.setTo(0.5);
         pauseMenu.inputEnabled = true;
         pauseMenu.events.onInputDown.add(function () {
             game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
+            game.physics.arcade.isPaused = false;
             ghostSound.stop();
         },t);
     },
