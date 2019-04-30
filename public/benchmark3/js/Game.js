@@ -466,8 +466,10 @@ sadako.Game.prototype = {
         }
 
         this.player.bringToTop();
+        if(mapNum == 2 && this.player.position.x > 14480 && this.player.position.x < 14550 && this.player.position.y > 880 && this.player.position.y < 920){
+            this.useCatapult();
+        }
 
-        this.game.physics.arcade.overlap(this.player,this.catapult,this.useCatapult,null,this);
 
         //reset velocity
         this.reset();
@@ -780,12 +782,12 @@ sadako.Game.prototype = {
             if(mapNum == 6){
                 lv = 6;
                 game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
-                ghostSound.stop();
+                //ghostSound.stop();
             }
             else if(lv < mapNum + 1){
                 lv = mapNum + 1;
                 game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level'+lv.toString());
-                ghostSound.stop();
+                //ghostSound.stop();
             }
         },t);
 
@@ -801,7 +803,7 @@ sadako.Game.prototype = {
                 lv = mapNum + 1;
             }
             game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
-            ghostSound.stop();
+            //ghostSound.stop();
         },t);
     },
     terrified: function (){
@@ -858,7 +860,7 @@ sadako.Game.prototype = {
             pauseRestart.destroy();
             pauseMenu.destroy();
             game.physics.arcade.isPaused = false;
-            ghostSound.stop();
+            //ghostSound.stop();
         },t);
 
 
@@ -868,7 +870,7 @@ sadako.Game.prototype = {
         pauseRestart.events.onInputDown.add(function () {
             game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, mapname);
             game.physics.arcade.isPaused = false;
-            ghostSound.stop();
+            //ghostSound.stop();
         },t);
 
         pauseMenu = game.add.sprite(game.camera.x + 1024, 1400, 'mainMenuButton');
@@ -877,7 +879,7 @@ sadako.Game.prototype = {
         pauseMenu.events.onInputDown.add(function () {
             game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
             game.physics.arcade.isPaused = false;
-            ghostSound.stop();
+            //ghostSound.stop();
         },t);
     },
     pauseGame: function () {
@@ -908,7 +910,7 @@ sadako.Game.prototype = {
                 pauseRestart.events.onInputDown.add(function () {
                     t.pauseGame();
                     game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, mapname);
-                    ghostSound.stop();
+                    //ghostSound.stop();
                 },t);
                 
                 pauseMenu = game.add.sprite(game.camera.x + 1024, 1350, 'mainMenuButton');
@@ -917,7 +919,7 @@ sadako.Game.prototype = {
                 pauseMenu.events.onInputDown.add(function () { 
                     t.pauseGame();
                     game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
-                    ghostSound.stop();
+                    //ghostSound.stop();
 
                 },t);
 
