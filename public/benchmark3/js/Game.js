@@ -201,7 +201,10 @@ sadako.Game.prototype = {
         this.catapult.enableBody = true;
         result = this.findObjectsByType('catapult', this.map, 'ObjectLayer');
         result.forEach(function(element){
-            this.button.create(element.x, element.y, 'catapult');
+            this.catapult.create(element.x, element.y, 'catapult');
+        }, this);
+        this.catapult.children.forEach(function(element){
+            element.animations.add('useCatapult', [0,1,2]);
         }, this);
     },
     createDoor: function() {
@@ -314,6 +317,7 @@ sadako.Game.prototype = {
         this.game.physics.arcade.collide(this.moths,this.box);
         this.game.physics.arcade.overlap(this.moths,this.player,this.mothTouch,null,this);
         this.game.physics.arcade.overlap(this.star,this.player,this.useStar,null,this);
+        this.game.physics.arcade.overlap(this.player, this.catapult, this.useCatapult, null, this);
         this.game.physics.arcade.collide(this.star,this.blockedLayer);
         if(this.cheatDone)
         {
@@ -466,9 +470,7 @@ sadako.Game.prototype = {
         }
 
         this.player.bringToTop();
-        if(mapNum == 2 && this.player.position.x > 14480 && this.player.position.x < 14550 && this.player.position.y > 880 && this.player.position.y < 920){
-            this.useCatapult();
-        }
+        
 
 
         //reset velocity
