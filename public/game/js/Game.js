@@ -54,7 +54,10 @@ var boxMoveSoundFlag;
 var gashaponSoundFlag;
 var doorOpenSoundFlag;
 var lighterOpenSoundFlag;
-
+var topCutSceneBar;
+var bottomCutSceneBar;
+var chatBox;
+var chatBoxBar;
 
 sadako.Game.prototype = {
     init: function (complete, level, sound, bgMusic, map) {
@@ -151,7 +154,7 @@ sadako.Game.prototype = {
         this.player.body.gravity.y = gravity;
         this.player.body.collideWorldBounds = true;
         this.game.camera.follow(this.player);
-        
+
         cursors = this.game.input.keyboard.createCursorKeys();
         pauseButton = this.game.add.sprite(2000, 100, 'pauseButton');
         pauseButton.anchor.setTo(0.5);
@@ -166,6 +169,12 @@ sadako.Game.prototype = {
         terrorBar.width = 0;
         terrorBrackets = this.player.addChild(game.make.sprite(-91, -55,'brackets'));
         this.tilepx = this.background.tilePosition.x;
+        topCutSceneBar = game.add.sprite(game.camera.x, 0, 'cutSceneBar');
+        topCutSceneBar.fixedToCamera = true;
+        topCutSceneBar.alpha = 0;
+        bottomCutSceneBar = game.add.sprite(game.camera.x, 1898, 'cutSceneBar');
+        bottomCutSceneBar.fixedToCamera = true;
+        bottomCutSceneBar.alpha = 0;
     },
     findObjectsByType: function(type, map, layer) {
         var result = new Array();
@@ -527,6 +536,7 @@ sadako.Game.prototype = {
             this.player.position.x = this.restartx;
             this.player.position.y = this.restarty;
             this.background.tilePosition.x = this.tilepx;
+            terror = 0;
         }
     },
     //pushing box event
@@ -665,7 +675,7 @@ sadako.Game.prototype = {
         },this)
     },
     ghostTouch: function () {
-        terror += 1;
+        terror += 0.5;
         ghostTouchFlag = true;
         /* if(this.player.animations.currentAnim.name.includes("left"))
         {
@@ -762,6 +772,45 @@ sadako.Game.prototype = {
                 takeDamageSoundFlag = false;
             })
         }
+    },
+    createCutSceneBar: function () {
+        var topCutSceneBarTween = this.game.add.tween(topCutSceneBar);
+        topCutSceneBarTween.to({
+            alpha: 1
+        }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+        var bottomCutSceneBarTween = this.game.add.tween(bottomCutSceneBar);
+        bottomCutSceneBarTween.to({
+            alpha: 1
+        }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+        game.input.enabled = false;
+    },
+    destroyCutSceneBar: function () {
+        var topCutSceneBarTween = this.game.add.tween(topCutSceneBar);
+        topCutSceneBarTween.to({
+            alpha: 0
+        }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+        var bottomCutSceneBarTween = this.game.add.tween(bottomCutSceneBar);
+        bottomCutSceneBarTween.to({
+            alpha: 0
+        }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+        game.input.enabled = true;
+    },
+    createChatBox: function (text, time) {
+        var textStyle = {
+            font: "50px Arial",
+            fill: "#FFFFFF",
+            align: "center"
+        };
+        chatBox = game.add.text(this.player.position.x+50, this.player.position.y-150, text, textStyle);
+        chatBox.anchor.setTo(0.5, 0.5);
+        chatBoxBar = game.add.sprite(this.player.position.x+50, this.player.position.y - 100, 'chatBoxBar');
+        chatBoxBar.scale.setTo(0.8);
+        chatBoxBar.anchor.setTo(0.5, 0.5);
+        game.time.events.add(Phaser.Timer.SECOND * time, this.destroyChatBox, this);
+    },
+    destroyChatBox: function (){
+        chatBox.destroy();
+        chatBoxBar.destroy();
     },
     //winning event
     winningBear: function () {
@@ -882,6 +931,12 @@ sadako.Game.prototype = {
             pauseRespawn.destroy();
             pauseRestart.destroy();
             pauseMenu.destroy();
+            pauseButton = this.game.add.sprite(2000, 100, 'pauseButton');
+            pauseButton.anchor.setTo(0.5);
+            pauseButton.scale.setTo(0.5);
+            pauseButton.inputEnabled = true;
+            pauseButton.fixedToCamera = true;
+            pauseButton.events.onInputDown.add(this.pauseGame, this);
             game.physics.arcade.isPaused = false;
             //ghostSound.stop();
         },t);

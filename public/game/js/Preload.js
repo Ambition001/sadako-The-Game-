@@ -11,7 +11,33 @@ var cheatKey;
 
 sadako.Preload.prototype = {
     preload: function () {
+        var preloadimg = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 400, 'preloadimage');
+        preloadimg.anchor.setTo(0.5, 0.5);
+        preloadimg.alpha = 0;
+        var preloadtween = this.game.add.tween(preloadimg);
+        preloadtween.to({
+            alpha: 1
+        }, 1000, Phaser.Easing.Linear.None, true, 0, 0, false);
 
+        var textStyle = {
+            font: "48px Arial",
+            fill: "#000000",
+            align: "center"
+        };
+        var preloadtext = this.game.add.text(this.game.world.centerX, this.game.world.centerY, "Sadako is a little girl who has bad dreams after \n her uncle played the horror movie: The Ring.\n And here starts her adventure.", textStyle);
+        preloadtext.anchor.setTo(0.5, 0.5);
+        preloadtext.alpha = 0;
+        var t = this.game.add.tween(preloadtext);
+        t.to({
+            alpha: 1
+        }, 1000, Phaser.Easing.Linear.None, true, 100, 0, false);
+
+        escapeKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+        escapeKey.onDown.add(function () {
+            backstory = true;
+        }, this);
+
+        this.game.time.events.add(Phaser.Timer.SECOND * 20, backstorytoggle, this);
 
 
         // TODO: load game assets(tilemap/image/sprites/audio)
@@ -23,7 +49,7 @@ sadako.Preload.prototype = {
         this.load.spritesheet('helpButtonA', 'assets/images/mainMenu/helpButtonA.png', 512, 300);
         this.load.spritesheet('aboutButton', 'assets/images/mainMenu/aboutButton.png', 512, 300);
         this.load.spritesheet('soundButton', 'assets/images/mainMenu/soundButton.png', 250, 250);
-        this.load.audio('bgMusic1', 'assets/sounds/bgMusic1.mp3');
+        this.load.audio('bgMusic1', 'assets/sounds/bgMusic1.ogg');
 
         // Load for helpMenu
         this.load.image('helpMenu1', 'assets/images/helpMenu/help1.png');
@@ -53,6 +79,8 @@ sadako.Preload.prototype = {
         // this.load.tilemap('level5', 'assets/map/level5.json', null, Phaser.Tilemap.TILED_JSON);
         // this.load.tilemap('level6', 'assets/map/level6.json', null, Phaser.Tilemap.TILED_JSON);
         // this.load.image('basicColor', 'assets/images/BasicColor.png');
+        this.load.image('cutSceneBar', 'assets/images/game/cutSceneBar150.png');
+        this.load.image('chatBoxBar', 'assets/images/game/chatBoxBar.png');
         this.load.image('sadakoTiles', 'assets/map/SadakoFullTileSet.png');
         this.load.image('sadakoWoodenCrate', 'assets/sprites/SadakoWoodenCrate.png');
         this.load.spritesheet('sadakoButton', 'assets/sprites/SadakoButton.png',256,256);
@@ -95,40 +123,15 @@ sadako.Preload.prototype = {
         // this.load.image('background5','assets/backgrounds/background5.png');
         // this.load.image('background6','assets/backgrounds/background6.png');
         load = true;
+        var loadDoneText = this.game.add.text(this.game.world.centerX + 200, this.game.world.centerY - 1024, "Load Completed, Press ESC to skip", textStyle);
+        loadDoneText.addColor("#FF0000", 22);
+        loadDoneText.addColor("#000000", 25);
 
 
     },
     create: function () {
-        var preloadimg = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 400, 'preloadimage');
-        preloadimg.anchor.setTo(0.5, 0.5);
-        preloadimg.alpha = 0;
-        var preloadtween = this.game.add.tween(preloadimg);
-        preloadtween.to({
-            alpha: 1
-        }, 1000, Phaser.Easing.Linear.None, true, 0, 0, false);
-
-        var textStyle = {
-            font: "48px Arial",
-            fill: "#000000",
-            align: "center"
-        };
-        var preloadtext = this.game.add.text(this.game.world.centerX, this.game.world.centerY, "Sadako is a little girl who has bad dreams after \n her uncle played the horror movie: The Ring.\n And here starts her adventure.", textStyle);
-        preloadtext.anchor.setTo(0.5, 0.5);
-        preloadtext.alpha = 0;
-        var t = this.game.add.tween(preloadtext);
-        t.to({
-            alpha: 1
-        }, 1000, Phaser.Easing.Linear.None, true, 100, 0, false);
-
-        var loadDoneText = this.game.add.text(this.game.world.centerX + 200, this.game.world.centerY - 1024, "Load Completed, Press ESC to skip", textStyle);
-        loadDoneText.addColor("#FF0000", 22);
-        loadDoneText.addColor("#000000", 25);
-        escapeKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
-        escapeKey.onDown.add(function () {
-            backstory = true;
-        }, this);
-
-        this.game.time.events.add(Phaser.Timer.SECOND * 20, backstorytoggle, this);
+        
+        
     },
     update: function () {
         if (backstory && load) {
@@ -136,7 +139,6 @@ sadako.Preload.prototype = {
         }
     }
 };
-
 //Change to true at launch
 function backstorytoggle() {
     backstory = false;
