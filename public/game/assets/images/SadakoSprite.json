@@ -1,0 +1,1004 @@
+{ "frames": [
+   {
+    "filename": "SadakoSprite 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 1.aseprite",
+    "frame": { "x": 128, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 2.aseprite",
+    "frame": { "x": 256, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 3.aseprite",
+    "frame": { "x": 384, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 4.aseprite",
+    "frame": { "x": 512, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 5.aseprite",
+    "frame": { "x": 640, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 6.aseprite",
+    "frame": { "x": 768, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 7.aseprite",
+    "frame": { "x": 896, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 8.aseprite",
+    "frame": { "x": 1024, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 9.aseprite",
+    "frame": { "x": 1152, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 10.aseprite",
+    "frame": { "x": 1280, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 11.aseprite",
+    "frame": { "x": 1408, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 12.aseprite",
+    "frame": { "x": 1536, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 13.aseprite",
+    "frame": { "x": 1664, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 14.aseprite",
+    "frame": { "x": 1792, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 15.aseprite",
+    "frame": { "x": 1920, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 16.aseprite",
+    "frame": { "x": 2048, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 17.aseprite",
+    "frame": { "x": 2176, "y": 0, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 18.aseprite",
+    "frame": { "x": 0, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 19.aseprite",
+    "frame": { "x": 128, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 20.aseprite",
+    "frame": { "x": 256, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 21.aseprite",
+    "frame": { "x": 384, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 22.aseprite",
+    "frame": { "x": 512, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 23.aseprite",
+    "frame": { "x": 640, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 24.aseprite",
+    "frame": { "x": 768, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 25.aseprite",
+    "frame": { "x": 896, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 26.aseprite",
+    "frame": { "x": 1024, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 27.aseprite",
+    "frame": { "x": 1152, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 28.aseprite",
+    "frame": { "x": 1280, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 29.aseprite",
+    "frame": { "x": 1408, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 30.aseprite",
+    "frame": { "x": 1536, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 31.aseprite",
+    "frame": { "x": 1664, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 32.aseprite",
+    "frame": { "x": 1792, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 33.aseprite",
+    "frame": { "x": 1920, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 34.aseprite",
+    "frame": { "x": 2048, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 35.aseprite",
+    "frame": { "x": 2176, "y": 256, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 36.aseprite",
+    "frame": { "x": 0, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 37.aseprite",
+    "frame": { "x": 128, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 38.aseprite",
+    "frame": { "x": 256, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 39.aseprite",
+    "frame": { "x": 384, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 40.aseprite",
+    "frame": { "x": 512, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 41.aseprite",
+    "frame": { "x": 640, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 42.aseprite",
+    "frame": { "x": 768, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 43.aseprite",
+    "frame": { "x": 896, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 44.aseprite",
+    "frame": { "x": 1024, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 45.aseprite",
+    "frame": { "x": 1152, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 46.aseprite",
+    "frame": { "x": 1280, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 47.aseprite",
+    "frame": { "x": 1408, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 48.aseprite",
+    "frame": { "x": 1536, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 49.aseprite",
+    "frame": { "x": 1664, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 50.aseprite",
+    "frame": { "x": 1792, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 51.aseprite",
+    "frame": { "x": 1920, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 52.aseprite",
+    "frame": { "x": 2048, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 53.aseprite",
+    "frame": { "x": 2176, "y": 512, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 54.aseprite",
+    "frame": { "x": 0, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 55.aseprite",
+    "frame": { "x": 128, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 56.aseprite",
+    "frame": { "x": 256, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 57.aseprite",
+    "frame": { "x": 384, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 58.aseprite",
+    "frame": { "x": 512, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 59.aseprite",
+    "frame": { "x": 640, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 60.aseprite",
+    "frame": { "x": 768, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 61.aseprite",
+    "frame": { "x": 896, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 62.aseprite",
+    "frame": { "x": 1024, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 63.aseprite",
+    "frame": { "x": 1152, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 64.aseprite",
+    "frame": { "x": 1280, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 65.aseprite",
+    "frame": { "x": 1408, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 66.aseprite",
+    "frame": { "x": 1536, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 67.aseprite",
+    "frame": { "x": 1664, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 68.aseprite",
+    "frame": { "x": 1792, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 69.aseprite",
+    "frame": { "x": 1920, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 70.aseprite",
+    "frame": { "x": 2048, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 71.aseprite",
+    "frame": { "x": 2176, "y": 768, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 72.aseprite",
+    "frame": { "x": 0, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 73.aseprite",
+    "frame": { "x": 128, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 74.aseprite",
+    "frame": { "x": 256, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 75.aseprite",
+    "frame": { "x": 384, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 76.aseprite",
+    "frame": { "x": 512, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 77.aseprite",
+    "frame": { "x": 640, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 78.aseprite",
+    "frame": { "x": 768, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 79.aseprite",
+    "frame": { "x": 896, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 80.aseprite",
+    "frame": { "x": 1024, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 81.aseprite",
+    "frame": { "x": 1152, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 82.aseprite",
+    "frame": { "x": 1280, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 83.aseprite",
+    "frame": { "x": 1408, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 84.aseprite",
+    "frame": { "x": 1536, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 85.aseprite",
+    "frame": { "x": 1664, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 86.aseprite",
+    "frame": { "x": 1792, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 87.aseprite",
+    "frame": { "x": 1920, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 88.aseprite",
+    "frame": { "x": 2048, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 89.aseprite",
+    "frame": { "x": 2176, "y": 1024, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 90.aseprite",
+    "frame": { "x": 0, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 91.aseprite",
+    "frame": { "x": 128, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 92.aseprite",
+    "frame": { "x": 256, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 93.aseprite",
+    "frame": { "x": 384, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 94.aseprite",
+    "frame": { "x": 512, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 95.aseprite",
+    "frame": { "x": 640, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 96.aseprite",
+    "frame": { "x": 768, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 97.aseprite",
+    "frame": { "x": 896, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 98.aseprite",
+    "frame": { "x": 1024, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 99.aseprite",
+    "frame": { "x": 1152, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 100.aseprite",
+    "frame": { "x": 1280, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 101.aseprite",
+    "frame": { "x": 1408, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 102.aseprite",
+    "frame": { "x": 1536, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 103.aseprite",
+    "frame": { "x": 1664, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 104.aseprite",
+    "frame": { "x": 1792, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 105.aseprite",
+    "frame": { "x": 1920, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 106.aseprite",
+    "frame": { "x": 2048, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 107.aseprite",
+    "frame": { "x": 2176, "y": 1280, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "SadakoSprite 108.aseprite",
+    "frame": { "x": 0, "y": 1536, "w": 128, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 256 },
+    "sourceSize": { "w": 128, "h": 256 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.9-x64",
+  "image": "H:\\Desktop\\Playground\\CSE380\\sadako\\public\\benchmark3\\assets\\images\\SadakoSprite.png",
+  "format": "RGBA8888",
+  "size": { "w": 2304, "h": 1792 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
+   { "name": "Dress", "opacity": 255, "blendMode": "normal" },
+   { "name": "arms", "opacity": 255, "blendMode": "normal" },
+   { "name": "lighter", "opacity": 255, "blendMode": "normal" },
+   { "name": "hair&eyes", "opacity": 255, "blendMode": "normal" },
+   { "name": "legs", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
