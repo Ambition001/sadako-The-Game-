@@ -106,6 +106,7 @@ sadako.Preload.prototype = {
         this.load.spritesheet('respawnButton', 'assets/images/game/respawn.png', 512, 300);
         this.load.image('white', 'assets/images/game/white.png');
         this.load.image('bar', 'assets/images/preloader-bar.png');
+        this.load.image('timerBar', 'assets/images/game/timerBar.png');
         this.load.image('brackets', 'assets/images/game/terrorBrackets.png');
         this.load.audio('winMusic', 'assets/sounds/win.ogg');
         this.load.audio('ghostSound', 'assets/sounds/ghost.ogg');
