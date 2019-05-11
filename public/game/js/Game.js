@@ -8,7 +8,7 @@ var lv;
 var mute;
 var cursors;
 
-var desirFPS = 75;
+var desirFPS = 100;
 
 var jumpCounter = 0;
 var jumpHeight = 128 * -6;
@@ -990,7 +990,7 @@ sadako.Game.prototype = {
         text = game.add.text(game.camera.x + 1024, 500, "Win", textStyle);
         text.anchor.setTo(0.5, 0.5);
 
-        if (mapNum < 3) {
+        if (mapNum < 7) {
             pauseNext = game.add.sprite(game.camera.x + 1024, 900, 'nextLevelButton');
             pauseNext.anchor.setTo(0.5);
             pauseNext.inputEnabled = true;

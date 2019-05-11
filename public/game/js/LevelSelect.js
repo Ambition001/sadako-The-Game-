@@ -206,9 +206,9 @@ sadako.LevelSelect.prototype = {
         this.game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level6');
     },
     cheat: function () {
-            //lv6.inputEnabled = true;
-            //lv5.inputEnabled = true;
-            //lv4.inputEnabled = true;
+            lv6.inputEnabled = true;
+            lv5.inputEnabled = true;
+            lv4.inputEnabled = true;
             lv3.inputEnabled = true;
             lv2.inputEnabled = true;
     },

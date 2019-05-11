@@ -78,7 +78,7 @@ sadako.Preload.prototype = {
         this.load.tilemap('level4', 'assets/map/level4.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('level5', 'assets/map/level5.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('level6', 'assets/map/level6.json', null, Phaser.Tilemap.TILED_JSON);
-        // this.load.image('basicColor', 'assets/images/BasicColor.png');
+        this.load.image('basicColor', 'assets/images/BasicColor.png');
         this.load.image('cutSceneBar', 'assets/images/game/cutSceneBar150.png');
         this.load.image('chatBoxBar', 'assets/images/game/chatBoxBar.png');
         this.load.image('sadakoTiles', 'assets/map/SadakoFullTileSet.png');
