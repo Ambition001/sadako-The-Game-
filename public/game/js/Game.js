@@ -7,24 +7,29 @@ var completed;
 var lv;
 var mute;
 var cursors;
+
+var desirFPS = 75;
+
 var jumpCounter = 0;
 var jumpHeight = -700;
 var moveSpeed = 500;
 var monMoveMult = 1;
-var gravity = 700;
+var gravity = 1000;
+
 var jumpFlag = false;
-var starFlag = false;
 var lighting = false;
 var leftFlag = false;
 var rightFlag = true;
 var downflag = false;
 var grabFlag = false;
 var cryFlag = false;
-var desirFPS = 100;
+
 var dollFlag = false;
 var starFlag = false;
 var cheatStar = false;
+var timerFlag = false;
 var catapultLoad = false;
+
 var pauseButton;
 var pauseFlag = false;
 var pauseWhite;
@@ -35,25 +40,30 @@ var pauseRestart;
 var pauseMenu;
 var pauseHelp;
 var pauseNext;
+
 var t;
 var terror;
-var winState = false;
 var terrorState = false;
+var winState = false;
+
 var terrorBar;
 var terrorWidth;
 var terrorBrackets;
+
 var mapNum;
 var backgroundMusic;
+
 var ghostSoundFlag;
 var takeDamageSoundFlag;
 var ghostTouchFlag;
 var ghostSound;
-var boxOnFloor;
-var boxLandList;
 var boxMoveSoundFlag;
 var gashaponSoundFlag;
 var doorOpenSoundFlag;
 var lighterOpenSoundFlag;
+
+var boxOnFloor;
+var boxLandList;
 
 
 sadako.Game.prototype = {
@@ -91,10 +101,14 @@ sadako.Game.prototype = {
         this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.shiftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
         this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+        cursors = this.game.input.keyboard.createCursorKeys();
 
         this.game.time.desiredFps = desirFPS;
 
         this.map = this.game.add.tilemap(mapname);
+
+        //TODO IF level4 -> background = null
+
 
         this.map.addTilesetImage('SadakoTiles','sadakoTiles');
         this.map.addTilesetImage('BasicColor','basicColor');
@@ -107,6 +121,8 @@ sadako.Game.prototype = {
 
         this.backgroundlayer.resizeWorld();
 
+        this.monsters = this.game.add.group();
+
         this.createCheckPoints();
         this.createBox();
         this.createButton();
@@ -114,7 +130,6 @@ sadako.Game.prototype = {
         this.createSpikes();
         this.createBear();
         // this.createGashapon();
-        // this.createPlank();
         // this.createSkull();
         this.createGhost();
         this.createMoth();
@@ -123,6 +138,7 @@ sadako.Game.prototype = {
         //create a player
         var result = this.findObjectsByType('playerStart', this.map, 'ObjectLayer');
         this.player = this.game.add.sprite(result[0].x,result[0].y-128,'sadako');
+
         this.player.animations.add('idleleft',[0,1,2,3,4]);
         this.player.animations.add('walkleft',[5,6,7,8,9,10,11,12]);
         this.player.animations.add('jumpupleft',[13,14,15]);
@@ -145,21 +161,21 @@ sadako.Game.prototype = {
         this.player.animations.add('interrifiedright',[99,100,101,102]);
         this.player.animations.add('spikedleft',[103,104,105]);
         this.player.animations.add('spikedright',[106,107,108]);
+
         this.restartx = result[0].x;
         this.restarty = result[0].y-128;
+
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.gravity.y = gravity;
         this.player.body.collideWorldBounds = true;
         this.game.camera.follow(this.player);
         
-        cursors = this.game.input.keyboard.createCursorKeys();
         pauseButton = this.game.add.sprite(2000, 100, 'pauseButton');
         pauseButton.anchor.setTo(0.5);
         pauseButton.scale.setTo(0.5);
         pauseButton.inputEnabled = true;
         pauseButton.fixedToCamera = true;
         pauseButton.events.onInputDown.add(this.pauseGame, this);
-
         this.escKey.onDown.add(this.pauseGame);
 
         terrorBar = this.player.addChild(game.make.sprite(64, -50, 'bar'));
@@ -194,7 +210,7 @@ sadako.Game.prototype = {
         }, this);
     },
     createBox: function() {
-        this.box = this.game.add.group();
+        this.box = this.game.add.group(this.monsters);
         this.box.enableBody = true;
         result = this.findObjectsByType('box', this.map, 'ObjectLayer');
         result.forEach(function(element){
@@ -203,6 +219,9 @@ sadako.Game.prototype = {
         this.box.children.forEach(function(element){
             this.game.physics.enable(element, Phaser.Physics.ARCADE);
             element.body.gravity.y = 1000;
+            
+            element.spawnPx = element.x;
+            element.spawnPy = element.y;
         },this);
     },
     createButton: function() {
@@ -236,6 +255,14 @@ sadako.Game.prototype = {
             element.body.moves = false;
         },this);
     },
+    createTV: function() {
+        this.tv = this.game.add.group();
+        result = this.findObjectsByType('tv', this.map, 'ObjectLayer');
+        result.forEach(function(element){
+            this.tv.create(element.x, element.y, 'tv');
+        }, this);
+        //TV properties
+    },
     createBear: function() {
         this.bear = this.game.add.group();
         this.bear.enableBody = true;
@@ -244,16 +271,8 @@ sadako.Game.prototype = {
             this.bear.create(element.x, element.y, 'bear');
         }, this);
     },
-    createStar: function(x, y) {
-        
-        this.star = this.game.add.sprite(x, y, 'goldStar');
-        this.game.physics.enable(this.star, Phaser.Physics.ARCADE);
-        this.star.enableBody = true;
-        this.star.body.bounce.set(0.7);
-        this.star.body.gravity.y = 200;
-    },
     createGhost: function() {
-        this.ghost = this.game.add.group();
+        this.ghost = this.game.add.group(this.monsters);
         this.ghost.enableBody = true;
         result = this.findObjectsByType('ghost', this.map, 'ObjectLayer');
         result.forEach(function(element){
@@ -267,10 +286,17 @@ sadako.Game.prototype = {
             element.animations.add('scaredleft',[16,17,18,19]);
             element.animations.add('scaredright',[20,21,22,23]);
             element.animations.add('winning',[24,25]);
+
+            element.spawnPx = element.x;
+            element.spawnPy = element.y;
+
+            element.touched = false;
+
+            //element.wanderer = ;
         },this);
     },
     createMoth: function() {
-        this.moths = this.game.add.group();
+        this.moths = this.game.add.group(this.monsters);
         this.moths.enableBody = true;
         result = this.findObjectsByType('moth', this.map, 'ObjectLayer');
         console.log(result);
@@ -281,6 +307,31 @@ sadako.Game.prototype = {
             element.animations.add('flyingLeft',[0,1]);
             element.animations.add('flyingRight',[2,3]);
             element.counter = 0;
+
+            element.spawnPx = element.x;
+            element.spawnPy = element.y;
+
+            element.chasing = false;
+            element.running = false;
+        },this);
+    },
+    createSkull: function() {
+        this.skulls = this.game.add.group(this.monsters);
+        this.skulls.enableBody = true;
+        result = this.findObjectsByType('skull', this.map, 'ObjectLayer');
+        console.log(result);
+        result.forEach(function(element){
+            this.skulls.create(element.x, element.y, 'skull');
+        }, this);
+        this.skulls.children.forEach(function(element){
+
+            element.animations.add('flyingLeft',[0,1]);
+            element.animations.add('flyingRight',[2,3]);
+
+            element.spawnPx = element.x;
+            element.spawnPy = element.y;
+
+
         },this);
     },
     createFromTiledObject: function(element, group,name) {
@@ -290,35 +341,42 @@ sadako.Game.prototype = {
             sprite[key] = element.properties[key];
           });
     },
+    createGashapon: function() {
+
+        this.game.physics.enable(this.cheatgashapon, Phaser.Physics.ARCADE);
+        this.gashapon.enableBody = true;
+        this.gashapon.body.gravity.y = 1000;
+        this.gashapon.animations.add('useGashapon', [0,1,2,3,4]);
+    },
+    createStar: function(x, y) {
+        
+        this.star = this.game.add.sprite(x, y, 'goldStar');
+        this.game.physics.enable(this.star, Phaser.Physics.ARCADE);
+        this.star.enableBody = true;
+        this.star.body.bounce.set(0.7);
+        this.star.body.gravity.y = 400;
+    },
+    createDoll: function() {
+
+        this.doll = this.game.add.sprite(x, y, 'hauntedDoll');
+        this.game.physics.enable(this.doll, Phaser.Physics.ARCADE);
+        this.doll.enableBody = true;
+        this.doll.body.bounce.set(0.2);
+        this.doll.body.gravity.y = 300;
+    },
+    createStopwatch: function() {
+
+        this.stopwatch = this.game.add.sprite(x, y, 'stopwatch');
+        this.game.physics.enable(this.stopwatch, Phaser.Physics.ARCADE);
+        this.stopwatch.enableBody = true;
+        this.stopwatch.body.bounce.set(0.4);
+        this.stopwatch.body.gravity.y = 400;
+    },
+
+    // TODO Order:
+    // COLLISION/LOGIC -> INPUT/GUI -> P MOVEMENT -> AI MOVEMENT
     update: function () {
 
-        //Cheat code Handler
-        if(this.shiftKey.isDown) {
-            if(this.pKey.isDown && !this.cheatDone)
-            {
-                this.cheatDone = true;
-                this.cheatgashapon = this.game.add.sprite(this.player.x+256, this.player.y-36, 'gashapon');
-                this.game.physics.enable(this.cheatgashapon, Phaser.Physics.ARCADE);
-                this.cheatgashapon.enableBody = true;
-                this.cheatgashapon.body.gravity.y = 1000;
-                this.cheatgashapon.animations.add('useGashapon', [0,1,2,3,4]);
-                this.cheatgashapon.stock = 1;
-                this.cheatgashapon.anchor.setTo(0.5);
-                this.useCheatGashapon();
-            }
-        }
-
-        ghostTouchFlag = false;
-        if(this.button.length > 0){
-            var button = this.button.children[0];
-            button.frame = 0;
-        }
-        //var button = this.button.children[0];
-        //reset button in every frame
-        //button.frame = 0;
-        if(this.door.length > 0){
-            var door = this.door.children[0];
-        }
         this.game.physics.arcade.collide(this.player, this.blockedLayer);
         this.game.physics.arcade.collide(this.box,this.blockedLayer);
         this.game.physics.arcade.overlap(this.player,this.checkPoints,this.passCheckPoint,null,this);
@@ -336,98 +394,176 @@ sadako.Game.prototype = {
         this.game.physics.arcade.overlap(this.star,this.player,this.useStar,null,this);
         this.game.physics.arcade.overlap(this.player, this.catapult, this.useCatapult, null, this);
         this.game.physics.arcade.collide(this.star,this.blockedLayer);
-        if(this.cheatDone)
+        
+        ghostTouchFlag = false;
+        if(this.button.length > 0){
+            var button = this.button.children[0];
+            button.frame = 0;
+        }
+
+        if(this.door.length > 0){
+            var door = this.door.children[0];
+        }
+
+        if(this.button.length > 0 && this.door.length>0)
         {
-            //this.game.physics.arcade.overlap(this.player, this.cheatgashapon, this.useCheatGashapon, null, this);
-            this.game.physics.arcade.collide(this.cheatgashapon, this.blockedLayer);
+            if(button.frame == 0)
+            {
+                this.game.physics.arcade.collide(this.player, this.door);
+                door.frame = 0;
+            }
+            else
+            {
+                door.frame = 1;
+            }
         }
         
+
+        // if(this.cheatDone)
+        // {
+        //     //this.game.physics.arcade.overlap(this.player, this.cheatgashapon, this.useCheatGashapon, null, this);
+        //     this.game.physics.arcade.collide(this.cheatgashapon, this.blockedLayer);
+        // }
+
+
+
+
+
+
+
+
+
+
+
+
         terrorBar.width = (terror / 100) * terrorWidth;
-        if(terrorBar.width>300){
+        if(terrorBar.width>300)
+        {
             terrorBar.width = 300;
         }
-        terrorBar.x = 64 - terrorBar.width / 2;
 
+        terrorBar.x = 64 - terrorBar.width / 2;
 
         if(terror == 100){
             this.terrified();
         }
-        //console.log(terrorBar.width);
+
+        /* if(terror == 95 && dollFlag)
+        {
+            this.useDoll();
+        } */
+
         if(pauseButton.input.pointerOver()){
             pauseButton.frame = 1;
         }else{
             pauseButton.frame = 0;
         }
-    
 
-        if(this.button.length > 0 && this.door.length>0){
-            if(button.frame == 0){
-                this.game.physics.arcade.collide(this.player, this.door);
-                door.frame = 0;
+
+        //Cheat code Handler
+        if(this.shiftKey.isDown) {
+            if(this.pKey.isDown && !this.cheatDone)
+            {
+                //this.cheatDone = true;
+                this.cheatgashapon = this.game.add.sprite(this.player.x+256, this.player.y-36, 'gashapon');
+                this.game.physics.enable(this.cheatgashapon, Phaser.Physics.ARCADE);
+                this.cheatgashapon.enableBody = true;
+                this.cheatgashapon.body.gravity.y = 1000;
+                this.cheatgashapon.animations.add('useGashapon', [0,1,2,3,4]);
+                this.cheatgashapon.stock = 1;
+                this.cheatgashapon.anchor.setTo(0.5);
+                this.useCheatGashapon();
             }
-            else{
-                door.frame = 1;
+        } 
+
+
+        //Jump
+        if(this.spaceKey.isUp)
+        {
+            jumpFlag = false;
+        }
+
+        //grab/use
+        if(this.shiftKey.isDown)
+        {
+            grabFlag = true;
+        }
+        else
+        {
+            grabFlag = false;
+        }
+
+        //lighter
+        if(this.rKey.isUp)
+        {
+            lighting = false;
+            lighterOpenSoundFlag = false;
+        }
+        else if(this.player.body.onFloor() || this.player.body.touching.down == true)
+        {
+            lighting = true;
+            if(!lighterOpenSoundFlag && !mute)
+            {
+                lighterOpenSoundFlag = true;
+                var lighterOpenSound = this.game.add.audio('lighterOpen');
+                lighterOpenSound.play();
             }
         }
         
-        //savedVelocity = this.player.body.velocity.x;
-        //this.player.body.velocity.x = 0;
-        
+        //Left-Right Move
+        if((this.dKey.isDown || cursors.right.isDown) && (this.aKey.isDown || cursors.left.isDown))
+        {
+            this.player.body.velocity.x = 0;
 
-        if(cursors.left.isDown || this.aKey.isDown){
+            if(this.player.body.touching.down && (!this.player.animations.currentAnim.isPlaying || !this.player.animations.currentAnim.name.includes('idle')))
+                if(lighting)
+                    this.player.animations.play("idlelighter"+(leftFlag ? 'left' : 'right'), 10);
+                else
+                    this.player.animations.play("idle"+(leftFlag ? 'left' : 'right'), 10);
+        }
+        else if(this.aKey.isDown || cursors.left.isDown)
+        {
+            leftFlag = true;
+            rightFlag = false;
+
             this.player.body.velocity.x = -1 * moveSpeed;
-            if(!lighting)
-                if(this.player.animations.currentAnim.name.includes("idle") || this.player.animations.currentAnim.name.includes("right") 
-                || (!this.player.animations.currentAnim.isPlaying))
-                    this.player.animations.play("walkleft", 10);
-            else
-                if(this.player.animations.currentAnim.name.includes("idle")  || this.player.animations.currentAnim.name.includes("right")
-                || (!this.player.animations.currentAnim.isPlaying))
+
+            if(!this.player.animations.currentAnim.isPlaying && this.player.body.touching.down)
+                if(lighting)
                     this.player.animations.play("walklighterleft", 10);
-        }else if(cursors.right.isDown || this.dKey.isDown){
-            this.player.body.velocity.x = moveSpeed;
-            if(!lighting)
-                if(this.player.animations.currentAnim.name.includes("idle")  || this.player.animations.currentAnim.name.includes("left")
-                || (!this.player.animations.currentAnim.isPlaying))
-                    this.player.animations.play("walkright", 10);
-            else
-                if(this.player.animations.currentAnim.name.includes("idle") || this.player.animations.currentAnim.name.includes("left")
-                || (!this.player.animations.currentAnim.isPlaying))
-                    this.player.animations.play("walklighterright", 10);
-        }else {
-
-            if((this.player.animations.currentAnim.name.includes("walk") && this.player.animations.currentAnim.name.includes("right")) || (!this.player.animations.currentAnim.isPlaying
-                && this.player.animations.currentAnim.name.includes("right"))){
-                if(!lighting)
-                    this.player.animations.play("idleright", 10);
                 else
-                    this.player.animations.play("idlelighterright", 10);
-            }
-    
-            else if ((this.player.animations.currentAnim.name.includes("walk") && this.player.animations.currentAnim.name.includes("left")) || (!this.player.animations.currentAnim.isPlaying 
-                && this.player.animations.currentAnim.name.includes("left"))){
-                if(!lighting)
-                    this.player.animations.play("idleleft", 10);
-                else
-                    this.player.animations.play("idlelighterleft", 10);
-            }
+                    this.player.animations.play("walkleft", 10);
         }
+        else if(this.dKey.isDown || cursors.right.isDown)
+        {
+            rightFlag = true;
+            leftFlag = false;
 
-        if(this.player.body.onFloor() || this.player.body.touching.down == true){
-            if(jumpCounter > 0){
-                if(this.player.animations.currentAnim.name.includes("left"))
-                    this.player.animations.play("jumpdownleft", 10);
+            this.player.body.velocity.x = moveSpeed;
+
+            if(!this.player.animations.currentAnim.isPlaying && this.player.body.touching.down)
+                if(lighting)
+                    this.player.animations.play("walklighterright", 10);
                 else
-                    this.player.animations.play("jumpdownright", 10);
-            }
-            jumpCounter = 0;
+                    this.player.animations.play("walkright", 10);
+        }
+        else
+        {
+            //slow down!
+            this.player.body.velocity.x = 0;
+
+            if(this.player.body.touching.down && (!this.player.animations.currentAnim.isPlaying || !this.player.animations.currentAnim.name.includes('idle')))
+                if(lighting)
+                    this.player.animations.play("idlelighter"+(leftFlag ? 'left' : 'right'), 10);
+                else
+                    this.player.animations.play("idle"+(leftFlag ? 'left' : 'right'), 10);
         }
 
         if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
             //console.log(jumpCounter,jumpFlag);
-            if(this.player.animations.currentAnim.name.includes("left"))
-                    this.player.animations.play("jumpupleft", 10);
-            else if(this.player.animations.currentAnim.name.includes("right"))
+            if(leftFlag)
+                this.player.animations.play("jumpupleft", 10);
+            else
                 this.player.animations.play("jumpupright", 10);
 
             this.player.body.velocity.y = jumpHeight;
@@ -435,38 +571,37 @@ sadako.Game.prototype = {
             jumpCounter += 1;
         }
 
-        if(this.spaceKey.isUp){
+        if(jumpCounter > 0 && (this.player.body.touching.down == true || this.player.body.onFloor()))
+        {
+            
+            if(leftFlag)
+                this.player.animations.play("jumpdownleft", 10);
+            else
+                this.player.animations.play("jumpdownright", 10);
+            
+            jumpCounter = 0;
             jumpFlag = false;
         }
 
-        if(this.rKey.isDown && ( this.player.body.onFloor() || this.player.body.touching.down == true)){
-            lighting = true;
-            if(!lighterOpenSoundFlag && !mute){
-                lighterOpenSoundFlag = true;
-                var lighterOpenSound = this.game.add.audio('lighterOpen');
-                lighterOpenSound.play();
-            }
-        }
-
-        if(this.rKey.isUp){
-            lighting = false;
-            lighterOpenSoundFlag = false;
-        }
-
-        if(this.player.body.velocity.x > 0 && !this.player.body.blocked.right){
+        if(this.player.body.velocity.x > 0 && !this.player.body.blocked.right)
+        {
             this.background.tilePosition.x -= 0.5;
         }
-        else if(this.player.body.velocity.x < 0 && !this.player.body.blocked.left){
+        else if(this.player.body.velocity.x < 0 && !this.player.body.blocked.left)
+        {
             this.background.tilePosition.x += 0.5;
         }
 
-        this.box.children.forEach(function(element){
-            if(!element.body.blocked.down && !mute){
-                if(boxLandList.indexOf(element)==-1){
+        this.box.children.forEach(function(element) {
+            if(!element.body.blocked.down && !mute)
+            {
+                if(boxLandList.indexOf(element)==-1)
+                {
                     boxLandList.push(element);
                 }
             }
-            if(boxLandList.indexOf(element)!=-1 && element.body.blocked.down && !mute){
+            if(boxLandList.indexOf(element)!=-1 && element.body.blocked.down && !mute)
+            {
                 boxLandList.splice(boxLandList.indexOf(element));
                 boxLandingSound = game.add.audio('blockLanding');
                 boxLandingSound.play();
@@ -476,21 +611,21 @@ sadako.Game.prototype = {
 
         this.ghostMovement();
         this.mothMovement();
+        //this.skullMovement();
 
 
-        if(starFlag && !winState)
+        /* if(starFlag && !winState)
         {
             moveSpeed = 1000;
             jumpHeight = -750;
             terror = 0;
             this.game.physics.arcade.collide(this.player, this.blockedLayer);
-        }
+        } */
 
-        this.player.bringToTop();
-        
+        if(!pauseFlag)
+            this.player.bringToTop();
 
-
-        //reset velocity
+        //reset box velocity
         this.reset();
     },
     // TODO: add hover to pause menu
@@ -515,18 +650,23 @@ sadako.Game.prototype = {
     stepOnSpike: function (){
 
         if(!starFlag){
-            /* if (this.player.animations.currentAnim.name.includes("right"))
+            if (this.player.animations.currentAnim.name.includes("right"))
             {
                 this.player.animations.play('spikedright', 10);
             }
             else
             {
                 this.player.animations.play('spikedleft', 10);
-            } */
+            }
 
             this.player.position.x = this.restartx;
             this.player.position.y = this.restarty;
             this.background.tilePosition.x = this.tilepx;
+
+            this.monsters.children.forEach(function (element){
+                element.x = element.spawnPx;
+                element.y = element.spawnPy;
+            }, this);
         }
     },
     //pushing box event
@@ -667,14 +807,14 @@ sadako.Game.prototype = {
     ghostTouch: function () {
         terror += 1;
         ghostTouchFlag = true;
-        /* if(this.player.animations.currentAnim.name.includes("left"))
+        if(this.player.animations.currentAnim.name.includes("left"))
         {
             this.player.animations.play('gainterrorleft', 10);
         }
         else
         {
             this.player.animations.play('gainterrorright', 10);
-        } */
+        } 
         if(!takeDamageSoundFlag && !mute && !winState){
             var takeDamageSound = game.add.audio('takeDamage');
             takeDamageSoundFlag = true;
@@ -777,7 +917,7 @@ sadako.Game.prototype = {
                 }
             });
         }
-        t.bear.destroy();
+        this.bear.destroy();
         this.ghost.children.forEach(function(element){
         
             element.kill();
@@ -835,14 +975,14 @@ sadako.Game.prototype = {
         this.ghost.children.forEach(function(element){
             element.animations.play('winning',10,true);
         });
-        /* if(this.player.animations.currentAnim.name.includes("left"))
+        if(this.player.animations.currentAnim.name.includes("left"))
         {
             this.player.animations.play('interrifiedleft', 10, true);
         }
         else
         {
             this.player.animations.play('interrifiedright', 10, true);
-        } */
+        }
         pauseButton.destroy();
         pauseWhite = game.add.sprite(game.camera.x + 1024, 1024, 'white');
         pauseWhite.anchor.setTo(0.5, 0.5);
@@ -946,7 +1086,7 @@ sadako.Game.prototype = {
 
                 },t);
 
-
+                this.pauseFlag = true;
 
             }else{
                 pauseWhite.destroy();
@@ -954,6 +1094,8 @@ sadako.Game.prototype = {
                 pauseResume.destroy();
                 pauseRestart.destroy();
                 pauseMenu.destroy();
+
+                this.pauseFlag = false;
             }
         }
 
