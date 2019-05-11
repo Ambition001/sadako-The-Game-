@@ -571,8 +571,8 @@ sadako.Game.prototype = {
         if (!pauseFlag && !winState) {
             //Cheat code Handler
             if (this.shiftKey.isDown) {
-                if (this.pKey.isDown && !this.cheatDone) {
-                    this.cheatDone = true;
+                if (this.pKey.isDown && !cheatDone) {
+                    cheatDone = true;
                     this.cheatgashapon = this.game.add.sprite(this.player.x + 256, this.player.y - 36, 'gashapon');
                     this.game.physics.enable(this.cheatgashapon, Phaser.Physics.ARCADE);
                     this.cheatgashapon.enableBody = true;
@@ -690,10 +690,11 @@ sadako.Game.prototype = {
                 jumpFlag = false;
             }
 
-            if (this.player.body.velocity.x > 0 && this.player.body.isMoving) {
+            console.log(this.player.body.deltaX());
+            if (this.player.body.velocity.x > 0 && !this.player.body.blocked.right && this.player.body.deltaX() != 0) {
                 this.background.tilePosition.x -= 0.5;
             }
-            else if (this.player.body.velocity.x < 0 && this.player.body.isMoving) {
+            else if (this.player.body.velocity.x < 0 && !this.player.body.blocked.left && this.player.body.deltaX() != 0) {
                 this.background.tilePosition.x += 0.5;
             }
 
@@ -781,7 +782,7 @@ sadako.Game.prototype = {
             spikedFlag = true;
             
             game.input.enabled = false;
-            game.time.events.add(Phaser.Timer.HALF, this.useCheckPoint(), this);
+            game.time.events.add(Phaser.Timer.HALF, this.useCheckPoint, this);
         }
     },
     //pushing box event
