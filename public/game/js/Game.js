@@ -14,7 +14,7 @@ var jumpCounter = 0;
 var jumpHeight = -700;
 var moveSpeed = 500;
 var monMoveMult = 1;
-var gravity = 1000;
+var gravity = 128*6;
 
 var jumpFlag = false;
 var lighting = false;
@@ -28,6 +28,7 @@ var dollFlag = false;
 var starFlag = false;
 var cheatStar = false;
 var timerFlag = false;
+var itemTimer = 0;
 var catapultLoad = false;
 
 var pauseButton;
@@ -271,8 +272,8 @@ sadako.Game.prototype = {
         result.forEach(function(element){
             this.tv.create(element.x, element.y, 'tv');
         }, this);
-        //TV properties
     },
+
     createBear: function() {
         this.bear = this.game.add.group();
         this.bear.enableBody = true;
@@ -413,7 +414,6 @@ sadako.Game.prototype = {
         this.game.physics.arcade.collide(this.star,this.blockedLayer);
         this.game.physics.arcade.collide(this.cheatgashapon, this.blockedLayer);
         
-        
 
         if(this.door.length > 0){
             var door = this.door.children[0];
@@ -431,6 +431,33 @@ sadako.Game.prototype = {
                 door.frame = 1;
             }
         }
+
+        if(this.player.body.velocity.x > 0 && !this.player.body.blocked.right)
+        {
+            this.background.tilePosition.x -= 0.5;
+        }
+        else if(this.player.body.velocity.x < 0 && !this.player.body.blocked.left)
+        {
+            this.background.tilePosition.x += 0.5;
+        }
+
+        this.box.children.forEach(function(element) {
+            if(!element.body.blocked.down && !mute)
+            {
+                if(boxLandList.indexOf(element)==-1)
+                {
+                    boxLandList.push(element);
+                }
+            }
+            if(boxLandList.indexOf(element)!=-1 && element.body.blocked.down && !mute)
+            {
+                boxLandList.splice(boxLandList.indexOf(element));
+                boxLandingSound = game.add.audio('blockLanding');
+                boxLandingSound.play();
+            }
+            //console.log(boxOnFloor);
+        },this);
+        
 
         terrorBar.width = (terror / 100) * terrorWidth;
         if(terrorBar.width>300)
@@ -480,12 +507,12 @@ sadako.Game.prototype = {
         }
 
         //lighter
-        if(this.rKey.isUp)
+        if(this.rKey.isUp || (!this.player.body.onFloor() && !this.player.body.touching.down))
         {
             lighting = false;
             lighterOpenSoundFlag = false;
         }
-        else if(this.player.body.onFloor() || this.player.body.touching.down == true)
+        else if(this.player.body.onFloor() || this.player.body.touching.down)
         {
             lighting = true;
             if(!lighterOpenSoundFlag && !mute)
@@ -499,55 +526,68 @@ sadako.Game.prototype = {
         //Left-Right Move
         if((this.dKey.isDown || cursors.right.isDown) && (this.aKey.isDown || cursors.left.isDown))
         {
-            this.player.body.velocity.x = 0;
 
             if((this.player.body.touching.down || this.player.body.onFloor()))
+            {
+                this.player.body.velocity.x = 0;
                 if(lighting)
                     this.player.animations.play("idlelighter"+(leftFlag ? 'left' : 'right'), 10);
                 else
                     this.player.animations.play("idle"+(leftFlag ? 'left' : 'right'), 10);
+            }
         }
         else if(this.aKey.isDown || cursors.left.isDown)
         {
             leftFlag = true;
             rightFlag = false;
 
-            this.player.body.velocity.x = -1 * moveSpeed;
+            if(this.player.body.velocity.x > -1 * moveSpeed)
+                this.player.body.velocity.x = -1 * moveSpeed;
 
             if( (this.player.body.touching.down || this.player.body.onFloor()))
+            {
+                this.player.body.velocity.x = -1 * moveSpeed;
                 if(lighting)
                     this.player.animations.play("walklighterleft", 10);
                 else if (grabFlag)
                     this.player.animations.play("walkgrableft", 10);
                 else
                     this.player.animations.play("walkleft", 10);
+            }
         }
         else if(this.dKey.isDown || cursors.right.isDown)
         {
             rightFlag = true;
             leftFlag = false;
 
-            this.player.body.velocity.x = moveSpeed;
-
+            if(this.player.body.velocity.x < moveSpeed)
+                this.player.body.velocity.x = moveSpeed;
             if((this.player.body.touching.down || this.player.body.onFloor()))
+            {
+                this.player.body.velocity.x = moveSpeed;
                 if(lighting)
                     this.player.animations.play("walklighterright", 10);
                 else if (grabFlag)
                     this.player.animations.play("walkgrabright", 10);
                 else
                     this.player.animations.play("walkright", 10);
+            }
         }
         else
         {
-            //slow down!
-            this.player.body.velocity.x = 0;
 
             if((this.player.body.touching.down || this.player.body.onFloor()) )
+            {
+                this.player.body.velocity.x = 0;
                 if(lighting)
                     this.player.animations.play("idlelighter"+(leftFlag ? 'left' : 'right'), 10);
                 else
                     this.player.animations.play("idle"+(leftFlag ? 'left' : 'right'), 10);
+            }
         }
+
+        grabFlag = false;
+        //reset grab in case we walk away from box
 
         //Jump
         if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
@@ -574,34 +614,7 @@ sadako.Game.prototype = {
             jumpFlag = false;
         }
 
-        if(this.player.body.velocity.x > 0 && !this.player.body.blocked.right)
-        {
-            this.background.tilePosition.x -= 0.5;
-        }
-        else if(this.player.body.velocity.x < 0 && !this.player.body.blocked.left)
-        {
-            this.background.tilePosition.x += 0.5;
-        }
-
-        this.box.children.forEach(function(element) {
-            if(!element.body.blocked.down && !mute)
-            {
-                if(boxLandList.indexOf(element)==-1)
-                {
-                    boxLandList.push(element);
-                }
-            }
-            if(boxLandList.indexOf(element)!=-1 && element.body.blocked.down && !mute)
-            {
-                boxLandList.splice(boxLandList.indexOf(element));
-                boxLandingSound = game.add.audio('blockLanding');
-                boxLandingSound.play();
-            }
-            //console.log(boxOnFloor);
-        },this);
-
-        grabFlag = false;
-        //reset grab
+        
 
         this.ghostMovement();
         this.mothMovement();
@@ -666,12 +679,13 @@ sadako.Game.prototype = {
             element.x = element.spawnPx;
             element.y = element.spawnPy;
         }, this);
+
         terror = 0;
     },
     //step on spike event
     stepOnSpike: function (){
 
-        if(!starFlag){
+        if(!starFlag || !cheatStar){
             if (this.player.animations.currentAnim.name.includes("right"))
             {
                 this.player.animations.play('spikedright', 10);
@@ -728,7 +742,6 @@ sadako.Game.prototype = {
             {
                 this.star.kill();
             }
-        
     },
 
     useStar: function()
@@ -736,9 +749,9 @@ sadako.Game.prototype = {
         starFlag = true;
         console.log(starFlag);
         if(this.player.overlap(this.star))
-            {
-                this.star.kill();
-            }
+        {
+            this.star.kill();
+        }
         
     },
     useCatapult: function(player,catapult)
@@ -746,8 +759,10 @@ sadako.Game.prototype = {
 
         catapult.animations.play('useCatapult', 30);
 
-        this.player.body.velocity.x = 1000;
-        this.player.body.velocity.y = -800;
+        this.player.body.velocity.x = 3000;
+        this.player.body.velocity.y = -300;
+
+        catapult.frame = 0;
     },
     //reset
     reset: function(){
@@ -830,7 +845,7 @@ sadako.Game.prototype = {
     ghostTouch: function () {
         terror += 0.5;
         ghostTouchFlag = true;
-        if(this.player.animations.currentAnim.name.includes("left"))
+        if(leftFlag)
         {
             this.player.animations.play('gainterrorleft', 10);
         }
@@ -1037,7 +1052,7 @@ sadako.Game.prototype = {
         this.ghost.children.forEach(function(element){
             element.animations.play('winning',10,true);
         });
-        if(this.player.animations.currentAnim.name.includes("left"))
+        if(leftFlag)
         {
             this.player.animations.play('interrifiedleft', 10, true);
         }
@@ -1149,7 +1164,7 @@ sadako.Game.prototype = {
 
                 },t);
 
-                this.pauseFlag = true;
+                pauseFlag = true;
 
             }else{
                 pauseWhite.destroy();
@@ -1158,7 +1173,7 @@ sadako.Game.prototype = {
                 pauseRestart.destroy();
                 pauseMenu.destroy();
 
-                this.pauseFlag = false;
+                pauseFlag = false;
             }
         }
 

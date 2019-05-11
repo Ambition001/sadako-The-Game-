@@ -86,7 +86,7 @@ sadako.Preload.prototype = {
         this.load.spritesheet('sadakoButton', 'assets/sprites/SadakoButton.png',256,256);
         this.load.spritesheet('sadakoDoor', 'assets/sprites/SadakoDoor.png',256,384);
         this.load.spritesheet('catapult', 'assets/sprites/Spring.png',128,128);
-        this.load.spritesheet('cookie', 'assets/sprites/Cookie.png',128,128);
+        this.load.image('cookie', 'assets/sprites/Cookie.png');
         this.load.image('spike','assets/sprites/Spike.png');
         this.load.image('checkPoint','assets/sprites/CheckPoint.png');
         this.load.image('bear','assets/sprites/SadakoBear.png');
