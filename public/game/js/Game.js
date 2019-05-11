@@ -484,7 +484,6 @@ sadako.Game.prototype = {
                 }
             }
 
-
             //Jump
             if (this.spaceKey.isUp) {
                 jumpFlag = false;
@@ -734,7 +733,7 @@ sadako.Game.prototype = {
         catapult.animations.play('useCatapult', 30);
 
         this.player.body.velocity.x = 3000;
-        this.player.body.velocity.y = -300;
+        this.player.body.velocity.y = -400;
 
         catapult.frame = 0;
     },
