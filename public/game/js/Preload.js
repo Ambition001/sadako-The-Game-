@@ -88,6 +88,7 @@ sadako.Preload.prototype = {
         this.load.spritesheet('catapult', 'assets/sprites/Spring.png',128,128);
         this.load.image('cookie', 'assets/sprites/Cookie.png');
         this.load.image('spike','assets/sprites/Spike.png');
+        this.load.image('stopwatch','assets/sprites/Stopwatch.png');
         this.load.image('checkPoint','assets/sprites/CheckPoint.png');
         this.load.image('bear','assets/sprites/SadakoBear.png');
         this.load.spritesheet('sadako', 'assets/sprites/Sadako.png', 128, 256);
@@ -97,6 +98,7 @@ sadako.Preload.prototype = {
         this.load.spritesheet('hidingSpot', 'assets/sprites/HidingSpot.png', 192, 262);
         this.load.image('hauntedDoll', 'assets/sprites/HauntedDoll.png');
         this.load.spritesheet('gashapon', 'assets/sprites/Gashapon.png', 192, 288);
+        
         this.load.spritesheet('mainMenuButton', 'assets/images/game/mainMenu.png', 512, 300);
         this.load.spritesheet('nextLevelButton', 'assets/images/game/next.png', 512, 300);
         this.load.spritesheet('restartButton', 'assets/images/game/restart.png', 512, 300);

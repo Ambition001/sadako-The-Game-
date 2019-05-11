@@ -672,6 +672,7 @@ sadako.Game.prototype = {
                 this.player.animations.play('spiked' + (rightFlag ? 'right' : 'left'), 10);
             }
             spikedFlag = true;
+            this.player.body.gravity = gravity * 2;
             if (this.player.body.onFloor())
                 this.useCheckPoint();
         }
