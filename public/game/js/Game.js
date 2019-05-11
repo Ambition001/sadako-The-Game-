@@ -64,8 +64,10 @@ var lighterOpenSoundFlag;
 
 var boxOnFloor;
 var boxLandList;
-
-
+var topCutSceneBar;
+var bottomCutSceneBar;
+var chatBox;
+var chatBoxBar;
 sadako.Game.prototype = {
     init: function (complete, level, sound, bgMusic, map) {
         completed = complete;
@@ -182,7 +184,13 @@ sadako.Game.prototype = {
         terrorBar.width = 0;
         terrorBrackets = this.player.addChild(game.make.sprite(-91, -55,'brackets'));
         this.tilepx = this.background.tilePosition.x;
-    },
+        topCutSceneBar = game.add.sprite(game.camera.x, 0, 'cutSceneBar');
+        topCutSceneBar.fixedToCamera = true;
+        topCutSceneBar.alpha = 0;
+        bottomCutSceneBar = game.add.sprite(game.camera.x, 1898, 'cutSceneBar');
+        bottomCutSceneBar.fixedToCamera = true;
+        bottomCutSceneBar.alpha = 0;   
+     },
     findObjectsByType: function(type, map, layer) {
         var result = new Array();
         map.objects[layer].forEach(function(element){
@@ -210,18 +218,18 @@ sadako.Game.prototype = {
         }, this);
     },
     createBox: function() {
+        var thisBox;
         this.box = this.game.add.group(this.monsters);
         this.box.enableBody = true;
         result = this.findObjectsByType('box', this.map, 'ObjectLayer');
         result.forEach(function(element){
-            this.box.create(element.x, element.y, 'sadakoWoodenCrate');
+            thisBox = this.box.create(element.x, element.y, 'sadakoWoodenCrate');
+            thisBox.spawnPx = element.x;
+            thisBox.spawnPy = element.y;
         }, this);
         this.box.children.forEach(function(element){
             this.game.physics.enable(element, Phaser.Physics.ARCADE);
             element.body.gravity.y = 1000;
-            
-            element.spawnPx = element.x;
-            element.spawnPy = element.y;
         },this);
     },
     createButton: function() {
@@ -805,7 +813,7 @@ sadako.Game.prototype = {
         },this)
     },
     ghostTouch: function () {
-        terror += 1;
+        terror += 0.5;
         ghostTouchFlag = true;
         if(this.player.animations.currentAnim.name.includes("left"))
         {
@@ -902,6 +910,45 @@ sadako.Game.prototype = {
                 takeDamageSoundFlag = false;
             })
         }
+    },
+    createCutSceneBar: function () {
+        var topCutSceneBarTween = this.game.add.tween(topCutSceneBar);
+        topCutSceneBarTween.to({
+            alpha: 1
+        }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+        var bottomCutSceneBarTween = this.game.add.tween(bottomCutSceneBar);
+        bottomCutSceneBarTween.to({
+            alpha: 1
+        }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+        game.input.enabled = false;
+    },
+    destroyCutSceneBar: function () {
+        var topCutSceneBarTween = this.game.add.tween(topCutSceneBar);
+        topCutSceneBarTween.to({
+            alpha: 0
+        }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+        var bottomCutSceneBarTween = this.game.add.tween(bottomCutSceneBar);
+        bottomCutSceneBarTween.to({
+            alpha: 0
+        }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+        game.input.enabled = true;
+    },
+    createChatBox: function (text, time) {
+        var textStyle = {
+            font: "50px Arial",
+            fill: "#FFFFFF",
+            align: "center"
+        };
+        chatBox = game.add.text(this.player.position.x+50, this.player.position.y-150, text, textStyle);
+        chatBox.anchor.setTo(0.5, 0.5);
+        chatBoxBar = game.add.sprite(this.player.position.x+50, this.player.position.y - 100, 'chatBoxBar');
+        chatBoxBar.scale.setTo(0.8);
+        chatBoxBar.anchor.setTo(0.5, 0.5);
+        game.time.events.add(Phaser.Timer.SECOND * time, this.destroyChatBox, this);
+    },
+    destroyChatBox: function (){
+        chatBox.destroy();
+        chatBoxBar.destroy();
     },
     //winning event
     winningBear: function () {
@@ -1022,6 +1069,12 @@ sadako.Game.prototype = {
             pauseRespawn.destroy();
             pauseRestart.destroy();
             pauseMenu.destroy();
+            pauseButton = this.game.add.sprite(2000, 100, 'pauseButton');
+            pauseButton.anchor.setTo(0.5);
+            pauseButton.scale.setTo(0.5);
+            pauseButton.inputEnabled = true;
+            pauseButton.fixedToCamera = true;
+            pauseButton.events.onInputDown.add(this.pauseGame, this);
             game.physics.arcade.isPaused = false;
             //ghostSound.stop();
         },t);
