@@ -70,6 +70,11 @@ var topCutSceneBar;
 var bottomCutSceneBar;
 var chatBox;
 var chatBoxBar;
+
+var starTimer;
+var starTimerBar;
+var starBuffIcon;
+
 sadako.Game.prototype = {
     init: function (complete, level, sound, bgMusic, map) {
         completed = complete;
@@ -196,6 +201,26 @@ sadako.Game.prototype = {
         bottomCutSceneBar = game.add.sprite(game.camera.x, 1898, 'cutSceneBar');
         bottomCutSceneBar.fixedToCamera = true;
         bottomCutSceneBar.alpha = 0;
+
+        //Star test
+        // starBuffIcon = this.player.addChild(game.make.sprite(-130, -100,'goldStar'));
+        // starBuffIcon.anchor.setTo(0.5,0.5);
+        // starBuffIcon.scale.setTo(0.5);
+        // starTimerBar = this.player.addChild(game.make.sprite(-86,-110,'timerBar'));
+        // starTimer = 80;
+        // game.time.events.add(Phaser.Timer.QUARTER, this.starTimerTick, this);
+    },
+    starTimerTick: function () {
+        starTimer -= 1;
+        if(starTimer > 0){
+            starTimerBar.width = (starTimer / 80) * terrorWidth;
+            game.time.events.add(Phaser.Timer.QUARTER, this.starTimerTick, this);
+        }else{
+            starFlag = false;
+            starTimerBar.destroy();
+            starBuffIcon.destroy();
+        }
+
     },
     findObjectsByType: function (type, map, layer) {
         var result = new Array();
@@ -715,6 +740,13 @@ sadako.Game.prototype = {
     },
     useCheatStar: function () {
         cheatStar = true;
+
+        starBuffIcon = this.player.addChild(game.make.sprite(-130, -100,'goldStar'));
+        starBuffIcon.anchor.setTo(0.5,0.5);
+        starBuffIcon.scale.setTo(0.5);
+        starTimerBar = this.player.addChild(game.make.sprite(-86,-110,'timerBar'));
+        starTimer = 80;
+
         if (this.player.overlap(this.star)) {
             this.star.kill();
         }
@@ -722,6 +754,14 @@ sadako.Game.prototype = {
 
     useStar: function () {
         starFlag = true;
+
+        starBuffIcon = this.player.addChild(game.make.sprite(-130, -100,'goldStar'));
+        starBuffIcon.anchor.setTo(0.5,0.5);
+        starBuffIcon.scale.setTo(0.5);
+        starTimerBar = this.player.addChild(game.make.sprite(-86,-110,'timerBar'));
+        starTimer = 80;
+        game.time.events.add(Phaser.Timer.QUARTER, this.starTimerTick, this);
+
         console.log(starFlag);
         if (this.player.overlap(this.star)) {
             this.star.kill();
@@ -977,7 +1017,7 @@ sadako.Game.prototype = {
         cheatDone = false;
 
         pauseButton.destroy();
-        pauseWhite = game.add.sprite(game.camera.x + 1024, 1024, 'white');
+        pauseWhite = game.add.sprite(game.camera.x + 1024, game.camera.y + 1024, 'white');
         pauseWhite.anchor.setTo(0.5, 0.5);
         pauseWhite.alpha = 0.5;
 
@@ -987,11 +1027,11 @@ sadako.Game.prototype = {
             align: "center"
         };
 
-        text = game.add.text(game.camera.x + 1024, 500, "Win", textStyle);
+        text = game.add.text(game.camera.x + 1024, game.camera.y + 500, "Win", textStyle);
         text.anchor.setTo(0.5, 0.5);
 
         if (mapNum < 7) {
-            pauseNext = game.add.sprite(game.camera.x + 1024, 900, 'nextLevelButton');
+            pauseNext = game.add.sprite(game.camera.x + 1024, game.camera.y + 900, 'nextLevelButton');
             pauseNext.anchor.setTo(0.5);
             pauseNext.inputEnabled = true;
             pauseNext.events.onInputDown.add(function () {
@@ -1008,7 +1048,7 @@ sadako.Game.prototype = {
                 }
             }, t);
         }
-        pauseMenu = game.add.sprite(game.camera.x + 1024, 1250, 'mainMenuButton');
+        pauseMenu = game.add.sprite(game.camera.x + 1024, game.camera.y + 1250, 'mainMenuButton');
         pauseMenu.anchor.setTo(0.5);
         pauseMenu.inputEnabled = true;
         pauseMenu.events.onInputDown.add(function () {
@@ -1036,7 +1076,7 @@ sadako.Game.prototype = {
             this.player.animations.play('interrifiedright', 10, true);
         }
         pauseButton.destroy();
-        pauseWhite = game.add.sprite(game.camera.x + 1024, 1024, 'white');
+        pauseWhite = game.add.sprite(game.camera.x + 1024, game.camera.y + 1024, 'white');
         pauseWhite.anchor.setTo(0.5, 0.5);
         pauseWhite.alpha = 0.5;
         if (!mute) {
@@ -1056,10 +1096,10 @@ sadako.Game.prototype = {
             align: "center"
         };
 
-        text = game.add.text(game.camera.x + 1024, 500, "Terrified", textStyle);
+        text = game.add.text(game.camera.x + 1024, game.camera.y + 500, "Terrified", textStyle);
         text.anchor.setTo(0.5, 0.5);
 
-        pauseRespawn = game.add.sprite(game.camera.x + 1024, 800, 'respawnButton');
+        pauseRespawn = game.add.sprite(game.camera.x + 1024, game.camera.y + 800, 'respawnButton');
         pauseRespawn.anchor.setTo(0.5);
         pauseRespawn.inputEnabled = true;
         pauseRespawn.events.onInputDown.add(function () {
@@ -1081,7 +1121,7 @@ sadako.Game.prototype = {
         }, t);
 
 
-        pauseRestart = game.add.sprite(game.camera.x + 1024, 1100, 'restartButton');
+        pauseRestart = game.add.sprite(game.camera.x + 1024, game.camera.y + 1100, 'restartButton');
         pauseRestart.anchor.setTo(0.5);
         pauseRestart.inputEnabled = true;
         pauseRestart.events.onInputDown.add(function () {
@@ -1091,7 +1131,7 @@ sadako.Game.prototype = {
             //ghostSound.stop();
         }, t);
 
-        pauseMenu = game.add.sprite(game.camera.x + 1024, 1400, 'mainMenuButton');
+        pauseMenu = game.add.sprite(game.camera.x + 1024, game.camera.y + 1400, 'mainMenuButton');
         pauseMenu.anchor.setTo(0.5);
         pauseMenu.inputEnabled = true;
         pauseMenu.events.onInputDown.add(function () {
@@ -1104,7 +1144,7 @@ sadako.Game.prototype = {
         if (!winState) {
             game.physics.arcade.isPaused = (game.physics.arcade.isPaused) ? false : true;
             if (game.physics.arcade.isPaused) {
-                pauseWhite = game.add.sprite(game.camera.x + 1024, 1024, 'white');
+                pauseWhite = game.add.sprite(game.camera.x + 1024, game.camera.y + 1024, 'white');
                 pauseWhite.anchor.setTo(0.5, 0.5);
                 pauseWhite.alpha = 0.5;
 
@@ -1114,15 +1154,36 @@ sadako.Game.prototype = {
                     align: "center"
                 };
 
-                text = game.add.text(game.camera.x + 1024, 500, "Paused", textStyle);
+                text = game.add.text(game.camera.x + 1024, game.camera.y + 500, "Paused", textStyle);
                 text.anchor.setTo(0.5, 0.5);
 
-                pauseResume = game.add.sprite(game.camera.x + 1024, 750, 'resumeButton');
+                pauseResume = game.add.sprite(game.camera.x + 1024, game.camera.y + 750, 'resumeButton');
                 pauseResume.anchor.setTo(0.5);
                 pauseResume.inputEnabled = true;
                 pauseResume.events.onInputDown.add(t.pauseGame, t);
 
-                pauseRestart = game.add.sprite(game.camera.x + 1024, 1050, 'restartButton');
+                pauseRespawn = game.add.sprite(game.camera.x + 1024, game.camera.y + 1050, 'respawnButton');
+                pauseRespawn.anchor.setTo(0.5);
+                pauseRespawn.inputEnabled = true;
+                pauseRespawn.events.onInputDown.add(function () {
+                    this.useCheckPoint();
+                    pauseWhite.destroy();
+                    text.destroy();
+                    pauseRespawn.destroy();
+                    pauseRestart.destroy();
+                    pauseResume.destroy();
+                    pauseMenu.destroy();
+                    pauseButton = this.game.add.sprite(2000, 100, 'pauseButton');
+                    pauseButton.anchor.setTo(0.5);
+                    pauseButton.scale.setTo(0.5);
+                    pauseButton.inputEnabled = true;
+                    pauseButton.fixedToCamera = true;
+                    pauseButton.events.onInputDown.add(this.pauseGame, this);
+                    game.physics.arcade.isPaused = false;
+                    pauseFlag = false;
+                }, t);
+
+                pauseRestart = game.add.sprite(game.camera.x + 1024, game.camera.y + 1350, 'restartButton');
                 pauseRestart.anchor.setTo(0.5);
                 pauseRestart.inputEnabled = true;
                 pauseRestart.events.onInputDown.add(function () {
@@ -1131,7 +1192,7 @@ sadako.Game.prototype = {
                     //ghostSound.stop();
                 }, t);
 
-                pauseMenu = game.add.sprite(game.camera.x + 1024, 1350, 'mainMenuButton');
+                pauseMenu = game.add.sprite(game.camera.x + 1024, game.camera.y + 1650, 'mainMenuButton');
                 pauseMenu.anchor.setTo(0.5);
                 pauseMenu.inputEnabled = true;
                 pauseMenu.events.onInputDown.add(function () {
@@ -1149,7 +1210,7 @@ sadako.Game.prototype = {
                 pauseResume.destroy();
                 pauseRestart.destroy();
                 pauseMenu.destroy();
-
+                pauseRespawn.destroy();
                 pauseFlag = false;
             }
         }
