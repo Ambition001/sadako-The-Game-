@@ -28,6 +28,13 @@ sadako.MainMenu.prototype = {
             this.bgMusic.play();
             this.bgMusic.onStop.add(function(){this.bgMusic.play();},this);
         }
+        if(this.bgMusic.name != "bgMusic1"){
+            this.bgMusic.onStop._bindings = new Array(); 
+            this.bgMusic.stop();
+            this.bgMusic = this.game.add.audio('bgMusic1');
+            this.bgMusic.play();
+            this.bgMusic.onStop.add(function(){this.bgMusic.play();},this);
+        }
         
         var mainMenuTitle = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 400, 'mainMenuTitle');
         mainMenuTitle.anchor.setTo(0.5, 0.5);
