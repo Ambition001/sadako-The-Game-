@@ -639,6 +639,35 @@ sadako.Game.prototype = {
         this.tilepx = this.background.tilePosition.x;
         terror = 0;
     },
+    useCheckPoint: function () {
+        this.player.position.x = this.restartx;
+        this.player.position.y = this.restarty;
+        this.background.tilePosition.x = this.tilepx;
+
+        this.player.body.velocity.x = 0;
+        this.player.body.velocity.y = 0;
+
+        this.ghost.children.forEach(function (element) {
+            element.x = element.spawnPx;
+            element.y = element.spawnPy;
+        }, this);
+
+        this.moths.children.forEach(function (element) {
+            element.x = element.spawnPx;
+            element.y = element.spawnPy;
+        }, this);
+
+        /* this.skulls.children.forEach(function (element){
+            element.x = element.spawnPx;
+            element.y = element.spawnPy;
+        }, this); */
+
+        this.box.children.forEach(function (element) {
+            element.x = element.spawnPx;
+            element.y = element.spawnPy;
+        }, this);
+        terror = 0;
+    },
     //step on spike event
     stepOnSpike: function (){
 
@@ -651,30 +680,7 @@ sadako.Game.prototype = {
             {
                 this.player.animations.play('spikedleft', 10);
             }
-
-            this.player.position.x = this.restartx;
-            this.player.position.y = this.restarty;
-            this.background.tilePosition.x = this.tilepx;
-
-            this.ghost.children.forEach(function (element){
-                element.x = element.spawnPx;
-                element.y = element.spawnPy;
-            }, this);
-
-            this.moths.children.forEach(function (element){
-                element.x = element.spawnPx;
-                element.y = element.spawnPy;
-            }, this);
-
-            /* this.skulls.children.forEach(function (element){
-                element.x = element.spawnPx;
-                element.y = element.spawnPy;
-            }, this); */
-
-            this.box.children.forEach(function (element){
-                element.x = element.spawnPx;
-                element.y = element.spawnPy;
-            }, this);
+            this.useCheckPoint();
         }
     },
     //pushing box event
@@ -1067,12 +1073,7 @@ sadako.Game.prototype = {
         pauseRespawn.anchor.setTo(0.5);
         pauseRespawn.inputEnabled = true;
         pauseRespawn.events.onInputDown.add(function () {
-            this.player.position.x = this.restartx;
-            this.player.position.y = this.restarty;
-            this.background.tilePosition.x = this.tilepx;
-            this.player.body.velocity.x = 0;
-            this.player.body.velocity.y = 0;
-            terror = 0;
+            this.useCheckPoint();
             pauseWhite.destroy();
             text.destroy();
             pauseRespawn.destroy();
