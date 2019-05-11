@@ -387,6 +387,13 @@ sadako.Game.prototype = {
     // COLLISION/LOGIC -> INPUT/GUI -> P MOVEMENT -> AI MOVEMENT
     update: function () {
 
+        ghostTouchFlag = false;
+        if(this.button.length > 0)
+        {
+            var button = this.button.children[0];
+            button.frame = 0;
+        }
+
         this.game.physics.arcade.collide(this.player, this.blockedLayer);
         this.game.physics.arcade.collide(this.box,this.blockedLayer);
         this.game.physics.arcade.overlap(this.player,this.checkPoints,this.passCheckPoint,null,this);
@@ -404,12 +411,9 @@ sadako.Game.prototype = {
         this.game.physics.arcade.overlap(this.star,this.player,this.useStar,null,this);
         this.game.physics.arcade.overlap(this.player, this.catapult, this.useCatapult, null, this);
         this.game.physics.arcade.collide(this.star,this.blockedLayer);
+        this.game.physics.arcade.collide(this.cheatgashapon, this.blockedLayer);
         
-        ghostTouchFlag = false;
-        if(this.button.length > 0){
-            var button = this.button.children[0];
-            button.frame = 0;
-        }
+        
 
         if(this.door.length > 0){
             var door = this.door.children[0];
@@ -427,24 +431,6 @@ sadako.Game.prototype = {
                 door.frame = 1;
             }
         }
-        
-
-        // if(this.cheatDone)
-        // {
-        //     //this.game.physics.arcade.overlap(this.player, this.cheatgashapon, this.useCheatGashapon, null, this);
-        //     this.game.physics.arcade.collide(this.cheatgashapon, this.blockedLayer);
-        // }
-
-
-
-
-
-
-
-
-
-
-
 
         terrorBar.width = (terror / 100) * terrorWidth;
         if(terrorBar.width>300)
@@ -491,16 +477,6 @@ sadako.Game.prototype = {
         if(this.spaceKey.isUp)
         {
             jumpFlag = false;
-        }
-
-        //grab/use
-        if(this.shiftKey.isDown)
-        {
-            grabFlag = true;
-        }
-        else
-        {
-            grabFlag = false;
         }
 
         //lighter
@@ -573,6 +549,7 @@ sadako.Game.prototype = {
                     this.player.animations.play("idle"+(leftFlag ? 'left' : 'right'), 10);
         }
 
+        //Jump
         if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
             //console.log(jumpCounter,jumpFlag);
             if(leftFlag)
@@ -622,6 +599,9 @@ sadako.Game.prototype = {
             }
             //console.log(boxOnFloor);
         },this);
+
+        grabFlag = false;
+        //reset grab
 
         this.ghostMovement();
         this.mothMovement();
@@ -676,7 +656,22 @@ sadako.Game.prototype = {
             this.player.position.y = this.restarty;
             this.background.tilePosition.x = this.tilepx;
 
-            this.monsters.children.forEach(function (element){
+            this.ghost.children.forEach(function (element){
+                element.x = element.spawnPx;
+                element.y = element.spawnPy;
+            }, this);
+
+            this.moths.children.forEach(function (element){
+                element.x = element.spawnPx;
+                element.y = element.spawnPy;
+            }, this);
+
+            /* this.skulls.children.forEach(function (element){
+                element.x = element.spawnPx;
+                element.y = element.spawnPy;
+            }, this); */
+
+            this.box.children.forEach(function (element){
                 element.x = element.spawnPx;
                 element.y = element.spawnPy;
             }, this);
@@ -720,6 +715,15 @@ sadako.Game.prototype = {
             this.cheatgashapon.stock--;
         }
     },
+    useCheatStar: function()
+    {
+        cheatStar = true;
+        if(this.player.overlap(this.star))
+            {
+                this.star.kill();
+            }
+        
+    },
 
     useStar: function()
     {
@@ -762,7 +766,7 @@ sadako.Game.prototype = {
     //ghost movement
     ghostMovement: function(){
         this.ghost.children.forEach(function(element){
-            if(this.player.position.x < element.body.position.x && this.player.position.x +1280>element.body.position.x){
+            if(this.player.position.x < element.body.position.x && this.player.position.x + 1280 > element.body.position.x){
                 this.game.physics.arcade.moveToObject(element,this.player, 300);
                 if(lighting){
                     element.body.velocity.x *= -1;
@@ -782,9 +786,10 @@ sadako.Game.prototype = {
                     })
                 }
             }
-            else if(this.player.position.x > element.body.position.x && this.player.position.x -1280<element.body.position.x){
+            else if(this.player.position.x > element.body.position.x && this.player.position.x - 1280 < element.body.position.x){
                 this.game.physics.arcade.moveToObject(element,this.player,200);
-                if(lighting){
+                if(lighting)
+                {
                     element.body.velocity.x *= -1;
                     element.body.velocity.y = -200;
                     element.animations.play('scaredleft',10,true);
@@ -805,11 +810,11 @@ sadako.Game.prototype = {
             else{
                 element.body.velocity.y = 400;
                 element.animations.play('floatingleft',10,true);
-                if(element.y>1664){
+                if(element.y > 1664){
                     element.body.velocity.y = -400;
                     element.animations.play('floatingright',10,true);
                 }
-                else if(element.y<256){
+                else if(element.y < 256){
                     element.body.velocity.y = 400;
                     element.animations.play('floatingleft',10,true);
                 }
