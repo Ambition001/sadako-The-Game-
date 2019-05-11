@@ -23,6 +23,7 @@ var rightFlag = true;
 var downflag = false;
 var grabFlag = false;
 var cryFlag = false;
+var spikedFlag = false;
 
 var dollFlag = false;
 var starFlag = false;
@@ -527,7 +528,7 @@ sadako.Game.prototype = {
         if((this.dKey.isDown || cursors.right.isDown) && (this.aKey.isDown || cursors.left.isDown))
         {
 
-            if((this.player.body.touching.down || this.player.body.onFloor()))
+            if((this.player.body.touching.down || this.player.body.onFloor()) && !spikedFlag)
             {
                 this.player.body.velocity.x = 0;
                 if(lighting)
@@ -544,7 +545,7 @@ sadako.Game.prototype = {
             if(this.player.body.velocity.x > -1 * moveSpeed)
                 this.player.body.velocity.x = -1 * moveSpeed;
 
-            if( (this.player.body.touching.down || this.player.body.onFloor()))
+            if( (this.player.body.touching.down || this.player.body.onFloor()) && !spikedFlag)
             {
                 this.player.body.velocity.x = -1 * moveSpeed;
                 if(lighting)
@@ -562,7 +563,7 @@ sadako.Game.prototype = {
 
             if(this.player.body.velocity.x < moveSpeed)
                 this.player.body.velocity.x = moveSpeed;
-            if((this.player.body.touching.down || this.player.body.onFloor()))
+            if((this.player.body.touching.down || this.player.body.onFloor()) && !spikedFlag)
             {
                 this.player.body.velocity.x = moveSpeed;
                 if(lighting)
@@ -576,7 +577,7 @@ sadako.Game.prototype = {
         else
         {
 
-            if((this.player.body.touching.down || this.player.body.onFloor()) )
+            if((this.player.body.touching.down || this.player.body.onFloor()) && !spikedFlag )
             {
                 this.player.body.velocity.x = 0;
                 if(lighting)
@@ -590,7 +591,7 @@ sadako.Game.prototype = {
         //reset grab in case we walk away from box
 
         //Jump
-        if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag){
+        if(this.spaceKey.isDown && jumpCounter <=1 && !jumpFlag  && !spikedFlag){
             //console.log(jumpCounter,jumpFlag);
             if(leftFlag)
                 this.player.animations.play("jumpupleft", 10);
@@ -602,7 +603,7 @@ sadako.Game.prototype = {
             jumpCounter += 1;
         }
 
-        if(jumpCounter > 0 && (this.player.body.touching.down == true || this.player.body.onFloor()))
+        if(jumpCounter > 0 && (this.player.body.touching.down == true || this.player.body.onFloor()) && !spikedFlag)
         {
             
             if(leftFlag)
@@ -613,6 +614,8 @@ sadako.Game.prototype = {
             jumpCounter = 0;
             jumpFlag = false;
         }
+
+        spikedFlag = false;
 
         
 
@@ -648,7 +651,7 @@ sadako.Game.prototype = {
     //check point event
     passCheckPoint: function (player, checkPoint){
         this.restartx = checkPoint.position.x+128;
-        this.restarty = checkPoint.position.y-192;
+        this.restarty = checkPoint.position.y-256;
         this.tilepx = this.background.tilePosition.x;
         terror = 0;
     },
@@ -686,15 +689,13 @@ sadako.Game.prototype = {
     stepOnSpike: function (){
 
         if(!starFlag || !cheatStar){
-            if (this.player.animations.currentAnim.name.includes("right"))
+            if (!spikedFlag)
             {
-                this.player.animations.play('spikedright', 10);
+                this.player.animations.play('spiked' + (rightFlag ? 'right' : 'left'), 10);
             }
-            else
-            {
-                this.player.animations.play('spikedleft', 10);
-            }
-            this.useCheckPoint();
+            spikedFlag = true;
+            if(this.player.body.onFloor())
+                this.useCheckPoint();
         }
     },
     //pushing box event
