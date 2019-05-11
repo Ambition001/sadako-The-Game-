@@ -26,11 +26,15 @@ var cryFlag = false;
 var spikedFlag = false;
 
 var dollFlag = false;
+var dollInt = 5;
 var starFlag = false;
 var cheatStar = false;
 var timerFlag = false;
 var itemTimer = 0;
 var catapultLoad = false;
+
+var uncleDone = false;
+var uncleWin = false;
 
 var pauseButton;
 var pauseFlag = false;
@@ -223,10 +227,10 @@ sadako.Game.prototype = {
     },
     starTimerTick: function () {
         starTimer -= 1;
-        if(starTimer > 0){
+        if (starTimer > 0) {
             starTimerBar.width = (starTimer / 80) * terrorWidth;
             game.time.events.add(Phaser.Timer.QUARTER, this.starTimerTick, this);
-        }else{
+        } else {
             starFlag = false;
             starTimerBar.destroy();
             starBuffIcon.destroy();
@@ -305,13 +309,12 @@ sadako.Game.prototype = {
             element.body.moves = false;
         }, this);
     },
-    createTV: function () {
-        this.tv = this.game.add.group();
+    /* createTV: function () {
         result = this.findObjectsByType('tv', this.map, 'ObjectLayer');
         result.forEach(function (element) {
             this.tv.create(element.x, element.y, 'tv');
         }, this);
-    },
+    }, */
 
     createBear: function () {
         this.bear = this.game.add.group();
@@ -391,9 +394,16 @@ sadako.Game.prototype = {
             sprite[key] = element.properties[key];
         });
     },
-    createGashapon: function () {
+    createGashapons: function () {
 
-        this.game.physics.enable(this.cheatgashapon, Phaser.Physics.ARCADE);
+        this.game.physics.enable(this.gashapon, Phaser.Physics.ARCADE);
+        this.gashapon.enableBody = true;
+        this.gashapon.body.gravity.y = 1000;
+        this.gashapon.animations.add('useGashapon', [0, 1, 2, 3, 4]);
+    },
+    createGashapon: function (x, y) {
+
+        this.game.physics.enable(this.gashapon, Phaser.Physics.ARCADE);
         this.gashapon.enableBody = true;
         this.gashapon.body.gravity.y = 1000;
         this.gashapon.animations.add('useGashapon', [0, 1, 2, 3, 4]);
@@ -406,7 +416,7 @@ sadako.Game.prototype = {
         this.star.body.bounce.set(0.7);
         this.star.body.gravity.y = 400;
     },
-    createDoll: function () {
+    createDoll: function (x, y) {
 
         this.doll = this.game.add.sprite(x, y, 'hauntedDoll');
         this.game.physics.enable(this.doll, Phaser.Physics.ARCADE);
@@ -414,7 +424,7 @@ sadako.Game.prototype = {
         this.doll.body.bounce.set(0.2);
         this.doll.body.gravity.y = 300;
     },
-    createStopwatch: function () {
+    createStopwatch: function (x, y) {
 
         this.stopwatch = this.game.add.sprite(x, y, 'stopwatch');
         this.game.physics.enable(this.stopwatch, Phaser.Physics.ARCADE);
@@ -447,9 +457,15 @@ sadako.Game.prototype = {
         this.game.physics.arcade.collide(this.moths, this.blockedLayer);
         this.game.physics.arcade.collide(this.moths, this.box);
         this.game.physics.arcade.overlap(this.moths, this.player, this.mothTouch, null, this);
+
+        this.game.physics.arcade.overlap(this.cheatStar, this.player, this.useCheatStar, null, this);
         this.game.physics.arcade.overlap(this.star, this.player, this.useStar, null, this);
+        this.game.physics.arcade.overlap(this.doll, this.player, function (){dollFlag = true}, null, this);
+        this.game.physics.arcade.overlap(this.player, this.stopwatch, this.useStopwatch, null, this);
         this.game.physics.arcade.overlap(this.player, this.catapult, this.useCatapult, null, this);
+
         this.game.physics.arcade.collide(this.star, this.blockedLayer);
+        this.game.physics.arcade.collide(this.gashapons, this.blockedLayer);
         this.game.physics.arcade.collide(this.cheatgashapon, this.blockedLayer);
 
 
@@ -493,10 +509,10 @@ sadako.Game.prototype = {
             this.terrified();
         }
 
-        /* if(terror == 95 && dollFlag)
+        if(terror == 95 && dollFlag)
         {
             this.useDoll();
-        } */
+        }
 
         if (pauseButton.input.pointerOver()) {
             pauseButton.frame = 1;
@@ -753,10 +769,10 @@ sadako.Game.prototype = {
     useCheatStar: function () {
         cheatStar = true;
 
-        starBuffIcon = this.player.addChild(game.make.sprite(-130, -100,'goldStar'));
-        starBuffIcon.anchor.setTo(0.5,0.5);
+        starBuffIcon = this.player.addChild(game.make.sprite(-130, -100, 'goldStar'));
+        starBuffIcon.anchor.setTo(0.5, 0.5);
         starBuffIcon.scale.setTo(0.5);
-        starTimerBar = this.player.addChild(game.make.sprite(-86,-110,'timerBar'));
+        starTimerBar = this.player.addChild(game.make.sprite(-86, -110, 'timerBar'));
         starTimer = 80;
 
         if (this.player.overlap(this.star)) {
@@ -764,19 +780,19 @@ sadako.Game.prototype = {
         }
     },
 
-    useStar: function () {
+    useStar: function (player, star) {
         starFlag = true;
 
-        starBuffIcon = this.player.addChild(game.make.sprite(-130, -100,'goldStar'));
-        starBuffIcon.anchor.setTo(0.5,0.5);
+        starBuffIcon = this.player.addChild(game.make.sprite(-130, -100, 'goldStar'));
+        starBuffIcon.anchor.setTo(0.5, 0.5);
         starBuffIcon.scale.setTo(0.5);
-        starTimerBar = this.player.addChild(game.make.sprite(-86,-110,'timerBar'));
+        starTimerBar = this.player.addChild(game.make.sprite(-86, -110, 'timerBar'));
         starTimer = 80;
         game.time.events.add(Phaser.Timer.QUARTER, this.starTimerTick, this);
 
         console.log(starFlag);
         if (this.player.overlap(this.star)) {
-            this.star.kill();
+            star.kill();
         }
 
     },
@@ -788,6 +804,58 @@ sadako.Game.prototype = {
         this.player.body.velocity.y = -400;
 
         catapult.frame = 0;
+    },
+    useDoll: function (player, doll) {
+        //if we got here, doll flag is true and the doll is being spent
+
+        var interval = (leftFlag ? -1 * dollInt : dollInt);
+
+        var distance = 0;
+
+        this.player.position.x += interval*128; 
+
+        dollFlag = false;
+        doll.kill();
+    },
+    useStopwatch: function (player, stopwatch) {
+
+        stopwatchFlag = true;
+
+        stopwatchBuffIcon = this.player.addChild(game.make.sprite(-130, -100, 'goldStar'));
+        stopwatchBuffIcon.anchor.setTo(0.5, 0.5);
+        stopwatchBuffIcon.scale.setTo(0.5);
+        stopwatchTimerBar = this.player.addChild(game.make.sprite(-86, -110, 'timerBar'));
+        stopwatchTimer = 80;
+
+        stopwatch.kill();
+    },
+    useCookie: function (player, cookie) {
+        terror -= 20;
+        if(terror < 0)
+            terror = 0;
+        cookie.kill();
+    },
+    useGashapon: function (player, gashapon) {
+        if (!gashaponSoundFlag && !mute) {
+            var gashaponSound = game.add.audio('gachaponUse');
+            gashaponSound.volume = 0.1;
+            gashaponSoundFlag = true;
+            gashaponSound.play();
+            gashaponSound.onStop.add(function () {
+                gashaponSound = false;
+            })
+        }
+        if (this.gashapon.stock > 0) {
+            this.gashapon.animations.play('useGashapon', 10)
+
+            gashapon.stock--;
+        }
+    },
+    plateMovement: function (player, plate) {
+
+    },
+    plateEffect: function (player, plate) {
+
     },
     //reset
     reset: function () {
