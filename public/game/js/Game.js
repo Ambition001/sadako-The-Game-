@@ -23,6 +23,7 @@ var rightFlag = true;
 var downflag = false;
 var grabFlag = false;
 var cryFlag = false;
+var nearGashaponFlag = false;
 var spikedFlag = false;
 
 var dollFlag = false;
@@ -206,6 +207,22 @@ sadako.Game.prototype = {
         bottomCutSceneBar.fixedToCamera = true;
         bottomCutSceneBar.alpha = 0;
 
+        if(mapNum == 1)
+        {
+            this.createCutSceneBar();
+
+            this.createChatBox('I can\'t sleep without my teddy!', 4);
+            game.time.events.add(Phaser.Timer.HALF, this.faceLeft , this);
+            game.time.events.add(2*Phaser.Timer.HALF, this.faceRight , this);
+            game.time.events.add(3*Phaser.Timer.HALF, this.faceLeft , this);
+            game.time.events.add(4*Phaser.Timer.HALF, this.faceRight , this);
+            game.time.events.add(5*Phaser.Timer.HALF, this.faceLeft , this);
+            game.time.events.add(6*Phaser.Timer.HALF, this.faceRight , this);
+            game.time.events.add(7*Phaser.Timer.HALF, this.faceLeft , this);
+            game.time.events.add(8*Phaser.Timer.HALF, this.faceRight , this);
+            game.time.events.add(8*Phaser.Timer.HALF, this.destroyCutSceneBar , this);
+        }
+
         //Star test
         // starBuffIcon = this.player.addChild(game.make.sprite(-130, -100,'goldStar'));
         // starBuffIcon.anchor.setTo(0.5,0.5);
@@ -225,6 +242,14 @@ sadako.Game.prototype = {
             starBuffIcon.destroy();
         }
 
+    },
+    faceLeft: function() {
+        leftFlag = true;
+        rightFlag = false;
+    },
+    faceRight: function() {
+        leftFlag = false;
+        rightFlag = true;
     },
     findObjectsByType: function (type, map, layer) {
         var result = new Array();
@@ -385,10 +410,10 @@ sadako.Game.prototype = {
     },
     createGashapons: function () {
 
-        this.game.physics.enable(this.gashapon, Phaser.Physics.ARCADE);
+       /*  this.game.physics.enable(this.gashapon, Phaser.Physics.ARCADE);
         this.gashapon.enableBody = true;
         this.gashapon.body.gravity.y = 1000;
-        this.gashapon.animations.add('useGashapon', [0, 1, 2, 3, 4]);
+        this.gashapon.animations.add('useGashapon', [0, 1, 2, 3, 4]); */
     },
     createGashapon: function (x, y) {
 
@@ -404,6 +429,14 @@ sadako.Game.prototype = {
         this.star.enableBody = true;
         this.star.body.bounce.set(0.7);
         this.star.body.gravity.y = 400;
+    },
+    createCheatStar: function (x, y) {
+
+        this.cheatStar = this.game.add.sprite(x, y, 'goldStar');
+        this.game.physics.enable(this.cheatStar, Phaser.Physics.ARCADE);
+        this.cheatStar.enableBody = true;
+        this.cheatStar.body.bounce.set(0.7);
+        this.cheatStar.body.gravity.y = 400;
     },
     createDoll: function (x, y) {
 
@@ -484,6 +517,10 @@ sadako.Game.prototype = {
                 boxLandingSound.play();
             }
             //console.log(boxOnFloor);
+        }, this);
+
+        this.box.children.forEach(function (element) {
+            element.body.velocity.x = 0;
         }, this);
 
 
@@ -631,8 +668,6 @@ sadako.Game.prototype = {
                 jumpFlag = false;
             }
 
-            spikedFlag = false;
-
             if (this.player.body.velocity.x > 0 && this.player.body.isMoving) {
                 this.background.tilePosition.x -= 0.5;
             }
@@ -703,19 +738,28 @@ sadako.Game.prototype = {
             element.y = element.spawnPy;
         }, this);
 
+        game.input.enabled = true;
+
+        spikedFlag = false;
+
+        //reset item flags and cheats
+        starFlag = false;
+        dollFlag = false;
+        timerFlag = false;
+
         terror = 0;
     },
     //step on spike event
     stepOnSpike: function () {
 
-        if (!starFlag || !cheatStar) {
+        if (!starFlag && !cheatStar) {
             if (!spikedFlag) {
                 this.player.animations.play('spiked' + (rightFlag ? 'right' : 'left'), 10);
             }
             spikedFlag = true;
-            this.player.body.gravity = gravity * 2;
-            if (this.player.body.onFloor())
-                this.useCheckPoint();
+            
+            game.input.enabled = false;
+            game.time.events.add(Phaser.Timer.HALF, this.useCheckPoint(), this);
         }
     },
     //pushing box event
@@ -750,8 +794,8 @@ sadako.Game.prototype = {
             })
         }
         if (this.cheatgashapon.stock > 0) {
-            this.cheatgashapon.animations.play('useGashapon', 10)
-            this.createStar(this.cheatgashapon.x, this.cheatgashapon.y);
+            this.cheatgashapon.animations.play('useGashapon', 10);
+            this.createCheatStar(this.cheatgashapon.x, this.cheatgashapon.y);
             this.cheatgashapon.stock--;
         }
     },
@@ -762,26 +806,27 @@ sadako.Game.prototype = {
         starBuffIcon.anchor.setTo(0.5, 0.5);
         starBuffIcon.scale.setTo(0.5);
         starTimerBar = this.player.addChild(game.make.sprite(-86, -110, 'timerBar'));
-        starTimer = 80;
 
-        if (this.player.overlap(this.star)) {
-            this.star.kill();
+        if (this.player.overlap(this.cheatStar)) {
+            this.cheatStar.kill();
         }
     },
 
     useStar: function (player, star) {
         starFlag = true;
 
-        starBuffIcon = this.player.addChild(game.make.sprite(-130, -100, 'goldStar'));
-        starBuffIcon.anchor.setTo(0.5, 0.5);
-        starBuffIcon.scale.setTo(0.5);
-        starTimerBar = this.player.addChild(game.make.sprite(-86, -110, 'timerBar'));
-        starTimer = 80;
-        game.time.events.add(Phaser.Timer.QUARTER, this.starTimerTick, this);
-
+        if(!cheatStar)
+        {
+            starBuffIcon = this.player.addChild(game.make.sprite(-130, -100, 'goldStar'));
+            starBuffIcon.anchor.setTo(0.5, 0.5);
+            starBuffIcon.scale.setTo(0.5);
+            starTimerBar = this.player.addChild(game.make.sprite(-86, -110, 'timerBar'));
+            starTimer = 80;
+            game.time.events.add(Phaser.Timer.QUARTER, this.starTimerTick, this);
+        }
         console.log(starFlag);
         if (this.player.overlap(this.star)) {
-            star.kill();
+            this.star.kill();
         }
 
     },
@@ -825,6 +870,7 @@ sadako.Game.prototype = {
         cookie.kill();
     },
     useGashapon: function (player, gashapon) {
+        //flag & timer
         if (!gashaponSoundFlag && !mute) {
             var gashaponSound = game.add.audio('gachaponUse');
             gashaponSound.volume = 0.1;
@@ -835,8 +881,8 @@ sadako.Game.prototype = {
             })
         }
         if (this.gashapon.stock > 0) {
-            this.gashapon.animations.play('useGashapon', 10)
 
+            this.gashapon.animations.play('useGashapon', 10);
             gashapon.stock--;
         }
     },
@@ -848,9 +894,7 @@ sadako.Game.prototype = {
     },
     //reset
     reset: function () {
-        this.box.children.forEach(function (element) {
-            element.body.velocity.x = 0;
-        }, this);
+        
         this.door.children.forEach(function (element) {
             element.body.velocity.x = 0;
         }, this);
@@ -1189,7 +1233,6 @@ sadako.Game.prototype = {
             //ghostSound.stop();
         }, t);
 
-
         pauseRestart = game.add.sprite(game.camera.x + 1024, game.camera.y + 1100, 'restartButton');
         pauseRestart.anchor.setTo(0.5);
         pauseRestart.inputEnabled = true;
@@ -1208,6 +1251,8 @@ sadako.Game.prototype = {
             game.physics.arcade.isPaused = false;
             //ghostSound.stop();
         }, t);
+
+        
     },
     pauseGame: function () {
         if (!winState) {
