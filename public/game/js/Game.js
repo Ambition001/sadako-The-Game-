@@ -81,15 +81,26 @@ sadako.Game.prototype = {
         lv = level;
         mute = sound;
         mapname = map;
-        this.bgMusic = bgMusic;
-        backgroundMusic = this.bgMusic;
         mapNum = parseInt(mapname.slice(mapname.length - 1));
+
+        console.log(bgMusic);
+        if(bgMusic.name != "bgMusic"+mapNum){
+            var n = bgMusic.name;
+            bgMusic.onStop._bindings = new Array(); 
+            bgMusic.stop();
+            this.bgMusic = this.game.add.audio('bgMusic'+mapNum);
+            this.bgMusic.play();
+            this.bgMusic.onStop.add(function(){this.bgMusic.play();},this);
+        }else{
+            this.bgMusic = bgMusic;
+        }
+        
+        backgroundMusic = this.bgMusic;
         ghostSoundFlag = false;
         boxLandList = [];
         boxMoveSoundFlag = false;
         doorOpenSoundFlag = false;
         lighterOpenSoundFlag = false;
-
     },
     create: function () {
         game = this.game;

@@ -50,6 +50,10 @@ sadako.Preload.prototype = {
         this.load.spritesheet('aboutButton', 'assets/images/mainMenu/aboutButton.png', 512, 300);
         this.load.spritesheet('soundButton', 'assets/images/mainMenu/soundButton.png', 250, 250);
         this.load.audio('bgMusic1', 'assets/sounds/bgMusic1.ogg');
+        this.load.audio('bgMusic2', 'assets/sounds/bgMusic2.ogg');
+        this.load.audio('bgMusic3', 'assets/sounds/bgMusic3.ogg');
+        this.load.audio('bgMusic4', 'assets/sounds/bgMusic4.ogg');
+
 
         // Load for helpMenu
         this.load.image('helpMenu1', 'assets/images/helpMenu/help1.png');
