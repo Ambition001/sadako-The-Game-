@@ -136,6 +136,8 @@ sadako.Game.prototype = {
         this.createGhost();
         this.createMoth();
         this.createCatapult();
+
+        cheatStar = false;
         
         //create a player
         var result = this.findObjectsByType('playerStart', this.map, 'ObjectLayer');
@@ -523,7 +525,7 @@ sadako.Game.prototype = {
         {
             this.player.body.velocity.x = 0;
 
-            if(this.player.body.touching.down && (!this.player.animations.currentAnim.isPlaying || !this.player.animations.currentAnim.name.includes('idle')))
+            if((this.player.body.touching.down || this.player.body.onFloor()))
                 if(lighting)
                     this.player.animations.play("idlelighter"+(leftFlag ? 'left' : 'right'), 10);
                 else
@@ -536,9 +538,11 @@ sadako.Game.prototype = {
 
             this.player.body.velocity.x = -1 * moveSpeed;
 
-            if(!this.player.animations.currentAnim.isPlaying && this.player.body.touching.down)
+            if( (this.player.body.touching.down || this.player.body.onFloor()))
                 if(lighting)
                     this.player.animations.play("walklighterleft", 10);
+                else if (grabFlag)
+                    this.player.animations.play("walkgrableft", 10);
                 else
                     this.player.animations.play("walkleft", 10);
         }
@@ -549,9 +553,11 @@ sadako.Game.prototype = {
 
             this.player.body.velocity.x = moveSpeed;
 
-            if(!this.player.animations.currentAnim.isPlaying && this.player.body.touching.down)
+            if((this.player.body.touching.down || this.player.body.onFloor()))
                 if(lighting)
                     this.player.animations.play("walklighterright", 10);
+                else if (grabFlag)
+                    this.player.animations.play("walkgrabright", 10);
                 else
                     this.player.animations.play("walkright", 10);
         }
@@ -560,7 +566,7 @@ sadako.Game.prototype = {
             //slow down!
             this.player.body.velocity.x = 0;
 
-            if(this.player.body.touching.down && (!this.player.animations.currentAnim.isPlaying || !this.player.animations.currentAnim.name.includes('idle')))
+            if((this.player.body.touching.down || this.player.body.onFloor()) )
                 if(lighting)
                     this.player.animations.play("idlelighter"+(leftFlag ? 'left' : 'right'), 10);
                 else
@@ -622,13 +628,12 @@ sadako.Game.prototype = {
         //this.skullMovement();
 
 
-        /* if(starFlag && !winState)
+        if(cheatStar && !winState)
         {
             moveSpeed = 1000;
-            jumpHeight = -750;
+            jumpHeight = -900;
             terror = 0;
-            this.game.physics.arcade.collide(this.player, this.blockedLayer);
-        } */
+        }
 
         if(!pauseFlag)
             this.player.bringToTop();
@@ -688,14 +693,13 @@ sadako.Game.prototype = {
                 boxMoveSoundFlag = false;
             })
         }
+        grabFlag = true;
         if(player.x<=box.position.x-256 || player.x>=box.position.x+256){
             if(box.position.x>this.player.x){
                 box.body.velocity.x += 32;
-                this.player.animations.play("walkgrabright", 10);
             }
             else{
                 box.body.velocity.x -= 32;
-                this.player.animations.play("walkgrableft", 10);
             }
         }
     },
