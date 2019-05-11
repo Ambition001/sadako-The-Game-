@@ -223,8 +223,6 @@ sadako.Game.prototype = {
             this.createCutSceneBar();
 
             this.createChatBox('I can\'t sleep without my teddy!', 4);
-            game.time.events.add(Phaser.Timer.HALF, this.faceLeft , this);
-            game.time.events.add(2*Phaser.Timer.HALF, this.faceRight , this);
             game.time.events.add(3*Phaser.Timer.HALF, this.faceLeft , this);
             game.time.events.add(4*Phaser.Timer.HALF, this.faceRight , this);
             game.time.events.add(5*Phaser.Timer.HALF, this.faceLeft , this);
