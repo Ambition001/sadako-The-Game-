@@ -106,6 +106,14 @@ sadako.Game.prototype = {
         boxMoveSoundFlag = false;
         doorOpenSoundFlag = false;
         lighterOpenSoundFlag = false;
+
+        
+         //reset item flags and cheats
+         cheatStar = false;
+         starFlag = false;
+         dollFlag = false;
+         timerFlag = false;
+         cheatDone = false;
     },
     create: function () {
         game = this.game;
@@ -132,6 +140,8 @@ sadako.Game.prototype = {
 
         this.map = this.game.add.tilemap(mapname);
 
+
+        
         //TODO IF level4 -> background = null
 
 
@@ -498,6 +508,7 @@ sadako.Game.prototype = {
         this.game.physics.arcade.overlap(this.player, this.catapult, this.useCatapult, null, this);
 
         this.game.physics.arcade.collide(this.star, this.blockedLayer);
+        this.game.physics.arcade.collide(this.cheatStar, this.blockedLayer);
         this.game.physics.arcade.collide(this.gashapons, this.blockedLayer);
         this.game.physics.arcade.collide(this.cheatgashapon, this.blockedLayer);
 
@@ -1117,6 +1128,8 @@ sadako.Game.prototype = {
     winningBear: function () {
         winState = true;
         game.physics.arcade.isPaused = true;
+
+
         if (!mute) {
             var winMusic = game.add.audio('winMusic');
             backgroundMusic.pause();
@@ -1133,12 +1146,7 @@ sadako.Game.prototype = {
             element.kill();
         });
 
-        //reset item flags and cheats
-        cheatStar = false;
-        starFlag = false;
-        dollFlag = false;
-        timerFlag = false;
-        cheatDone = false;
+       
 
         pauseButton.destroy();
         pauseWhite = game.add.sprite(game.camera.x + 1024, game.camera.y + 1024, 'white');
