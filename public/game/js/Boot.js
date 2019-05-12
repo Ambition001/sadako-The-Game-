@@ -7,7 +7,7 @@ sadako.Boot.prototype = {
     preload: function() {
         //assets we'll use in the loading screen
         this.load.image('icon', 'assets/images/icon/icon.png');
-        this.load.image('preloadimage', 'assets/images/backstory/preload-backstory(temp).png');
+        this.load.image('preloadimage', 'assets/images/backstory/preload-backstory.png');
     },
     create: function() {
         
