@@ -88,14 +88,21 @@ sadako.Game.prototype = {
         mapname = map;
         mapNum = parseInt(mapname.slice(mapname.length - 1));
 
-        console.log(bgMusic);
         if(bgMusic.name != "bgMusic"+mapNum){
-            var n = bgMusic.name;
             bgMusic.onStop._bindings = new Array(); 
             bgMusic.stop();
-            this.bgMusic = this.game.add.audio('bgMusic'+mapNum);
+            if(mapNum != 6){
+                this.bgMusic = this.game.add.audio('bgMusic'+mapNum);
+            }else{
+                this.bgMusic = this.game.add.audio('bgMusic6First');
+            }
             this.bgMusic.play();
-            this.bgMusic.onStop.add(function(){this.bgMusic.play();},this);
+            this.bgMusic.onStop.add(function(){
+                this.bgMusic = this.game.add.audio('bgMusic6');
+                this.bgMusic.play();
+                this.bgMusic.onStop._bindings = new Array();
+                this.bgMusic.onStop.add(function(){this.bgMusic.play();},this);
+            },this);
         }else{
             this.bgMusic = bgMusic;
         }
