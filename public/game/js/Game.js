@@ -325,7 +325,7 @@ sadako.Game.prototype = {
                 element.y -= map.tileHeight;
                 for (var property in element.properties)
                 {
-                    element[property] = element.properties[property];
+                    element[property[0]] = element.properties[property];
                 }
                 result.push(element);
             }
