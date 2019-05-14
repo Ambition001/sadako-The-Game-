@@ -55,6 +55,7 @@ sadako.Preload.prototype = {
         this.load.audio('bgMusic4', 'assets/sounds/bgMusic4.ogg');
         this.load.audio('bgMusic5', 'assets/sounds/bgMusic5.ogg');
         this.load.audio('bgMusic6', 'assets/sounds/bgMusic6.ogg');
+        this.load.audio('bgMusic6First', 'assets/sounds/bgMusic6First.ogg');
 
         // Load for helpMenu
         this.load.image('helpMenu1', 'assets/images/helpMenu/help1.png');
