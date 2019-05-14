@@ -590,6 +590,7 @@ sadako.Game.prototype = {
         this.game.physics.arcade.collide(this.moths, this.box);
         this.game.physics.arcade.overlap(this.moths, this.player, this.mothTouch, null, this);
         this.game.physics.arcade.overlap(this.wanderingGhost,this.player,this.wanderingGhostTouch,null,this);
+        this.game.physics.arcade.overlap(this.uncle, this.player, this.uncleTouch, null, this);
 
         this.game.physics.arcade.overlap(this.cheatStar, this.player, this.useCheatStar, null, this);
         this.game.physics.arcade.overlap(this.star, this.player, this.useStar, null, this);
@@ -826,6 +827,12 @@ sadako.Game.prototype = {
             uncleDone = true;
         }
 
+        if(mapNum == 6 && uncleDone){
+            if(this.uncle.children[0].position>this.player.position.x){
+                this.terrified();
+            }
+            
+        }
         if(headacheFlag){
             this.player.body.velocity.x = 0;
             this.player.animations.play('headache' + (leftFlag ? 'left' : 'right'), 10);
@@ -881,6 +888,11 @@ sadako.Game.prototype = {
             element.x = element.spawnPx;
             element.y = element.spawnPy;
         }, this);
+
+        this.uncle.children.forEach(function(element){
+            element.destroy();
+        },this);
+        uncleDone = false;
 
         game.input.enabled = true;
 
@@ -1112,6 +1124,24 @@ sadako.Game.prototype = {
     },
     ghostTouch: function () {
         terror += 0.5;
+        ghostTouchFlag = true;
+        if (leftFlag) {
+            this.player.animations.play('gainterrorleft', 10);
+        }
+        else {
+            this.player.animations.play('gainterrorright', 10);
+        }
+        if (!takeDamageSoundFlag && !mute && !winState) {
+            var takeDamageSound = game.add.audio('takeDamage');
+            takeDamageSoundFlag = true;
+            takeDamageSound.play();
+            takeDamageSound.onStop.add(function () {
+                takeDamageSoundFlag = false;
+            })
+        }
+    },
+    uncleTouch: function () {
+        terror += 5;
         ghostTouchFlag = true;
         if (leftFlag) {
             this.player.animations.play('gainterrorleft', 10);
