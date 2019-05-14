@@ -180,8 +180,9 @@ sadako.Game.prototype = {
         this.createDoor();
         this.createSpikes();
         this.createBear();
-        // this.createGashapon();
-        // this.createSkull();
+        this.createGashapons();
+        this.createPlate();
+        // this.createSkuller();
         this.createGhost();
         this.createMoth();
         this.createwanderingGhost();
@@ -537,7 +538,7 @@ sadako.Game.prototype = {
 
         this.gashapons = this.game.add.group();
         this.gashapons.enableBody = true;
-        this.game.physics.enable(this.gashapon, Phaser.Physics.ARCADE);
+        this.game.physics.enable(this.gashapons, Phaser.Physics.ARCADE);
         result = this.findObjectsByType('gashapon', this.map, 'ObjectLayer');
         result.forEach(function (element) {
             this.gashapons.create(element.x, element.y, 'skull');
