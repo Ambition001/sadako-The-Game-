@@ -164,8 +164,9 @@ sadako.Game.prototype = {
         this.background = this.game.add.tileSprite(0, 0, 4096, 2048, 'background' + mapNum);
         this.background.fixedToCamera = true;
         
-        this.blockedLayer = this.map.createLayer('BlockLayer');
         this.backgroundlayer = this.map.createLayer('Background');
+        this.blockedLayer = this.map.createLayer('BlockLayer');
+        
 
         this.map.setCollisionBetween(1, 10000, true, 'BlockLayer');
 
