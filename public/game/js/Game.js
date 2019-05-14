@@ -273,9 +273,10 @@ sadako.Game.prototype = {
         headacheFlag = true;
         game.input.enabled = false;
         this.player.body.velocity.x = 0;
+        this.player.body.velocity.y = 0;
         this.player.animations.play('headache' + (leftFlag ? 'left' : 'right'), 10);
         this.camera.target = null;
-        game.time.events.add(4 * Phaser.Timer.SECOND, this.lv5Win, this);
+        game.time.events.add(5 * Phaser.Timer.SECOND, this.lv5Win, this);
     },
     sadakoHeadache: function () {
         headacheFlag = true;
@@ -288,6 +289,17 @@ sadako.Game.prototype = {
         sadakoInPrisonTween.to({
             alpha: 1
         }, 1000, Phaser.Easing.Linear.None, true, 0, 0, false);
+        if(leftFlag){
+            this.aKey.isDown = false;
+            this.aKey.isUp = true;
+            cursors.left.isDown = false;
+            cursors.left.isUp = true;
+        }else{
+            this.dKey.isDown = false;
+            this.dKey.isUp = true;
+            cursors.right.isDown = false;
+            cursors.right.isUp = true;
+        }
         game.time.events.add(Phaser.Timer.SECOND * 4, this.destroySadakoInPrison, this);
     },
     destroySadakoInPrison: function () {
