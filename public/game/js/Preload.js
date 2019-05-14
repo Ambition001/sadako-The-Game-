@@ -126,7 +126,7 @@ sadako.Preload.prototype = {
         this.load.audio('doorOpen', 'assets/sounds/doorOpen.ogg');
         this.load.audio('gachaponUse', 'assets/sounds/gachaponUse.ogg');
         this.load.audio('lighterOpen', 'assets/sounds/lighterOpen.ogg');
-    
+        this.load.audio('uncleSound', 'assets/sounds/boss.ogg');
 
         this.load.image('background1','assets/backgrounds/background1.png');
         this.load.image('background2','assets/backgrounds/background2.png');

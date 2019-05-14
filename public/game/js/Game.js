@@ -862,6 +862,10 @@ sadako.Game.prototype = {
                 element.animations.add('walking', [0, 1, 2, 3]);
                 element.animations.play('walking',10,true);
             }, this);
+            if (!mute) {
+                var uncleSound = game.add.audio('uncleSound');
+                uncleSound.play();
+            }
             uncleDone = true;
         }
 
@@ -974,7 +978,7 @@ sadako.Game.prototype = {
     moveBox: function (player, box) {
         if (!boxMoveSoundFlag && !mute) {
             var boxMoveSound = game.add.audio('boxMoving');
-            boxMoveSound.volume = 0.1;
+            boxMoveSound.volume = 0.5;
             boxMoveSoundFlag = true;
             boxMoveSound.play();
             boxMoveSound.onStop.add(function () {
@@ -1420,7 +1424,7 @@ sadako.Game.prototype = {
     },
     //winning event
     winningBear: function () {
-        if(mapNum = 3){
+        if(mapNum == 3){
         this.lv3Headache();
         this.bear.destroy();
         this.ghost.children.forEach(function (element) {
