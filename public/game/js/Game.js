@@ -263,7 +263,6 @@ sadako.Game.prototype = {
             game.time.events.add(8*Phaser.Timer.HALF, this.faceRight , this);
             game.time.events.add(8*Phaser.Timer.HALF, this.destroyCutSceneBar , this);
         }
-
         //Star test
         // starBuffIcon = this.player.addChild(game.make.sprite(-130, -100,'goldStar'));
         // starBuffIcon.anchor.setTo(0.5,0.5);
@@ -414,12 +413,12 @@ sadako.Game.prototype = {
             element.body.moves = false;
         }, this);
     },
-    /* createTV: function () {
+    createTV: function () {
         result = this.findObjectsByType('tv', this.map, 'ObjectLayer');
         result.forEach(function (element) {
             this.tv.create(element.x, element.y, 'tv');
         }, this);
-    }, */
+    },
 
     createBear: function () {
         this.bear = this.game.add.group();
@@ -520,16 +519,26 @@ sadako.Game.prototype = {
     },
     createGashapons: function () {
 
-       /*  this.game.physics.enable(this.gashapon, Phaser.Physics.ARCADE);
-        this.gashapon.enableBody = true;
-        this.gashapon.body.gravity.y = 1000;
-        this.gashapon.animations.add('useGashapon', [0, 1, 2, 3, 4]); */
+        this.gashapons = this.game.add.group();
+        this.gashapons.enableBody = true;
+        this.game.physics.enable(this.gashapon, Phaser.Physics.ARCADE);
+        result = this.findObjectsByType('gashapon', this.map, 'ObjectLayer');
+        result.forEach(function (element) {
+            this.gashapons.create(element.x, element.y, 'skull');
+        }, this);
+        this.gashapons.children.forEach(function (element) {
+            element.body.gravity.y = 1000;
+            element.body.setSize(384, 288, -192, 0);
+            element.animations.add('useGashapon', [0, 1, 2, 3, 4]);
+        }, this);
+        
     },
     createGashapon: function (x, y) {
 
         this.game.physics.enable(this.gashapon, Phaser.Physics.ARCADE);
         this.gashapon.enableBody = true;
         this.gashapon.body.gravity.y = 1000;
+        this.gashapon.body.setSize(384, 288, -192, 0);
         this.gashapon.animations.add('useGashapon', [0, 1, 2, 3, 4]);
     },
     createStar: function (x, y) {
@@ -547,6 +556,14 @@ sadako.Game.prototype = {
         this.cheatStar.enableBody = true;
         this.cheatStar.body.bounce.set(0.7);
         this.cheatStar.body.gravity.y = 400;
+    },
+    createCookie: function (x, y) {
+
+        this.cookie = this.game.add.sprite(x, y, 'cookie');
+        this.game.physics.enable(this.cookie, Phaser.Physics.ARCADE);
+        this.cookie.enableBody = true;
+        this.cookie.body.bounce.set(0.3);
+        this.cookie.body.gravity.y = 400;
     },
     createDoll: function (x, y) {
 
@@ -573,6 +590,15 @@ sadako.Game.prototype = {
         if (this.button.length > 0) {
             var button = this.button.children[0];
             button.frame = 0;
+        }
+
+        if(stopwatchFlag)
+        {
+            monMoveMult = 0.5;
+        }
+        else
+        {
+            monMoveMult = 1;
         }
 
         this.game.physics.arcade.collide(this.player, this.blockedLayer);
@@ -997,12 +1023,17 @@ sadako.Game.prototype = {
     },
     useDoll: function (player, doll) {
         //if we got here, doll flag is true and the doll is being spent
-        dollBuff.alpha = 0;
+
         var interval = (leftFlag ? -1 * dollInt : dollInt);
 
         var distance = 0;
 
-        this.player.position.x += interval*128; 
+        if(this.boxOnButton.getTileWorldXY(this.player.body.x + dollInt * 128 , this.player.body.y, 128, 128, 'BlockLayer') != null)
+        {
+
+        }
+
+        this.game.physics.
 
         dollFlag = false;
         doll.kill();
@@ -1043,7 +1074,17 @@ sadako.Game.prototype = {
         }
     },
     plateMovement: function (player, plate) {
+        //On overlap, with no escape
 
+        if(plate.frame == 0)
+            plateFlag = false;
+
+        if(!plateFlag){
+            plate.animations.play('crush', 10);
+            plateFlag = true;
+        }
+
+        terror += plate.frame / 20;
     },
     plateEffect: function (player, plate) {
 
@@ -1332,82 +1373,82 @@ sadako.Game.prototype = {
     //winning event
     winningBear: function () {
         if(mapNum = 3){
-            this.lv3Headache();
-            this.bear.destroy();
-            this.ghost.children.forEach(function (element) {
-                element.kill();
+        this.lv3Headache();
+        this.bear.destroy();
+        this.ghost.children.forEach(function (element) {
+            element.kill();
+        });
+        game.time.events.add(Phaser.Timer.SECOND * 3, this.destroySadako, this);
+    }else{
+        winState = true;
+        game.physics.arcade.isPaused = true;
+
+
+        if (!mute) {
+            var winMusic = game.add.audio('winMusic');
+            backgroundMusic.pause();
+            winMusic.play();
+            winMusic.onStop.add(function () {
+                if (!mute) {
+                    backgroundMusic.resume();
+                }
             });
-            game.time.events.add(Phaser.Timer.SECOND * 3, this.destroySadako, this);
-        }else{
-            winState = true;
-            game.physics.arcade.isPaused = true;
+        }
+        this.bear.destroy();
+        this.ghost.children.forEach(function (element) {
 
+            element.kill();
+        });
 
-            if (!mute) {
-                var winMusic = game.add.audio('winMusic');
-                backgroundMusic.pause();
-                winMusic.play();
-                winMusic.onStop.add(function () {
-                    if (!mute) {
-                        backgroundMusic.resume();
-                    }
-                });
-            }
-            this.bear.destroy();
-            this.ghost.children.forEach(function (element) {
+       
 
-                element.kill();
-            });
+        pauseButton.destroy();
+        pauseWhite = game.add.sprite(game.camera.x + 1024, game.camera.y + 1024, 'white');
+        pauseWhite.anchor.setTo(0.5, 0.5);
+        pauseWhite.alpha = 0.5;
 
-        
+        var textStyle = {
+            font: "100px Arial",
+            fill: "#000000",
+            align: "center"
+        };
 
-            pauseButton.destroy();
-            pauseWhite = game.add.sprite(game.camera.x + 1024, game.camera.y + 1024, 'white');
-            pauseWhite.anchor.setTo(0.5, 0.5);
-            pauseWhite.alpha = 0.5;
+        text = game.add.text(game.camera.x + 1024, game.camera.y + 500, "Win", textStyle);
+        text.anchor.setTo(0.5, 0.5);
 
-            var textStyle = {
-                font: "100px Arial",
-                fill: "#000000",
-                align: "center"
-            };
-
-            text = game.add.text(game.camera.x + 1024, game.camera.y + 500, "Win", textStyle);
-            text.anchor.setTo(0.5, 0.5);
-
-            if (mapNum < 7) {
-                pauseNext = game.add.sprite(game.camera.x + 1024, game.camera.y + 900, 'nextLevelButton');
-                pauseNext.anchor.setTo(0.5);
-                pauseNext.inputEnabled = true;
-                pauseNext.events.onInputDown.add(function () {
-                    game.physics.arcade.isPaused = false;
-                    if (mapNum == 6) {
-                        lv = 6;
-                        game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
-                        //ghostSound.stop();
-                    }
-                    else if (lv < mapNum + 1) {
-                        lv = mapNum + 1;
-                        game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level' + lv.toString());
-                        //ghostSound.stop();
-                    }
-                }, t);
-            }
-            pauseMenu = game.add.sprite(game.camera.x + 1024, game.camera.y + 1250, 'mainMenuButton');
-            pauseMenu.anchor.setTo(0.5);
-            pauseMenu.inputEnabled = true;
-            pauseMenu.events.onInputDown.add(function () {
+        if (mapNum < 7) {
+            pauseNext = game.add.sprite(game.camera.x + 1024, game.camera.y + 900, 'nextLevelButton');
+            pauseNext.anchor.setTo(0.5);
+            pauseNext.inputEnabled = true;
+            pauseNext.events.onInputDown.add(function () {
                 game.physics.arcade.isPaused = false;
                 if (mapNum == 6) {
                     lv = 6;
+                    game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
+                    //ghostSound.stop();
                 }
                 else if (lv < mapNum + 1) {
                     lv = mapNum + 1;
+                    game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level' + lv.toString());
+                    //ghostSound.stop();
                 }
-                game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
-                //ghostSound.stop();
             }, t);
         }
+        pauseMenu = game.add.sprite(game.camera.x + 1024, game.camera.y + 1250, 'mainMenuButton');
+        pauseMenu.anchor.setTo(0.5);
+        pauseMenu.inputEnabled = true;
+        pauseMenu.events.onInputDown.add(function () {
+            game.physics.arcade.isPaused = false;
+            if (mapNum == 6) {
+                lv = 6;
+            }
+            else if (lv < mapNum + 1) {
+                lv = mapNum + 1;
+            }
+            game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
+            //ghostSound.stop();
+        }, t);
+    }
         
     },lv3Win: function () {
         game.input.enabled = true;
@@ -1472,8 +1513,7 @@ sadako.Game.prototype = {
             game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
             //ghostSound.stop();
         }, t);
-        
-    },
+            },
     lv4Win: function () {
         game.input.enabled = true;
         winState = true;
