@@ -710,7 +710,7 @@
          "imageheight":3840,
          "imagewidth":1536,
          "margin":0,
-         "name":"SadakoFullTileSet",
+         "name":"SadakoTiles",
          "spacing":0,
          "tilecount":360,
          "tileheight":128,
