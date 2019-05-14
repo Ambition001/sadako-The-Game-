@@ -175,6 +175,7 @@ sadako.Game.prototype = {
         // this.createSkull();
         this.createGhost();
         this.createMoth();
+        this.createwanderingGhost();
         this.createCatapult();
 
         cheatStar = false;
@@ -389,6 +390,28 @@ sadako.Game.prototype = {
             element.touched = false;
 
             //element.wanderer = ;
+        }, this);
+    },
+    createwanderingGhost: function () {
+        this.wanderingGhost = this.game.add.group(this.monsters);
+        this.wanderingGhost.enableBody = true;
+        result = this.findObjectsByType('wanderingGhost', this.map, 'ObjectLayer');
+        result.forEach(function (element) {
+            this.createFromTiledObject(element, this.wanderingGhost, 'ghost');
+        }, this);
+        this.wanderingGhost.children.forEach(function (element) {
+            element.animations.add('floatingleft', [0, 1, 2, 3]);
+            element.animations.add('floatingright', [4, 5, 6, 7]);
+            element.animations.add('chasingleft', [8, 9, 10, 11]);
+            element.animations.add('chasingright', [12, 13, 14, 15]);
+            element.animations.add('scaredleft', [16, 17, 18, 19]);
+            element.animations.add('scaredright', [20, 21, 22, 23]);
+            element.animations.add('winning', [24, 25]);
+
+            element.spawnPx = element.x;
+            element.spawnPy = element.y;
+
+            element.touched = false;
         }, this);
     },
     createMoth: function () {
@@ -1014,6 +1037,37 @@ sadako.Game.prototype = {
                 takeDamageSoundFlag = false;
             })
         }
+    },
+    wanderingGhostMovement: function(){
+        this.wanderingGhost.children.forEach(function (element){
+            if(element[ax]=="x"){
+                element.body.velocity.x = element[vel]*element[direc];
+                if(element[direc] == 1){
+                    if(element.body.position.x - element.spawnPx >= element[range]*128){
+                        element[direc]*=-1;
+                    }
+                }
+                else{
+                    if(element.spawnPx - element.body.position.x>= element[range]*128){
+                        element[direc]*=-1;
+                    }
+                }
+                 
+            }
+            else{
+                element.body.velocity.y = element[vel]*element[direc];
+                if(element[direc] == 1){
+                    if(element.body.position.y - element.spawnPy >= element[range]*128){
+                        element[direc]*=-1;
+                    }
+                }
+                else{
+                    if(element.spawnPy - element.body.position.y>= element[range]*128){
+                        element[direc]*=-1;
+                    }
+                }
+            }
+        },this)
     },
     mothMovement: function () {
         this.moths.children.forEach(function (element) {
