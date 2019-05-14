@@ -262,8 +262,6 @@ sadako.Game.prototype = {
             game.time.events.add(8*Phaser.Timer.HALF, this.faceRight , this);
             game.time.events.add(8*Phaser.Timer.HALF, this.destroyCutSceneBar , this);
         }
-        this.player.position.x = 9000;
-        this.player.position.y = 0;
         //Star test
         // starBuffIcon = this.player.addChild(game.make.sprite(-130, -100,'goldStar'));
         // starBuffIcon.anchor.setTo(0.5,0.5);
@@ -795,16 +793,26 @@ sadako.Game.prototype = {
         this.mothMovement();
         this.wanderingGhostMovement();
         //this.skullMovement();
+
         if(mapNum == 4 && !headacheFlag && this.player.position.y > 13568){
             if(this.player.position.y > 14208 || this.player.position.x > 1024 ){
                 this.headache();
             }
         }
 
-        if(mapNum == 6 && !uncleDone && this.player.position.y < 2048) {
-            //TODO: CREATE UNCLE
+        if(mapNum == 6 && !uncleDone && this.player.position.y < 1664) {
+            this.uncle = this.game.add.group(this.monsters);
+            this.uncle.enableBody = true;
+            result = this.findObjectsByType('uncle', this.map, 'ObjectLayer');
+            result.forEach(function (element) {
+                this.uncle.create(element.x, element.y, 'uncle');
+            }, this);
+            this.uncle.children.forEach(function (element) {
+                element.animations.add('walking', [0, 1, 2, 3]);
+                element.body.velocity.x = 200;
+                element.animations.play('walking',10,true);
+            }, this);
             uncleDone = true;
-
         }
 
         if(headacheFlag){
