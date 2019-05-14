@@ -88,6 +88,11 @@ sadako.HelpMenu.prototype = {
         item2.scale.setTo(0.9);
         item2.visible = false;
         items.push(item2);
+        
+        var item3 = this.game.add.sprite(1835,710,'cookie');
+        item3.scale.setTo(0.9);
+        item3.visible = false;
+        items.push(item3);
 
         // this.player.animations.add('jumpupleft',[13,14,15]);
         // this.player.animations.add('jumpdownleft',[17,18]);
