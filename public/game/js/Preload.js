@@ -104,6 +104,8 @@ sadako.Preload.prototype = {
         this.load.spritesheet('hidingSpot', 'assets/sprites/HidingSpot.png', 192, 262);
         this.load.image('hauntedDoll', 'assets/sprites/HauntedDoll.png');
         this.load.spritesheet('gashapon', 'assets/sprites/Gashapon.png', 192, 288);
+        this.load.spritesheet('plate', 'assets/sprites/spikePlate.png', 768, 1280);
+        this.load.image('plateS', 'assets/sprites/SpikePlateS.png');
         this.load.image('sadakoInPrison', 'assets/images/SadakoInPrison.png');
 
         this.load.spritesheet('mainMenuButton', 'assets/images/game/mainMenu.png', 512, 300);
