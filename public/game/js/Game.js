@@ -263,6 +263,7 @@ sadako.Game.prototype = {
             game.time.events.add(8*Phaser.Timer.HALF, this.faceRight , this);
             game.time.events.add(8*Phaser.Timer.HALF, this.destroyCutSceneBar , this);
         }
+
         //Star test
         // starBuffIcon = this.player.addChild(game.make.sprite(-130, -100,'goldStar'));
         // starBuffIcon.anchor.setTo(0.5,0.5);
@@ -271,6 +272,15 @@ sadako.Game.prototype = {
         // starTimer = 80;
         // game.time.events.add(Phaser.Timer.QUARTER, this.starTimerTick, this);
     },
+    lv3Headache: function () {
+        headacheFlag = true;
+        game.input.enabled = false;
+        this.player.body.velocity.x = 0;
+        this.player.body.velocity.y = 0;
+        this.player.animations.play('headache' + (leftFlag ? 'left' : 'right'), 10);
+        this.camera.target = null;
+        game.time.events.add(4 * Phaser.Timer.SECOND, this.lv3Win, this);
+    },
     headache: function () {
         headacheFlag = true;
         game.input.enabled = false;
@@ -278,7 +288,7 @@ sadako.Game.prototype = {
         this.player.body.velocity.y = 0;
         this.player.animations.play('headache' + (leftFlag ? 'left' : 'right'), 10);
         this.camera.target = null;
-        game.time.events.add(5 * Phaser.Timer.SECOND, this.lv5Win, this);
+        game.time.events.add(5 * Phaser.Timer.SECOND, this.lv4Win, this);
     },
     sadakoHeadache: function () {
         headacheFlag = true;
@@ -1286,8 +1296,91 @@ sadako.Game.prototype = {
         chatBox.destroy();
         chatBoxBar.destroy();
     },
+    destroySadako: function () {
+        this.player.alpha = 0;
+    },
     //winning event
     winningBear: function () {
+        if(mapNum = 3){
+            this.lv3Headache();
+            this.bear.destroy();
+            this.ghost.children.forEach(function (element) {
+                element.kill();
+            });
+            game.time.events.add(Phaser.Timer.SECOND * 3, this.destroySadako, this);
+        }else{
+            winState = true;
+            game.physics.arcade.isPaused = true;
+
+
+            if (!mute) {
+                var winMusic = game.add.audio('winMusic');
+                backgroundMusic.pause();
+                winMusic.play();
+                winMusic.onStop.add(function () {
+                    if (!mute) {
+                        backgroundMusic.resume();
+                    }
+                });
+            }
+            this.bear.destroy();
+            this.ghost.children.forEach(function (element) {
+
+                element.kill();
+            });
+
+        
+
+            pauseButton.destroy();
+            pauseWhite = game.add.sprite(game.camera.x + 1024, game.camera.y + 1024, 'white');
+            pauseWhite.anchor.setTo(0.5, 0.5);
+            pauseWhite.alpha = 0.5;
+
+            var textStyle = {
+                font: "100px Arial",
+                fill: "#000000",
+                align: "center"
+            };
+
+            text = game.add.text(game.camera.x + 1024, game.camera.y + 500, "Win", textStyle);
+            text.anchor.setTo(0.5, 0.5);
+
+            if (mapNum < 7) {
+                pauseNext = game.add.sprite(game.camera.x + 1024, game.camera.y + 900, 'nextLevelButton');
+                pauseNext.anchor.setTo(0.5);
+                pauseNext.inputEnabled = true;
+                pauseNext.events.onInputDown.add(function () {
+                    game.physics.arcade.isPaused = false;
+                    if (mapNum == 6) {
+                        lv = 6;
+                        game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
+                        //ghostSound.stop();
+                    }
+                    else if (lv < mapNum + 1) {
+                        lv = mapNum + 1;
+                        game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level' + lv.toString());
+                        //ghostSound.stop();
+                    }
+                }, t);
+            }
+            pauseMenu = game.add.sprite(game.camera.x + 1024, game.camera.y + 1250, 'mainMenuButton');
+            pauseMenu.anchor.setTo(0.5);
+            pauseMenu.inputEnabled = true;
+            pauseMenu.events.onInputDown.add(function () {
+                game.physics.arcade.isPaused = false;
+                if (mapNum == 6) {
+                    lv = 6;
+                }
+                else if (lv < mapNum + 1) {
+                    lv = mapNum + 1;
+                }
+                game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
+                //ghostSound.stop();
+            }, t);
+        }
+        
+    },lv3Win: function () {
+        game.input.enabled = true;
         winState = true;
         game.physics.arcade.isPaused = true;
 
@@ -1308,7 +1401,7 @@ sadako.Game.prototype = {
             element.kill();
         });
 
-       
+        
 
         pauseButton.destroy();
         pauseWhite = game.add.sprite(game.camera.x + 1024, game.camera.y + 1024, 'white');
@@ -1330,16 +1423,9 @@ sadako.Game.prototype = {
             pauseNext.inputEnabled = true;
             pauseNext.events.onInputDown.add(function () {
                 game.physics.arcade.isPaused = false;
-                if (mapNum == 6) {
-                    lv = 6;
-                    game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
-                    //ghostSound.stop();
-                }
-                else if (lv < mapNum + 1) {
                     lv = mapNum + 1;
-                    game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level' + lv.toString());
-                    //ghostSound.stop();
-                }
+                    game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level4');
+                    //ghostSound.stop();   
             }, t);
         }
         pauseMenu = game.add.sprite(game.camera.x + 1024, game.camera.y + 1250, 'mainMenuButton');
@@ -1356,8 +1442,9 @@ sadako.Game.prototype = {
             game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
             //ghostSound.stop();
         }, t);
+        
     },
-    lv5Win: function () {
+    lv4Win: function () {
         game.input.enabled = true;
         winState = true;
         game.physics.arcade.isPaused = true;
