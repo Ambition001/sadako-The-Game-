@@ -1404,7 +1404,7 @@ sadako.Game.prototype = {
     },
     //winning event
     winningBear: function () {
-        if(mapNum = 3){
+        if(mapNum == 3){
         this.lv3Headache();
         this.bear.destroy();
         this.ghost.children.forEach(function (element) {
