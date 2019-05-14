@@ -777,9 +777,9 @@ sadako.Game.prototype = {
 
             console.log(this.player.body.deltaX());
             if (this.player.body.velocity.x > 0 && !this.player.body.blocked.right && this.player.body.deltaX() != 0) {
-                this.background.tilePosition.x -= 1;
+                this.background.tilePosition.x -= 0.6;
             }else if (this.player.body.velocity.x < 0 && !this.player.body.blocked.left && this.player.body.deltaX() != 0) {
-                this.background.tilePosition.x += 1;
+                this.background.tilePosition.x += 0.6;
             }
             if(mapNum == 4){
                 if (this.player.body.velocity.y < 0 && !this.player.body.blocked.up && this.player.body.deltaY() != 0) {
