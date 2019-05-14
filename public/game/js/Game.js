@@ -83,6 +83,8 @@ var starBuffIcon;
 
 var sadakoInPrison;
 var headacheFlag;
+var checkPointFlag;
+
 
 sadako.Game.prototype = {
     init: function (complete, level, sound, bgMusic, map) {
@@ -119,6 +121,7 @@ sadako.Game.prototype = {
         doorOpenSoundFlag = false;
         lighterOpenSoundFlag = false;
         headacheFlag = false;
+        checkPointFlag = false;
         
          //reset item flags and cheats
          cheatStar = false;
@@ -256,8 +259,6 @@ sadako.Game.prototype = {
             game.time.events.add(8*Phaser.Timer.HALF, this.destroyCutSceneBar , this);
         }
 
-        this.player.position.x = 256;
-        this.player.position.y = 13400;
         //Star test
         // starBuffIcon = this.player.addChild(game.make.sprite(-130, -100,'goldStar'));
         // starBuffIcon.anchor.setTo(0.5,0.5);
@@ -272,12 +273,12 @@ sadako.Game.prototype = {
         this.player.body.velocity.x = 0;
         this.player.animations.play('headache' + (leftFlag ? 'left' : 'right'), 10);
         this.camera.target = null;
-        game.time.events.add(5 * Phaser.Timer.SECOND, this.lv5Win, this);
+        game.time.events.add(4 * Phaser.Timer.SECOND, this.lv5Win, this);
     },
     sadakoHeadache: function () {
         headacheFlag = true;
         game.input.enabled = false;
-        game.time.events.add(6 * Phaser.Timer.SECOND, this.disableSadakoHeadache, this);
+        game.time.events.add(5 * Phaser.Timer.SECOND, this.disableSadakoHeadache, this);
 
         sadakoInPrison = game.add.sprite(this.camera.x, this.camera.y,'sadakoInPrison');
         sadakoInPrison.alpha = 0;
@@ -735,10 +736,16 @@ sadako.Game.prototype = {
 
             console.log(this.player.body.deltaX());
             if (this.player.body.velocity.x > 0 && !this.player.body.blocked.right && this.player.body.deltaX() != 0) {
-                this.background.tilePosition.x -= 0.5;
+                this.background.tilePosition.x -= 1;
+            }else if (this.player.body.velocity.x < 0 && !this.player.body.blocked.left && this.player.body.deltaX() != 0) {
+                this.background.tilePosition.x += 1;
             }
-            else if (this.player.body.velocity.x < 0 && !this.player.body.blocked.left && this.player.body.deltaX() != 0) {
-                this.background.tilePosition.x += 0.5;
+            if(mapNum == 4){
+                if (this.player.body.velocity.y < 0 && !this.player.body.blocked.up && this.player.body.deltaY() != 0) {
+                    this.background.tilePosition.y += 2;
+                }else if (this.player.body.velocity.y > 0 && !this.player.body.blocked.down && this.player.body.deltaY() != 0) {
+                    this.background.tilePosition.y -= 2;
+                }
             }
 
             this.player.bringToTop();
@@ -783,7 +790,15 @@ sadako.Game.prototype = {
         this.restartx = checkPoint.position.x + 128;
         this.restarty = checkPoint.position.y - 256;
         this.tilepx = this.background.tilePosition.x;
+        if(mapNum == 4 && !checkPointFlag && this.player.body.onFloor()){
+            checkPointFlag = true;
+            game.time.events.add(Phaser.Timer.SECOND * 13, this.toggleCheckPointFlag, this);
+            this.sadakoHeadache();
+        }
         terror = 0;
+    },
+    toggleCheckPointFlag: function () {
+        checkPointFlag = false;
     },
     useCheckPoint: function () {
         this.player.position.x = this.restartx;
