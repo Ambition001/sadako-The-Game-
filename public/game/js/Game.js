@@ -81,6 +81,11 @@ var starTimer;
 var starTimerBar;
 var starBuffIcon;
 
+var sadakoInPrison;
+var headacheFlag;
+var checkPointFlag;
+
+
 sadako.Game.prototype = {
     init: function (complete, level, sound, bgMusic, map) {
         completed = complete;
@@ -94,16 +99,17 @@ sadako.Game.prototype = {
             bgMusic.stop();
             if(mapNum != 6){
                 this.bgMusic = this.game.add.audio('bgMusic'+mapNum);
+                this.bgMusic.onStop.add(function(){this.bgMusic.play();},this);
             }else{
                 this.bgMusic = this.game.add.audio('bgMusic6First');
+                this.bgMusic.onStop.add(function(){
+                    this.bgMusic = this.game.add.audio('bgMusic6');
+                    this.bgMusic.play();
+                    this.bgMusic.onStop._bindings = new Array();
+                    this.bgMusic.onStop.add(function(){this.bgMusic.play();},this);
+                },this);
             }
             this.bgMusic.play();
-            this.bgMusic.onStop.add(function(){
-                this.bgMusic = this.game.add.audio('bgMusic6');
-                this.bgMusic.play();
-                this.bgMusic.onStop._bindings = new Array();
-                this.bgMusic.onStop.add(function(){this.bgMusic.play();},this);
-            },this);
         }else{
             this.bgMusic = bgMusic;
         }
@@ -114,7 +120,8 @@ sadako.Game.prototype = {
         boxMoveSoundFlag = false;
         doorOpenSoundFlag = false;
         lighterOpenSoundFlag = false;
-
+        headacheFlag = false;
+        checkPointFlag = false;
         
          //reset item flags and cheats
          cheatStar = false;
@@ -260,6 +267,35 @@ sadako.Game.prototype = {
         // starTimerBar = this.player.addChild(game.make.sprite(-86,-110,'timerBar'));
         // starTimer = 80;
         // game.time.events.add(Phaser.Timer.QUARTER, this.starTimerTick, this);
+    },
+    headache: function () {
+        headacheFlag = true;
+        game.input.enabled = false;
+        this.player.body.velocity.x = 0;
+        this.player.animations.play('headache' + (leftFlag ? 'left' : 'right'), 10);
+        this.camera.target = null;
+        game.time.events.add(4 * Phaser.Timer.SECOND, this.lv5Win, this);
+    },
+    sadakoHeadache: function () {
+        headacheFlag = true;
+        game.input.enabled = false;
+        game.time.events.add(5 * Phaser.Timer.SECOND, this.disableSadakoHeadache, this);
+
+        sadakoInPrison = game.add.sprite(this.camera.x, this.camera.y,'sadakoInPrison');
+        sadakoInPrison.alpha = 0;
+        var sadakoInPrisonTween = this.game.add.tween(sadakoInPrison);
+        sadakoInPrisonTween.to({
+            alpha: 1
+        }, 1000, Phaser.Easing.Linear.None, true, 0, 0, false);
+        game.time.events.add(Phaser.Timer.SECOND * 4, this.destroySadakoInPrison, this);
+    },
+    destroySadakoInPrison: function () {
+        sadakoInPrison.destroy();
+    },
+    disableSadakoHeadache:function () {
+        game.input.enabled = true;
+        headacheFlag = false;
+        this.player.animations.loop = false;
     },
     starTimerTick: function () {
         starTimer -= 1;
@@ -723,10 +759,16 @@ sadako.Game.prototype = {
 
             console.log(this.player.body.deltaX());
             if (this.player.body.velocity.x > 0 && !this.player.body.blocked.right && this.player.body.deltaX() != 0) {
-                this.background.tilePosition.x -= 0.5;
+                this.background.tilePosition.x -= 1;
+            }else if (this.player.body.velocity.x < 0 && !this.player.body.blocked.left && this.player.body.deltaX() != 0) {
+                this.background.tilePosition.x += 1;
             }
-            else if (this.player.body.velocity.x < 0 && !this.player.body.blocked.left && this.player.body.deltaX() != 0) {
-                this.background.tilePosition.x += 0.5;
+            if(mapNum == 4){
+                if (this.player.body.velocity.y < 0 && !this.player.body.blocked.up && this.player.body.deltaY() != 0) {
+                    this.background.tilePosition.y += 2;
+                }else if (this.player.body.velocity.y > 0 && !this.player.body.blocked.down && this.player.body.deltaY() != 0) {
+                    this.background.tilePosition.y -= 2;
+                }
             }
 
             this.player.bringToTop();
@@ -735,7 +777,16 @@ sadako.Game.prototype = {
         this.ghostMovement();
         this.mothMovement();
         //this.skullMovement();
+        if(mapNum == 4 && !headacheFlag && this.player.position.y > 13568){
+            if(this.player.position.y > 14208 || this.player.position.x > 1024 ){
+                this.headache();
+            }
+        }
 
+        if(headacheFlag){
+            this.player.body.velocity.x = 0;
+            this.player.animations.play('headache' + (leftFlag ? 'left' : 'right'), 10);
+        }
 
         if (cheatStar && !winState && !pauseFlag) {
             moveSpeed = 1000;
@@ -762,7 +813,15 @@ sadako.Game.prototype = {
         this.restartx = checkPoint.position.x + 128;
         this.restarty = checkPoint.position.y - 256;
         this.tilepx = this.background.tilePosition.x;
+        if(mapNum == 4 && !checkPointFlag && this.player.body.onFloor()){
+            checkPointFlag = true;
+            game.time.events.add(Phaser.Timer.SECOND * 13, this.toggleCheckPointFlag, this);
+            this.sadakoHeadache();
+        }
         terror = 0;
+    },
+    toggleCheckPointFlag: function () {
+        checkPointFlag = false;
     },
     useCheckPoint: function () {
         this.player.position.x = this.restartx;
@@ -800,7 +859,7 @@ sadako.Game.prototype = {
         starFlag = false;
         dollFlag = false;
         timerFlag = false;
-
+        this.player.animations.play("idle" + (leftFlag ? 'left' : 'right'), 10);
         terror = 0;
     },
     //step on spike event
@@ -1257,6 +1316,71 @@ sadako.Game.prototype = {
             game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
             //ghostSound.stop();
         }, t);
+    },
+    lv5Win: function () {
+        game.input.enabled = true;
+        winState = true;
+        game.physics.arcade.isPaused = true;
+
+
+        if (!mute) {
+            var winMusic = game.add.audio('winMusic');
+            backgroundMusic.pause();
+            winMusic.play();
+            winMusic.onStop.add(function () {
+                if (!mute) {
+                    backgroundMusic.resume();
+                }
+            });
+        }
+        this.bear.destroy();
+        this.ghost.children.forEach(function (element) {
+
+            element.kill();
+        });
+
+        
+
+        pauseButton.destroy();
+        pauseWhite = game.add.sprite(game.camera.x + 1024, game.camera.y + 1024, 'white');
+        pauseWhite.anchor.setTo(0.5, 0.5);
+        pauseWhite.alpha = 0.5;
+
+        var textStyle = {
+            font: "100px Arial",
+            fill: "#000000",
+            align: "center"
+        };
+
+        text = game.add.text(game.camera.x + 1024, game.camera.y + 500, "Died ?", textStyle);
+        text.anchor.setTo(0.5, 0.5);
+
+        if (mapNum < 7) {
+            pauseNext = game.add.sprite(game.camera.x + 1024, game.camera.y + 900, 'nextLevelButton');
+            pauseNext.anchor.setTo(0.5);
+            pauseNext.inputEnabled = true;
+            pauseNext.events.onInputDown.add(function () {
+                game.physics.arcade.isPaused = false;
+                    lv = mapNum + 1;
+                    game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level5');
+                    //ghostSound.stop();   
+            }, t);
+        }
+        pauseMenu = game.add.sprite(game.camera.x + 1024, game.camera.y + 1250, 'mainMenuButton');
+        pauseMenu.anchor.setTo(0.5);
+        pauseMenu.inputEnabled = true;
+        pauseMenu.events.onInputDown.add(function () {
+            game.physics.arcade.isPaused = false;
+            if (mapNum == 6) {
+                lv = 6;
+            }
+            else if (lv < mapNum + 1) {
+                lv = mapNum + 1;
+            }
+            game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
+            //ghostSound.stop();
+        }, t);
+        
     },
     terrified: function () {
         pauseFlag = true;
