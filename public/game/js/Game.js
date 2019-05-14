@@ -57,6 +57,7 @@ var winState = false;
 var terrorBar;
 var terrorWidth;
 var terrorBrackets;
+var dollBuff;
 
 var mapNum;
 var backgroundMusic;
@@ -239,6 +240,9 @@ sadako.Game.prototype = {
         terrorBar = this.player.addChild(game.make.sprite(64, -50, 'bar'));
         terrorBar.width = 0;
         terrorBrackets = this.player.addChild(game.make.sprite(-91, -55, 'brackets'));
+        dollBuff = this.player.addChild(game.make.sprite(45,-80, 'hauntedDoll'));
+        dollBuff.scale.setTo(0.6);
+        dollBuff.alpha = 0;
         this.tilepx = this.background.tilePosition.x;
         topCutSceneBar = game.add.sprite(game.camera.x, 0, 'cutSceneBar');
         topCutSceneBar.fixedToCamera = true;
@@ -260,7 +264,7 @@ sadako.Game.prototype = {
             game.time.events.add(8*Phaser.Timer.HALF, this.faceRight , this);
             game.time.events.add(8*Phaser.Timer.HALF, this.destroyCutSceneBar , this);
         }
-
+   
         //Star test
         // starBuffIcon = this.player.addChild(game.make.sprite(-130, -100,'goldStar'));
         // starBuffIcon.anchor.setTo(0.5,0.5);
@@ -580,7 +584,10 @@ sadako.Game.prototype = {
 
         this.game.physics.arcade.overlap(this.cheatStar, this.player, this.useCheatStar, null, this);
         this.game.physics.arcade.overlap(this.star, this.player, this.useStar, null, this);
-        this.game.physics.arcade.overlap(this.doll, this.player, function (){dollFlag = true}, null, this);
+        this.game.physics.arcade.overlap(this.doll, this.player, function (){
+            dollFlag = true;
+            dollBuff.alpha = 1;
+        }, null, this);
         this.game.physics.arcade.overlap(this.player, this.stopwatch, this.useStopwatch, null, this);
         this.game.physics.arcade.overlap(this.player, this.catapult, this.useCatapult, null, this);
 
@@ -769,9 +776,9 @@ sadako.Game.prototype = {
 
             console.log(this.player.body.deltaX());
             if (this.player.body.velocity.x > 0 && !this.player.body.blocked.right && this.player.body.deltaX() != 0) {
-                this.background.tilePosition.x -= 1;
+                this.background.tilePosition.x -= 0.6;
             }else if (this.player.body.velocity.x < 0 && !this.player.body.blocked.left && this.player.body.deltaX() != 0) {
-                this.background.tilePosition.x += 1;
+                this.background.tilePosition.x += 0.6;
             }
             if(mapNum == 4){
                 if (this.player.body.velocity.y < 0 && !this.player.body.blocked.up && this.player.body.deltaY() != 0) {
@@ -958,14 +965,14 @@ sadako.Game.prototype = {
 
         catapult.animations.play('useCatapult', 30);
 
-        this.player.body.velocity.x = 3000;
+        this.player.body.velocity.x = 2500;
         this.player.body.velocity.y = -400;
 
         catapult.frame = 0;
     },
     useDoll: function (player, doll) {
         //if we got here, doll flag is true and the doll is being spent
-
+        dollBuff.alpha = 0;
         var interval = (leftFlag ? -1 * dollInt : dollInt);
 
         var distance = 0;
