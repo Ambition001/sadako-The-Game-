@@ -220,7 +220,6 @@ sadako.Game.prototype = {
         this.player.animations.add('headacheleft', [112, 113, 114]);
 
         this.player.frame = 40;//start her off facing right
-        this.player.position.x = 10000;
         this.restartx = result[0].x;
         this.restarty = result[0].y - 128;
 
@@ -581,6 +580,7 @@ sadako.Game.prototype = {
         this.game.physics.arcade.collide(this.moths, this.blockedLayer);
         this.game.physics.arcade.collide(this.moths, this.box);
         this.game.physics.arcade.overlap(this.moths, this.player, this.mothTouch, null, this);
+        this.game.physics.arcade.overlap(this.wanderingGhost,this.player,this.wanderingGhostTouch,null,this);
 
         this.game.physics.arcade.overlap(this.cheatStar, this.player, this.useCheatStar, null, this);
         this.game.physics.arcade.overlap(this.star, this.player, this.useStar, null, this);
@@ -1146,6 +1146,24 @@ sadako.Game.prototype = {
                 }
             }
         },this)
+    },
+    wanderingGhostTouch: function () {
+        terror += 0.5;
+        ghostTouchFlag = true;
+        if (leftFlag) {
+            this.player.animations.play('gainterrorleft', 10);
+        }
+        else {
+            this.player.animations.play('gainterrorright', 10);
+        }
+        if (!takeDamageSoundFlag && !mute && !winState) {
+            var takeDamageSound = game.add.audio('takeDamage');
+            takeDamageSoundFlag = true;
+            takeDamageSound.play();
+            takeDamageSound.onStop.add(function () {
+                takeDamageSoundFlag = false;
+            })
+        }
     },
     mothMovement: function () {
         this.moths.children.forEach(function (element) {
