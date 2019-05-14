@@ -1216,7 +1216,7 @@
         {
          "columns":12,
          "firstgid":1,
-         "image":"..\/images\/SadakoFullTileSet.png",
+         "image":"..\/..\/..\/game\/assets\/map\/SadakoFullTileSet.png",
          "imageheight":3840,
          "imagewidth":1536,
          "margin":0,
