@@ -805,6 +805,9 @@ sadako.Game.prototype = {
         this.ghostMovement();
         this.mothMovement();
         this.wanderingGhostMovement();
+        if(mapNum == 6 && uncleDone){
+            this.uncleMovement();
+        }
         //this.skullMovement();
 
         if(mapNum == 4 && !headacheFlag && this.player.position.y > 13568){
@@ -822,7 +825,6 @@ sadako.Game.prototype = {
             }, this);
             this.uncle.children.forEach(function (element) {
                 element.animations.add('walking', [0, 1, 2, 3]);
-                element.body.velocity.x = 200;
                 element.animations.play('walking',10,true);
             }, this);
             uncleDone = true;
@@ -1079,6 +1081,11 @@ sadako.Game.prototype = {
             doorOpenSound.play();
 
         }
+    },
+    uncleMovement: function(){
+        this.uncle.children.forEach(function (element){
+            this.game.physics.arcade.moveToObject(element, this.player, 400);
+        },this)
     },
     //ghost movement
     ghostMovement: function () {
