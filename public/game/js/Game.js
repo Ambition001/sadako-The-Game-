@@ -200,8 +200,6 @@ sadako.Game.prototype = {
         this.player.startx = this.player.position.x;
         this.player.starty = this.player.position.y;
 
-        this.player.position.x = 14000;
-        this.player.position.y = 1291;
         this.player.animations.add('idleleft', [0, 1, 2, 3, 4]);
         this.player.animations.add('walkleft', [5, 6, 7, 8, 9, 10, 11, 12]);
         this.player.animations.add('jumpupleft', [13, 14, 15]);
@@ -517,7 +515,7 @@ sadako.Game.prototype = {
             element.running = false;
         }, this);
     },
-    createSkull: function () {
+    /* createSkull: function () {
         this.skulls = this.game.add.group(this.monsters);
         this.skulls.enableBody = true;
         result = this.findObjectsByType('skull', this.map, 'ObjectLayer');
@@ -535,7 +533,7 @@ sadako.Game.prototype = {
 
 
         }, this);
-    },
+    }, */
     createFromTiledObject: function (element, group, name) {
         var sprite = group.create(element.x, element.y, name);
 
@@ -997,10 +995,10 @@ sadako.Game.prototype = {
             element.y = element.spawnPy;
         }, this);
 
-        this.skulls.children.forEach(function (element){
+        /* this.skulls.children.forEach(function (element){
             element.x = element.spawnPx;
             element.y = element.spawnPy;
-        }, this); 
+        }, this);  */
 
         this.box.children.forEach(function (element) {
             element.x = element.spawnPx;
