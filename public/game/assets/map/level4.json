@@ -790,8 +790,45 @@
          "tilewidth":64
         }, 
         {
+         "columns":2,
          "firstgid":21,
-         "source":"..\/..\/..\/..\/..\/..\/BasicColor.tsx"
+         "image":"..\/..\/..\/benchmark2\/assets\/images\/BasicColor.png",
+         "imageheight":256,
+         "imagewidth":256,
+         "margin":0,
+         "name":"BasicColor",
+         "spacing":0,
+         "tilecount":4,
+         "tileheight":128,
+         "tiles":[
+                {
+                 "id":0,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"checkPoint"
+                        }]
+                }, 
+                {
+                 "id":1,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"spike"
+                        }]
+                }, 
+                {
+                 "id":2,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":""
+                        }]
+                }],
+         "tilewidth":128
         }, 
         {
          "columns":12,

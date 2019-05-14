@@ -591,44 +591,6 @@
                 {
                  "gid":366,
                  "height":128,
-                 "id":37,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"ax",
-                         "type":"string",
-                         "value":"y"
-                        }, 
-                        {
-                         "name":"direc",
-                         "type":"int",
-                         "value":1
-                        }, 
-                        {
-                         "name":"range",
-                         "type":"int",
-                         "value":11
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"wanderingGhost"
-                        }, 
-                        {
-                         "name":"vel",
-                         "type":"int",
-                         "value":600
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":128,
-                 "x":11904,
-                 "y":128
-                }, 
-                {
-                 "gid":366,
-                 "height":128,
                  "id":40,
                  "name":"",
                  "properties":[
@@ -741,27 +703,27 @@
                  "name":"",
                  "properties":[
                         {
-                         "name":"ax",
-                         "type":"string",
-                         "value":"y"
-                        }, 
-                        {
-                         "name":"direc",
-                         "type":"int",
-                         "value":1
-                        }, 
-                        {
-                         "name":"range",
-                         "type":"int",
-                         "value":9
-                        }, 
-                        {
                          "name":"type",
                          "type":"string",
                          "value":"wanderingGhost"
                         }, 
                         {
-                         "name":"vel",
+                         "name":"zax",
+                         "type":"string",
+                         "value":"y"
+                        }, 
+                        {
+                         "name":"zdirec",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"zrange",
+                         "type":"int",
+                         "value":9
+                        }, 
+                        {
+                         "name":"zvel",
                          "type":"int",
                          "value":450
                         }],
@@ -770,44 +732,6 @@
                  "visible":true,
                  "width":128,
                  "x":11520,
-                 "y":128
-                }, 
-                {
-                 "gid":366,
-                 "height":128,
-                 "id":49,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"ax",
-                         "type":"string",
-                         "value":"y"
-                        }, 
-                        {
-                         "name":"direc",
-                         "type":"int",
-                         "value":1
-                        }, 
-                        {
-                         "name":"range",
-                         "type":"int",
-                         "value":8
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"wanderingGhost"
-                        }, 
-                        {
-                         "name":"vel",
-                         "type":"int",
-                         "value":450
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":128,
-                 "x":11008,
                  "y":128
                 }, 
                 {
@@ -827,44 +751,6 @@
                  "width":128,
                  "x":896,
                  "y":1408
-                }, 
-                {
-                 "gid":1073742190,
-                 "height":128,
-                 "id":55,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"ax",
-                         "type":"string",
-                         "value":"y"
-                        }, 
-                        {
-                         "name":"direc",
-                         "type":"int",
-                         "value":1
-                        }, 
-                        {
-                         "name":"range",
-                         "type":"int",
-                         "value":8
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"wanderingGhost"
-                        }, 
-                        {
-                         "name":"vel",
-                         "type":"int",
-                         "value":450
-                        }],
-                 "rotation":180,
-                 "type":"",
-                 "visible":true,
-                 "width":128,
-                 "x":1536,
-                 "y":0
                 }, 
                 {
                  "gid":361,
@@ -937,6 +823,120 @@
                  "width":128,
                  "x":896,
                  "y":640
+                }, 
+                {
+                 "gid":366,
+                 "height":128,
+                 "id":60,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"wanderingGhost"
+                        }, 
+                        {
+                         "name":"zax",
+                         "type":"string",
+                         "value":"y"
+                        }, 
+                        {
+                         "name":"zdirec",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"zrange",
+                         "type":"int",
+                         "value":9
+                        }, 
+                        {
+                         "name":"zvel",
+                         "type":"int",
+                         "value":450
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":128,
+                 "x":11904,
+                 "y":128
+                }, 
+                {
+                 "gid":366,
+                 "height":128,
+                 "id":61,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"wanderingGhost"
+                        }, 
+                        {
+                         "name":"zax",
+                         "type":"string",
+                         "value":"y"
+                        }, 
+                        {
+                         "name":"zdirec",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"zrange",
+                         "type":"int",
+                         "value":9
+                        }, 
+                        {
+                         "name":"zvel",
+                         "type":"int",
+                         "value":450
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":128,
+                 "x":11008,
+                 "y":128
+                }, 
+                {
+                 "gid":366,
+                 "height":128,
+                 "id":62,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"wanderingGhost"
+                        }, 
+                        {
+                         "name":"zax",
+                         "type":"string",
+                         "value":"y"
+                        }, 
+                        {
+                         "name":"zdirec",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"zrange",
+                         "type":"int",
+                         "value":9
+                        }, 
+                        {
+                         "name":"zvel",
+                         "type":"int",
+                         "value":450
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":128,
+                 "x":1408,
+                 "y":128
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -945,7 +945,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":60,
+ "nextobjectid":63,
  "orientation":"orthogonal",
  "renderorder":"left-down",
  "tiledversion":"1.2.3",
@@ -954,7 +954,7 @@
         {
          "columns":12,
          "firstgid":1,
-         "image":"..\/..\/..\/benchmark3\/assets\/images\/SadakoFullTileSet.png",
+         "image":"SadakoFullTileSet.png",
          "imageheight":3840,
          "imagewidth":1536,
          "margin":0,
@@ -978,8 +978,45 @@
          "tilewidth":128
         }, 
         {
+         "columns":2,
          "firstgid":365,
-         "source":"..\/..\/..\/..\/..\/..\/BasicColor.tsx"
+         "image":"..\/..\/..\/benchmark2\/assets\/images\/BasicColor.png",
+         "imageheight":256,
+         "imagewidth":256,
+         "margin":0,
+         "name":"BasicColor",
+         "spacing":0,
+         "tilecount":4,
+         "tileheight":128,
+         "tiles":[
+                {
+                 "id":0,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"checkPoint"
+                        }]
+                }, 
+                {
+                 "id":1,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"spike"
+                        }]
+                }, 
+                {
+                 "id":2,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":""
+                        }]
+                }],
+         "tilewidth":128
         }],
  "tilewidth":128,
  "type":"map",
