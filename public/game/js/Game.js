@@ -1507,7 +1507,77 @@ sadako.Game.prototype = {
         }, t);
     }
         
-    },lv3Win: function () {
+    },uncleDefeated: function () {
+        winState = true;
+        game.physics.arcade.isPaused = true;
+
+
+        if (!mute) {
+            var winMusic = game.add.audio('winMusic');
+            backgroundMusic.pause();
+            winMusic.play();
+            winMusic.onStop.add(function () {
+                if (!mute) {
+                    backgroundMusic.resume();
+                }
+            });
+        }
+        this.bear.destroy();
+        this.ghost.children.forEach(function (element) {
+
+            element.kill();
+        });
+
+       
+
+        pauseButton.destroy();
+        pauseWhite = game.add.sprite(game.camera.x + 1024, game.camera.y + 1024, 'white');
+        pauseWhite.anchor.setTo(0.5, 0.5);
+        pauseWhite.alpha = 0.5;
+
+        var textStyle = {
+            font: "100px Arial",
+            fill: "#000000",
+            align: "center"
+        };
+
+        text = game.add.text(game.camera.x + 1024, game.camera.y + 500, "Uncle Defeated", textStyle);
+        text.anchor.setTo(0.5, 0.5);
+
+        if (mapNum < 7) {
+            pauseNext = game.add.sprite(game.camera.x + 1024, game.camera.y + 900, 'nextLevelButton');
+            pauseNext.anchor.setTo(0.5);
+            pauseNext.inputEnabled = true;
+            pauseNext.events.onInputDown.add(function () {
+                game.physics.arcade.isPaused = false;
+                if (mapNum == 6) {
+                    lv = 6;
+                    game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
+                    //ghostSound.stop();
+                }
+                else if (lv < mapNum + 1) {
+                    lv = mapNum + 1;
+                    game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level' + lv.toString());
+                    //ghostSound.stop();
+                }
+            }, t);
+        }
+        pauseMenu = game.add.sprite(game.camera.x + 1024, game.camera.y + 1250, 'mainMenuButton');
+        pauseMenu.anchor.setTo(0.5);
+        pauseMenu.inputEnabled = true;
+        pauseMenu.events.onInputDown.add(function () {
+            game.physics.arcade.isPaused = false;
+            if (mapNum == 6) {
+                lv = 6;
+            }
+            else if (lv < mapNum + 1) {
+                lv = mapNum + 1;
+            }
+            game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
+            //ghostSound.stop();
+        }, t);
+    },
+    lv3Win: function () {
         game.input.enabled = true;
         winState = true;
         game.physics.arcade.isPaused = true;
