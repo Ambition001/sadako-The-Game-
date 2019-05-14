@@ -193,7 +193,8 @@ sadako.Game.prototype = {
         //create a player
         var result = this.findObjectsByType('playerStart', this.map, 'ObjectLayer');
         this.player = this.game.add.sprite(result[0].x, result[0].y - 128, 'sadako');
-
+        this.player.startx = this.player.position.x;
+        this.player.starty = this.player.position.y;
         this.player.animations.add('idleleft', [0, 1, 2, 3, 4]);
         this.player.animations.add('walkleft', [5, 6, 7, 8, 9, 10, 11, 12]);
         this.player.animations.add('jumpupleft', [13, 14, 15]);
@@ -830,6 +831,9 @@ sadako.Game.prototype = {
         this.ghostMovement();
         this.mothMovement();
         this.wanderingGhostMovement();
+        if(mapNum == 6 && uncleDone){
+            this.uncleMovement();
+        }
         //this.skullMovement();
 
         if(mapNum == 4 && !headacheFlag && this.player.position.y > 13568){
@@ -847,15 +851,16 @@ sadako.Game.prototype = {
             }, this);
             this.uncle.children.forEach(function (element) {
                 element.animations.add('walking', [0, 1, 2, 3]);
-                element.body.velocity.x = 200;
                 element.animations.play('walking',10,true);
             }, this);
             uncleDone = true;
         }
 
         if(mapNum == 6 && uncleDone){
-            if(this.uncle.children[0].position>this.player.position.x){
-                this.terrified();
+            if(this.uncle.children.length >0){
+                if(this.uncle.children[0].position>this.player.position.x){
+                    this.terrified();
+                }
             }
             
         }
@@ -887,11 +892,7 @@ sadako.Game.prototype = {
     toggleCheckPointFlag: function () {
         checkPointFlag = false;
     },
-    useCheckPoint: function () {
-        this.player.position.x = this.restartx;
-        this.player.position.y = this.restarty;
-        this.background.tilePosition.x = this.tilepx;
-
+    resetAll: function(){
         this.player.body.velocity.x = 0;
         this.player.body.velocity.y = 0;
 
@@ -930,6 +931,22 @@ sadako.Game.prototype = {
         timerFlag = false;
         this.player.animations.play("idle" + (leftFlag ? 'left' : 'right'), 10);
         terror = 0;
+    },
+    useCheckPoint: function () {
+        this.player.position.x = this.restartx;
+        this.player.position.y = this.restarty;
+        this.background.tilePosition.x = this.tilepx;
+
+        this.resetAll();
+    },
+    restartGame: function(){
+        this.player.position.x = this.player.startx;
+        this.player.position.y = this.player.starty;
+        this.restartx = this.player.startx;
+        this.restarty = this.player.starty;
+        this.background.tilePosition.x = 0;
+
+        this.resetAll();
     },
     //step on spike event
     stepOnSpike: function () {
@@ -1106,6 +1123,11 @@ sadako.Game.prototype = {
 
         }
     },
+    uncleMovement: function(){
+        this.uncle.children.forEach(function (element){
+            this.game.physics.arcade.moveToObject(element, this.player, 400);
+        },this)
+    },
     //ghost movement
     ghostMovement: function () {
         this.ghost.children.forEach(function (element) {
@@ -1252,7 +1274,6 @@ sadako.Game.prototype = {
     mothMovement: function () {
         this.moths.children.forEach(function (element) {
             if (!lighting) {
-                element.body.velocity.y = -400;
                 //initialize a speed every 10 frames
                 if (element.counter == 0) {
                     var c = Math.floor(Math.random() * 2);
@@ -1263,6 +1284,14 @@ sadako.Game.prototype = {
                         element.body.velocity.x = 400;
                     }
                     element.counter += 1;
+                    c = Math.floor(Math.random() * 2);
+                    if (c == 0) {
+                        element.body.velocity.y = -400;
+                    }
+                    else {
+                        element.body.velocity.y = 400;
+                    }
+                    element.counter += 1;
                 }
                 //reset the counter
                 else if (element.counter >= 20) {
@@ -1271,8 +1300,8 @@ sadako.Game.prototype = {
                 else {
                     element.counter += 1;
                 }
-                if (element.body.position.y <= 128) {
-                    element.body.velocity.y = 0;
+                if (element.body.position.y <= 128 && element.body.velocity.y < 0) {
+                    element.body.velocity.y *= -1;
                 }
                 if (element.body.position.x <= 128 && element.body.velocity.x < 0) {
                     element.body.velocity.x *= -1;
@@ -1281,7 +1310,10 @@ sadako.Game.prototype = {
                     element.body.velocity.x *= -1;
                 }
                 if (element.body.blocked.left || element.body.blocked.right) {
-                    element.body.velocity.x = 0;
+                    element.body.velocity.x *= -1;
+                }
+                if (element.body.blocked.up || element.body.blocked.down) {
+                    element.body.velocity.y *= -1;
                 }
             }
             else {
@@ -1640,6 +1672,7 @@ sadako.Game.prototype = {
         pauseRestart.anchor.setTo(0.5);
         pauseRestart.inputEnabled = true;
         pauseRestart.events.onInputDown.add(function () {
+            this.restartGame();
             game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, mapname);
             game.physics.arcade.isPaused = false;
             pauseFlag = false;
@@ -1705,6 +1738,7 @@ sadako.Game.prototype = {
                 pauseRestart.inputEnabled = true;
                 pauseRestart.events.onInputDown.add(function () {
                     t.pauseGame();
+                    this.restartGame();
                     game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, mapname);
                     //ghostSound.stop();
                 }, t);
