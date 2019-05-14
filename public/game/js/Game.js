@@ -827,7 +827,9 @@ sadako.Game.prototype = {
 
             this.player.bringToTop();
         }
-
+        if(this.player.body.velocity.y > 2000){
+            this.player.body.velocity.y = 2000;
+        }
         this.ghostMovement();
         this.mothMovement();
         this.wanderingGhostMovement();
@@ -920,10 +922,12 @@ sadako.Game.prototype = {
             element.y = element.spawnPy;
         }, this);
 
-        this.uncle.children.forEach(function(element){
-            element.destroy();
-        },this);
-        uncleDone = false;
+        if(uncleDone){
+            this.uncle.children.forEach(function(element){
+                element.destroy();
+            },this);
+            uncleDone = false;
+        }
 
         game.input.enabled = true;
 
