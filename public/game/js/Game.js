@@ -199,8 +199,6 @@ sadako.Game.prototype = {
         this.player.startx = this.player.position.x;
         this.player.starty = this.player.position.y;
 
-        this.player.position.x = 14000;
-        this.player.position.y = 1291;
         this.player.animations.add('idleleft', [0, 1, 2, 3, 4]);
         this.player.animations.add('walkleft', [5, 6, 7, 8, 9, 10, 11, 12]);
         this.player.animations.add('jumpupleft', [13, 14, 15]);
@@ -930,8 +928,12 @@ sadako.Game.prototype = {
                 }
                 
             }
+            else{
+                game.time.events.add(Phaser.Timer.SECOND * 4, this.uncleDefeated, this);
+            }
 
         }
+        
 
         if(headacheFlag){
             this.player.body.velocity.x = 0;
@@ -974,11 +976,6 @@ sadako.Game.prototype = {
             element.x = element.spawnPx;
             element.y = element.spawnPy;
         }, this);
-
-        this.skulls.children.forEach(function (element){
-            element.x = element.spawnPx;
-            element.y = element.spawnPy;
-        }, this); 
 
         this.box.children.forEach(function (element) {
             element.x = element.spawnPx;
