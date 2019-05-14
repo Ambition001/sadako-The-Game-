@@ -135,10 +135,10 @@ sadako.Preload.prototype = {
         this.load.image('background2','assets/backgrounds/background2.png');
         this.load.image('background3','assets/backgrounds/background3.png');
         this.load.image('background4','assets/backgrounds/background4.png');
-        // this.load.image('background5','assets/backgrounds/background5.png');
+        this.load.image('background5','assets/backgrounds/background6.png');
         this.load.image('background6','assets/backgrounds/background6.png');
         load = true;
-        var loadDoneText = this.game.add.text(this.game.world.centerX + 200, this.game.world.centerY - 1024, "Load Completed, Press ESC to skip", textStyle);
+        var loadDoneText = this.game.add.text(this.game.world.centerX + 200, this.game.world.centerY - 1024, "Press ESC to skip after load", textStyle);
         loadDoneText.addColor("#FF0000", 22);
         loadDoneText.addColor("#000000", 25);
 

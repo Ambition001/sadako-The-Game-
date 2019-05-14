@@ -28,7 +28,7 @@ var nearGashaponFlag = false;
 var spikedFlag = false;
 
 var dollFlag = false;
-var dollInt = 5;
+var dollInt = 7;
 var starFlag = false;
 var cheatStar = false;
 var timerFlag;
@@ -162,7 +162,7 @@ sadako.Game.prototype = {
         this.map.addTilesetImage('SadakoTiles', 'sadakoTiles');
         this.map.addTilesetImage('BasicColor', 'basicColor');
         
-        this.background = this.game.add.tileSprite(0, 0, 4096, 2048, 'background' + mapNum);
+            this.background = this.game.add.tileSprite(0, 0, 4096, 2048, 'background' + mapNum);
         this.background.fixedToCamera = true;
         
         this.backgroundlayer = this.map.createLayer('Background');
@@ -199,6 +199,7 @@ sadako.Game.prototype = {
         this.player = this.game.add.sprite(result[0].x, result[0].y - 128, 'sadako');
         this.player.startx = this.player.position.x;
         this.player.starty = this.player.position.y;
+        
 
         this.player.animations.add('idleleft', [0, 1, 2, 3, 4]);
         this.player.animations.add('walkleft', [5, 6, 7, 8, 9, 10, 11, 12]);
@@ -1036,6 +1037,8 @@ sadako.Game.prototype = {
         this.restartx = this.player.startx;
         this.restarty = this.player.starty;
         this.background.tilePosition.x = 0;
+        
+        this.createDolls();
 
         this.resetAll();
     },
