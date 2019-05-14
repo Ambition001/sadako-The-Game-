@@ -31,7 +31,7 @@ var dollFlag = false;
 var dollInt = 5;
 var starFlag = false;
 var cheatStar = false;
-var timerFlag = false;
+var timerFlag;
 var itemTimer = 0;
 var catapultLoad = false;
 
@@ -593,7 +593,7 @@ sadako.Game.prototype = {
             button.frame = 0;
         }
 
-        if(stopwatchFlag)
+        if(timerFlag)
         {
             monMoveMult = 0.5;
         }
@@ -678,7 +678,7 @@ sadako.Game.prototype = {
             this.terrified();
         }
 
-        if(terror == 95 && dollFlag)
+        if(terror >= 90 && dollFlag)
         {
             this.useDoll();
         }
@@ -1057,7 +1057,7 @@ sadako.Game.prototype = {
     },
     useStopwatch: function (player, stopwatch) {
 
-        stopwatchFlag = true;
+        timerFlag = true;
 
         stopwatchBuffIcon = this.player.addChild(game.make.sprite(-130, -100, 'goldStar'));
         stopwatchBuffIcon.anchor.setTo(0.5, 0.5);
