@@ -40,8 +40,6 @@ sadako.Preload.prototype = {
         this.game.time.events.add(Phaser.Timer.SECOND * 20, backstorytoggle, this);
 
 
-        // TODO: load game assets(tilemap/image/sprites/audio)
-
         // Load for mainMenu
         this.load.image('mainMenuTitle', 'assets/images/mainMenu/title.png');
         this.load.spritesheet('playButton', 'assets/images/mainMenu/playButton.png', 512, 300);
@@ -101,6 +99,7 @@ sadako.Preload.prototype = {
         this.load.spritesheet('ghost', 'assets/sprites/ghost.png', 256, 256);
         this.load.spritesheet('moth', 'assets/sprites/moth.png', 128, 128);
         this.load.spritesheet('skull', 'assets/sprites/skull.png', 128, 128);
+        this.load.spritesheet('uncle', 'assets/sprites/EvilUncle.png', 384, 1280);
         this.load.image('goldStar', 'assets/sprites/goldstar.png');
         this.load.spritesheet('hidingSpot', 'assets/sprites/HidingSpot.png', 192, 262);
         this.load.image('hauntedDoll', 'assets/sprites/HauntedDoll.png');
