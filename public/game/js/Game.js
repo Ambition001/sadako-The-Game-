@@ -72,6 +72,7 @@ var lighterOpenSoundFlag;
 
 var boxOnFloor;
 var boxLandList;
+var usedGashaponList;
 var topCutSceneBar;
 var bottomCutSceneBar;
 var chatBox;
@@ -435,7 +436,7 @@ sadako.Game.prototype = {
         this.wanderingGhost.enableBody = true;
         result = this.findObjectsByType('wanderingGhost', this.map, 'ObjectLayer');
         result.forEach(function (element) {
-            this.createFromTiledObject(element, this.wanderingGhost, 'ghost');
+            this.wanderingGhost.create(element.x, element.y, 'ghostW');
         }, this);
         this.wanderingGhost.children.forEach(function (element) {
             element.animations.add('floatingleft', [0, 1, 2, 3]);

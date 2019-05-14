@@ -523,9 +523,19 @@
                  "name":"",
                  "properties":[
                         {
+                         "name":"ax",
+                         "type":"string",
+                         "value":"x"
+                        }, 
+                        {
+                         "name":"direc",
+                         "type":"int",
+                         "value":-1
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
-                         "value":"skullerL"
+                         "value":"skuller"
                         }],
                  "rotation":0,
                  "type":"",
@@ -533,24 +543,6 @@
                  "width":128,
                  "x":1024,
                  "y":12032
-                }, 
-                {
-                 "gid":4,
-                 "height":128,
-                 "id":42,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"skullerR"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":128,
-                 "x":256,
-                 "y":9472
                 }, 
                 {
                  "gid":1,
@@ -701,6 +693,34 @@
                  "width":128,
                  "x":128,
                  "y":12544
+                }, 
+                {
+                 "gid":4,
+                 "height":128,
+                 "id":49,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"ax",
+                         "type":"string",
+                         "value":"x"
+                        }, 
+                        {
+                         "name":"direc",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"skuller"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":128,
+                 "x":256,
+                 "y":9472
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -709,7 +729,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":49,
+ "nextobjectid":50,
  "orientation":"orthogonal",
  "renderorder":"left-down",
  "tiledversion":"1.2.3",
