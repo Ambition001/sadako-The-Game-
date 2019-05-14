@@ -571,24 +571,6 @@
                  "y":384
                 }, 
                 {
-                 "gid":362,
-                 "height":128,
-                 "id":31,
-                 "name":"Ghost",
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"ghost"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":128,
-                 "x":19072,
-                 "y":1152
-                }, 
-                {
                  "gid":361,
                  "height":128,
                  "id":32,
@@ -641,6 +623,52 @@
                  "width":256,
                  "x":20352,
                  "y":1536
+                }, 
+                {
+                 "gid":367,
+                 "height":128,
+                 "id":36,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"gashaponS"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":128,
+                 "x":15232,
+                 "y":1664
+                }, 
+                {
+                 "gid":367,
+                 "height":128,
+                 "id":38,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"stock",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"gashaponC"
+                        }, 
+                        {
+                         "name":"xdirection",
+                         "type":"int",
+                         "value":-1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":128,
+                 "x":8320,
+                 "y":896
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -649,7 +677,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":36,
+ "nextobjectid":39,
  "orientation":"orthogonal",
  "renderorder":"left-down",
  "tiledversion":"1.2.3",
@@ -731,6 +759,19 @@
         {
          "firstgid":367,
          "source":"..\/..\/..\/..\/..\/..\/BasicColor.tsx"
+        }, 
+        {
+         "columns":12,
+         "firstgid":371,
+         "image":"SadakoFullTileSet.png",
+         "imageheight":3840,
+         "imagewidth":1536,
+         "margin":0,
+         "name":"SadakoTiles",
+         "spacing":0,
+         "tilecount":360,
+         "tileheight":128,
+         "tilewidth":128
         }],
  "tilewidth":128,
  "type":"map",

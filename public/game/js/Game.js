@@ -322,6 +322,10 @@ sadako.Game.prototype = {
         map.objects[layer].forEach(function (element) {
             if (element.properties[0].value === type) {
                 element.y -= map.tileHeight;
+                for (var property in element.properties)
+                {
+                    element[property] = element.properties[property];
+                }
                 result.push(element);
             }
         });
@@ -424,8 +428,6 @@ sadako.Game.prototype = {
             element.spawnPy = element.y;
 
             element.touched = false;
-
-            //element.wanderer = ;
         }, this);
     },
     createwanderingGhost: function () {
