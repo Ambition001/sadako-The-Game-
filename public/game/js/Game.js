@@ -160,11 +160,10 @@ sadako.Game.prototype = {
 
         this.map.addTilesetImage('SadakoTiles', 'sadakoTiles');
         this.map.addTilesetImage('BasicColor', 'basicColor');
-        if(mapNum != 5)
-        {
-            this.background = this.game.add.tileSprite(0, 0, 4096, 2048, 'background' + mapNum);
-            this.background.fixedToCamera = true;
-        }
+        
+        this.background = this.game.add.tileSprite(0, 0, 4096, 2048, 'background' + mapNum);
+        this.background.fixedToCamera = true;
+        
         this.blockedLayer = this.map.createLayer('BlockLayer');
         this.backgroundlayer = this.map.createLayer('Background');
 
@@ -264,7 +263,8 @@ sadako.Game.prototype = {
             game.time.events.add(8*Phaser.Timer.HALF, this.faceRight , this);
             game.time.events.add(8*Phaser.Timer.HALF, this.destroyCutSceneBar , this);
         }
-   
+        this.player.position.x = 9000;
+        this.player.position.y = 0;
         //Star test
         // starBuffIcon = this.player.addChild(game.make.sprite(-130, -100,'goldStar'));
         // starBuffIcon.anchor.setTo(0.5,0.5);
@@ -801,6 +801,12 @@ sadako.Game.prototype = {
             }
         }
 
+        if(mapNum == 6 && !uncleDone && this.player.position.y < 2048) {
+            //TODO: CREATE UNCLE
+            uncleDone = true;
+
+        }
+
         if(headacheFlag){
             this.player.body.velocity.x = 0;
             this.player.animations.play('headache' + (leftFlag ? 'left' : 'right'), 10);
@@ -815,18 +821,6 @@ sadako.Game.prototype = {
         //reset box velocity
         this.reset();
     },
-    // TODO: add hover to pause menu
-    // pauseUpdate: function () {
-    //     console.log("111");
-    //     if(!typeof(pauseResume) == "undefined"){
-    //         if(pauseResume.input.pointerOver()){
-    //             pauseResume.frame = 1;
-    //         }else{
-    //             pauseResume.frame = 0;
-    //         }
-    //     }
-    // },
-    //check point event
     passCheckPoint: function (player, checkPoint) {
         this.restartx = checkPoint.position.x + 128;
         this.restarty = checkPoint.position.y - 256;

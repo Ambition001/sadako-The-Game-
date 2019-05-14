@@ -49,7 +49,6 @@ sadako.MainMenu.prototype = {
         playButton.inputEnabled = true;
         playButton.events.onInputDown.add(this.levelSelect, this);
 
-        // TODO: change helpButton sprite to 'helpButtonA' if completed all levels
         if (completed) {
             helpButton = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY + 250, 'helpButtonA');
             helpButton.anchor.setTo(0.5);
