@@ -181,6 +181,7 @@ sadako.Game.prototype = {
         this.createDoor();
         this.createSpikes();
         this.createBear();
+        this.createDolls();
         this.createGashapons();
         this.createPlate();
         // this.createSkuller();
@@ -277,20 +278,23 @@ sadako.Game.prototype = {
         // game.time.events.add(Phaser.Timer.QUARTER, this.starTimerTick, this);
     },
     createPlate: function () {
+        console.log('hi!')
 
         this.plate = this.game.add.group();
         this.plate.enableBody = true;
         this.game.physics.enable(this.plate, Phaser.Physics.ARCADE);
         result = this.findObjectsByType('spikePlate', this.map, 'ObjectLayer');
         result.forEach(function (element) {
+            console.log(element);
             this.plate.create(element.x, element.y, 'plate');
         }, this);
         this.plate.children.forEach(function (element) {
-            element.body.gravity.y = 1000;
             element.animations.add('crush', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]);
+            element.edge = element.x + 768;
         }, this);
         
     },
+
     lv3Headache: function () {
         headacheFlag = true;
         game.input.enabled = false;
@@ -511,7 +515,7 @@ sadako.Game.prototype = {
             element.running = false;
         }, this);
     },
-    createSkull: function () {
+    /* createSkull: function () {
         this.skulls = this.game.add.group(this.monsters);
         this.skulls.enableBody = true;
         result = this.findObjectsByType('skull', this.map, 'ObjectLayer');
@@ -529,7 +533,7 @@ sadako.Game.prototype = {
 
 
         }, this);
-    },
+    }, */
     createFromTiledObject: function (element, group, name) {
         var sprite = group.create(element.x, element.y, name);
 
@@ -577,12 +581,23 @@ sadako.Game.prototype = {
         this.cookie.body.bounce.set(0.3);
         this.cookie.body.gravity.y = 400;
     },
+    createDolls: function (x, y) {
+
+        this.dolls = this.game.add.group();
+        this.dolls.enableBody = true;
+        this.game.physics.enable(this.dolls, Phaser.Physics.ARCADE);
+        result = this.findObjectsByType('hauntedDoll', this.map, 'ObjectLayer');
+        result.forEach(function (element) {
+            console.log(result);
+            this.dolls.create(element.x, element.y, 'hauntedDoll');
+        }, this);
+        this.dolls.children.forEach(function (element) {
+            element.body.gravity.y = 300;
+        }, this);
+    },
     createDoll: function (x, y) {
 
-        this.doll = this.game.add.sprite(x, y, 'hauntedDoll');
-        this.game.physics.enable(this.doll, Phaser.Physics.ARCADE);
-        this.doll.enableBody = true;
-        this.doll.body.bounce.set(0.2);
+        this.dolls.create(x, y, 'hauntedDoll');
         this.doll.body.gravity.y = 300;
     },
     createStopwatch: function (x, y) {
@@ -643,23 +658,30 @@ sadako.Game.prototype = {
         this.game.physics.arcade.collide(this.moths, this.box);
         this.game.physics.arcade.overlap(this.moths, this.player, this.mothTouch, null, this);
         this.game.physics.arcade.overlap(this.wanderingGhost,this.player,this.wanderingGhostTouch,null,this);
-        this.game.physics.arcade.overlap(this.player, this.spikePlate, this.plateMovement, null, this);
+        this.game.physics.arcade.overlap(this.player, this.plate, this.plateMovement, null, this);
         this.game.physics.arcade.collide(this.player, this.spikePlateS, (function () {terror = 90;}), null, this);
         this.game.physics.arcade.overlap(this.uncle, this.player, this.uncleTouch, null, this);
 
         this.game.physics.arcade.overlap(this.cheatStar, this.player, this.useCheatStar, null, this);
         this.game.physics.arcade.overlap(this.star, this.player, this.useStar, null, this);
-        this.game.physics.arcade.overlap(this.doll, this.player, function (){
+        this.game.physics.arcade.overlap(this.player, this.dolls, function (player, doll){
             dollFlag = true;
+            doll.kill();
             dollBuff.alpha = 1;
         }, null, this);
         this.game.physics.arcade.overlap(this.player, this.stopwatch, this.useStopwatch, null, this);
         this.game.physics.arcade.overlap(this.player, this.catapult, this.useCatapult, null, this);
 
+        this.game.physics.arcade.collide(this.dolls, this.blockedLayer);
+        this.game.physics.arcade.collide(this.cookies, this.blockedLayer);
         this.game.physics.arcade.collide(this.star, this.blockedLayer);
         this.game.physics.arcade.collide(this.cheatStar, this.blockedLayer);
         this.game.physics.arcade.collide(this.gashapons, this.blockedLayer);
         this.game.physics.arcade.collide(this.cheatgashapon, this.blockedLayer);
+        this.game.physics.arcade.overlap(this.stopwatch, this.blockedLayer);
+
+        /* if (this.player.x >= this.plate.x && this.player.x < spikePlate.x + 768);
+                console.log('overlap for real'); */
 
 
         if (this.door.length > 0) {
@@ -977,6 +999,14 @@ sadako.Game.prototype = {
             element.y = element.spawnPy;
         }, this);
 
+<<<<<<< HEAD
+=======
+        /* this.skulls.children.forEach(function (element){
+            element.x = element.spawnPx;
+            element.y = element.spawnPy;
+        }, this);  */
+
+>>>>>>> 0b4b8bd6fd1ef003d11dd7745b80f66b46f8be77
         this.box.children.forEach(function (element) {
             element.x = element.spawnPx;
             element.y = element.spawnPy;
@@ -1106,14 +1136,14 @@ sadako.Game.prototype = {
 
         catapult.frame = 0;
     },
-    useDoll: function (player, doll) {
+    useDoll: function () {
         //if we got here, doll flag is true and the doll is being spent
 
         var interval = (leftFlag ? -1 * dollInt : dollInt);
 
         var distance = 0;
 
-        if(this.boxOnButton.getTileWorldXY(this.player.body.x + dollInt * 128 , this.player.body.y, 128, 128, 'BlockLayer') == null)
+        if(this.map.getTileWorldXY(this.player.body.x + dollInt * 128 , this.player.body.y, 128, 128, 'BlockLayer') == null)
         {
             this.player.x = this.player.body.x + dollInt * 128;
         }
@@ -1121,16 +1151,15 @@ sadako.Game.prototype = {
         {
             for (var i = dollInt; i != 0; i > 0 ? (i--) :(i++))
             {
-                if (this.boxOnButton.getTileWorldXY(this.player.body.x + dollInt * 128, this.player.body.y, 128, 128, 'BlockLayer') == null) {
+                if (this.map.getTileWorldXY(this.player.body.x + dollInt * 128, this.player.body.y, 128, 128, 'BlockLayer') == null) {
                     this.player.x = this.player.body.x + dollInt * 128;
                 }
             }
         }
 
-
-
+        terror /= 2;
+        dollBuff.alpha = 0; 
         dollFlag = false;
-        doll.kill();
     },
     useStopwatch: function (player, stopwatch) {
 
