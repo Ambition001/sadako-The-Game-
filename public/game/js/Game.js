@@ -13,6 +13,7 @@ var desirFPS = 100;
 var jumpCounter = 0;
 var jumpHeight = 128 * -6;
 var moveSpeed = 500;
+
 var monMoveMult = 1;
 var gravity = 128 * 7;
 
@@ -141,14 +142,13 @@ sadako.Game.prototype = {
         this.map = this.game.add.tilemap(mapname);
 
 
-        
-        //TODO IF level4 -> background = null
-
-
         this.map.addTilesetImage('SadakoTiles', 'sadakoTiles');
         this.map.addTilesetImage('BasicColor', 'basicColor');
-        this.background = this.game.add.tileSprite(0, 0, 4096, 2048, 'background' + mapNum);
-        this.background.fixedToCamera = true;
+        if(mapNum != 5)
+        {
+            this.background = this.game.add.tileSprite(0, 0, 4096, 2048, 'background' + mapNum);
+            this.background.fixedToCamera = true;
+        }
         this.blockedLayer = this.map.createLayer('BlockLayer');
         this.backgroundlayer = this.map.createLayer('Background');
 
@@ -171,6 +171,7 @@ sadako.Game.prototype = {
         this.createCatapult();
 
         cheatStar = false;
+        cheatDone = false;
 
         //create a player
         var result = this.findObjectsByType('playerStart', this.map, 'ObjectLayer');
@@ -198,6 +199,8 @@ sadako.Game.prototype = {
         this.player.animations.add('interrifiedright', [99, 100, 101, 102]);
         this.player.animations.add('spikedleft', [103, 104, 105]);
         this.player.animations.add('spikedright', [106, 107, 108]);
+        this.player.animations.add('headacheright', [109, 110, 111]);
+        this.player.animations.add('headacheleft', [112, 113, 114]);
 
         this.player.frame = 40;//start her off facing right
 
@@ -780,7 +783,7 @@ sadako.Game.prototype = {
             spikedFlag = true;
             
             game.input.enabled = false;
-            game.time.events.add(Phaser.Timer.HALF, this.useCheckPoint, this);
+            game.time.events.add(Phaser.Timer.QUARTER, this.useCheckPoint, this);
         }
     },
     //pushing box event
