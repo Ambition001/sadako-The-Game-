@@ -87,6 +87,7 @@ var sadakoInPrison;
 var headacheFlag;
 var checkPointFlag;
 
+var uncledying = false;
 
 sadako.Game.prototype = {
     init: function (complete, level, sound, bgMusic, map) {
@@ -186,6 +187,7 @@ sadako.Game.prototype = {
         this.createMoth();
         this.createwanderingGhost();
         this.createCatapult();
+        this.createtv6();
 
         cheatStar = false;
         cheatDone = false;
@@ -195,6 +197,9 @@ sadako.Game.prototype = {
         this.player = this.game.add.sprite(result[0].x, result[0].y - 128, 'sadako');
         this.player.startx = this.player.position.x;
         this.player.starty = this.player.position.y;
+
+        this.player.position.x = 14000;
+        this.player.position.y = 1291;
         this.player.animations.add('idleleft', [0, 1, 2, 3, 4]);
         this.player.animations.add('walkleft', [5, 6, 7, 8, 9, 10, 11, 12]);
         this.player.animations.add('jumpupleft', [13, 14, 15]);
@@ -583,6 +588,21 @@ sadako.Game.prototype = {
         this.stopwatch.body.gravity.y = 400;
     },
 
+    createtv6: function(){
+        this.tvb = this.game.add.group();
+        this.tvb.enableBody = true;
+        result = this.findObjectsByType('tvB', this.map, 'ObjectLayer');
+        result.forEach(function(element){
+            this.tvb.create(element.x, element.y, 'tv6');
+        },this);
+        this.tvb.children.forEach(function (element){
+            element.animations.add('no', [0,1,2,3,4]);
+            element.animations.add('show', [7,8,9,10]);
+            element.animations.add('open',[11,12,13,14,15,16]);
+            element.animations.play('no', 10, true);
+        },this);
+    },
+
     // TODO Order:
     // COLLISION/LOGIC -> INPUT/GUI -> P MOVEMENT -> AI MOVEMENT
     update: function () {
@@ -811,7 +831,7 @@ sadako.Game.prototype = {
                 jumpFlag = false;
             }
 
-            console.log(this.player.body.deltaX());
+            //console.log(this.player.body.deltaX());
             if (this.player.body.velocity.x > 0 && !this.player.body.blocked.right && this.player.body.deltaX() != 0) {
                 this.background.tilePosition.x -= 0.6;
             }else if (this.player.body.velocity.x < 0 && !this.player.body.blocked.left && this.player.body.deltaX() != 0) {
@@ -864,6 +884,39 @@ sadako.Game.prototype = {
             }
             
         }
+        if(mapNum == 6 && this.player.position.x > 14270){
+            this.tvb.children.forEach(function (element) {
+                element.animations.play('show',10, false);
+            }, this);
+            game.input.enabled = false;
+            this.player.body.velocity.x=0;
+            this.player.animations.play('idleright', 10, true);
+            if(!this.uncledying){
+                if(this.uncle.children.length>0){
+                    if(this.uncle.children[0].position.x < 13500){
+                        this.uncle.children[0].body.velocity.x = 3000;
+                        this.uncle.children[0].body.velocity.y = 0;
+                    }
+                    else{
+                        this.uncledying = true;
+                        this.uncle.children.forEach(function(element){
+                            element.body.velocity.x = 0;
+                        },this);
+                        this.tvb.children.forEach(function (element) {
+                            element.animations.play('open',10, false);
+                        }, this);
+                        this.effect = this.game.add.group();
+                        this.effect.create(this.uncle.children[0].position.x, this.uncle.children[0].position.y, 'tvPortU');
+                        this.effect.children[0].animations.add('playing',[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);
+                        this.effect.children[0].animations.play('playing', 15, false);
+                        this.uncle.children[0].destroy();
+                    }
+                }
+                
+            }
+
+        }
+
         if(headacheFlag){
             this.player.body.velocity.x = 0;
             this.player.animations.play('headache' + (leftFlag ? 'left' : 'right'), 10);

@@ -452,7 +452,7 @@
                 }, 
                 {
                  "gid":1,
-                 "height":128,
+                 "height":256,
                  "id":36,
                  "name":"",
                  "properties":[
@@ -464,7 +464,7 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":128,
+                 "width":256,
                  "x":14464,
                  "y":1536
                 }, 
