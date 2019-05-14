@@ -181,8 +181,9 @@ sadako.Game.prototype = {
         this.createDoor();
         this.createSpikes();
         this.createBear();
-        // this.createGashapon();
-        // this.createSkull();
+        this.createGashapons();
+        this.createPlate();
+        // this.createSkuller();
         this.createGhost();
         this.createMoth();
         this.createwanderingGhost();
@@ -276,6 +277,21 @@ sadako.Game.prototype = {
         // starTimerBar = this.player.addChild(game.make.sprite(-86,-110,'timerBar'));
         // starTimer = 80;
         // game.time.events.add(Phaser.Timer.QUARTER, this.starTimerTick, this);
+    },
+    createPlate: function () {
+
+        this.plate = this.game.add.group();
+        this.plate.enableBody = true;
+        this.game.physics.enable(this.plate, Phaser.Physics.ARCADE);
+        result = this.findObjectsByType('spikePlate', this.map, 'ObjectLayer');
+        result.forEach(function (element) {
+            this.plate.create(element.x, element.y, 'plate');
+        }, this);
+        this.plate.children.forEach(function (element) {
+            element.body.gravity.y = 1000;
+            element.animations.add('crush', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]);
+        }, this);
+        
     },
     lv3Headache: function () {
         headacheFlag = true;
@@ -527,7 +543,7 @@ sadako.Game.prototype = {
 
         this.gashapons = this.game.add.group();
         this.gashapons.enableBody = true;
-        this.game.physics.enable(this.gashapon, Phaser.Physics.ARCADE);
+        this.game.physics.enable(this.gashapons, Phaser.Physics.ARCADE);
         result = this.findObjectsByType('gashapon', this.map, 'ObjectLayer');
         result.forEach(function (element) {
             this.gashapons.create(element.x, element.y, 'skull');
@@ -538,14 +554,6 @@ sadako.Game.prototype = {
             element.animations.add('useGashapon', [0, 1, 2, 3, 4]);
         }, this);
         
-    },
-    createGashapon: function (x, y) {
-
-        this.game.physics.enable(this.gashapon, Phaser.Physics.ARCADE);
-        this.gashapon.enableBody = true;
-        this.gashapon.body.gravity.y = 1000;
-        this.gashapon.body.setSize(384, 288, -192, 0);
-        this.gashapon.animations.add('useGashapon', [0, 1, 2, 3, 4]);
     },
     createStar: function (x, y) {
 
@@ -637,6 +645,8 @@ sadako.Game.prototype = {
         this.game.physics.arcade.collide(this.moths, this.box);
         this.game.physics.arcade.overlap(this.moths, this.player, this.mothTouch, null, this);
         this.game.physics.arcade.overlap(this.wanderingGhost,this.player,this.wanderingGhostTouch,null,this);
+        this.game.physics.arcade.overlap(this.player, this.spikePlate, this.plateMovement, null, this);
+        this.game.physics.arcade.collide(this.player, this.spikePlateS, (function () {terror = 90;}), null, this);
         this.game.physics.arcade.overlap(this.uncle, this.player, this.uncleTouch, null, this);
 
         this.game.physics.arcade.overlap(this.cheatStar, this.player, this.useCheatStar, null, this);
@@ -847,7 +857,9 @@ sadako.Game.prototype = {
 
             this.player.bringToTop();
         }
-
+        if(this.player.body.velocity.y > 2000){
+            this.player.body.velocity.y = 2000;
+        }
         this.ghostMovement();
         this.mothMovement();
         this.wanderingGhostMovement();
@@ -873,6 +885,10 @@ sadako.Game.prototype = {
                 element.animations.add('walking', [0, 1, 2, 3]);
                 element.animations.play('walking',10,true);
             }, this);
+            if (!mute) {
+                var uncleSound = game.add.audio('uncleSound');
+                uncleSound.play();
+            }
             uncleDone = true;
         }
 
@@ -959,20 +975,22 @@ sadako.Game.prototype = {
             element.y = element.spawnPy;
         }, this);
 
-        /* this.skulls.children.forEach(function (element){
+        this.skulls.children.forEach(function (element){
             element.x = element.spawnPx;
             element.y = element.spawnPy;
-        }, this); */
+        }, this); 
 
         this.box.children.forEach(function (element) {
             element.x = element.spawnPx;
             element.y = element.spawnPy;
         }, this);
 
-        this.uncle.children.forEach(function(element){
-            element.destroy();
-        },this);
-        uncleDone = false;
+        if(uncleDone){
+            this.uncle.children.forEach(function(element){
+                element.destroy();
+            },this);
+            uncleDone = false;
+        }
 
         game.input.enabled = true;
 
@@ -1018,7 +1036,7 @@ sadako.Game.prototype = {
     moveBox: function (player, box) {
         if (!boxMoveSoundFlag && !mute) {
             var boxMoveSound = game.add.audio('boxMoving');
-            boxMoveSound.volume = 0.1;
+            boxMoveSound.volume = 0.5;
             boxMoveSoundFlag = true;
             boxMoveSound.play();
             boxMoveSound.onStop.add(function () {
@@ -1098,12 +1116,21 @@ sadako.Game.prototype = {
 
         var distance = 0;
 
-        if(this.boxOnButton.getTileWorldXY(this.player.body.x + dollInt * 128 , this.player.body.y, 128, 128, 'BlockLayer') != null)
+        if(this.boxOnButton.getTileWorldXY(this.player.body.x + dollInt * 128 , this.player.body.y, 128, 128, 'BlockLayer') == null)
         {
-
+            this.player.x = this.player.body.x + dollInt * 128;
+        }
+        else
+        {
+            for (var i = dollInt; i != 0; i > 0 ? (i--) :(i++))
+            {
+                if (this.boxOnButton.getTileWorldXY(this.player.body.x + dollInt * 128, this.player.body.y, 128, 128, 'BlockLayer') == null) {
+                    this.player.x = this.player.body.x + dollInt * 128;
+                }
+            }
         }
 
-        this.game.physics.
+
 
         dollFlag = false;
         doll.kill();
@@ -1117,6 +1144,7 @@ sadako.Game.prototype = {
         stopwatchBuffIcon.scale.setTo(0.5);
         stopwatchTimerBar = this.player.addChild(game.make.sprite(-86, -110, 'timerBar'));
         stopwatchTimer = 80;
+        game.time.events.add(Phaser.Timer.QUARTER, this.TimerTick, this);
 
         stopwatch.kill();
     },
@@ -1155,9 +1183,6 @@ sadako.Game.prototype = {
         }
 
         terror += plate.frame / 20;
-    },
-    plateEffect: function (player, plate) {
-
     },
     //reset
     reset: function () {
@@ -1457,7 +1482,7 @@ sadako.Game.prototype = {
     },
     //winning event
     winningBear: function () {
-        if(mapNum = 3){
+        if(mapNum == 3){
         this.lv3Headache();
         this.bear.destroy();
         this.ghost.children.forEach(function (element) {
@@ -1535,7 +1560,77 @@ sadako.Game.prototype = {
         }, t);
     }
         
-    },lv3Win: function () {
+    },uncleDefeated: function () {
+        winState = true;
+        game.physics.arcade.isPaused = true;
+
+
+        if (!mute) {
+            var winMusic = game.add.audio('winMusic');
+            backgroundMusic.pause();
+            winMusic.play();
+            winMusic.onStop.add(function () {
+                if (!mute) {
+                    backgroundMusic.resume();
+                }
+            });
+        }
+        this.bear.destroy();
+        this.ghost.children.forEach(function (element) {
+
+            element.kill();
+        });
+
+       
+
+        pauseButton.destroy();
+        pauseWhite = game.add.sprite(game.camera.x + 1024, game.camera.y + 1024, 'white');
+        pauseWhite.anchor.setTo(0.5, 0.5);
+        pauseWhite.alpha = 0.5;
+
+        var textStyle = {
+            font: "100px Arial",
+            fill: "#000000",
+            align: "center"
+        };
+
+        text = game.add.text(game.camera.x + 1024, game.camera.y + 500, "Uncle Defeated", textStyle);
+        text.anchor.setTo(0.5, 0.5);
+
+        if (mapNum < 7) {
+            pauseNext = game.add.sprite(game.camera.x + 1024, game.camera.y + 900, 'nextLevelButton');
+            pauseNext.anchor.setTo(0.5);
+            pauseNext.inputEnabled = true;
+            pauseNext.events.onInputDown.add(function () {
+                game.physics.arcade.isPaused = false;
+                if (mapNum == 6) {
+                    lv = 6;
+                    game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
+                    //ghostSound.stop();
+                }
+                else if (lv < mapNum + 1) {
+                    lv = mapNum + 1;
+                    game.state.start('Game', true, false, completed, lv, mute, this.bgMusic, 'level' + lv.toString());
+                    //ghostSound.stop();
+                }
+            }, t);
+        }
+        pauseMenu = game.add.sprite(game.camera.x + 1024, game.camera.y + 1250, 'mainMenuButton');
+        pauseMenu.anchor.setTo(0.5);
+        pauseMenu.inputEnabled = true;
+        pauseMenu.events.onInputDown.add(function () {
+            game.physics.arcade.isPaused = false;
+            if (mapNum == 6) {
+                lv = 6;
+            }
+            else if (lv < mapNum + 1) {
+                lv = mapNum + 1;
+            }
+            game.state.start('MainMenu', true, false, completed, lv, mute, this.bgMusic);
+            //ghostSound.stop();
+        }, t);
+    },
+    lv3Win: function () {
         game.input.enabled = true;
         winState = true;
         game.physics.arcade.isPaused = true;
