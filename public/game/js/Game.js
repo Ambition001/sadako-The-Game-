@@ -219,7 +219,7 @@ sadako.Game.prototype = {
         this.player.animations.add('headacheleft', [112, 113, 114]);
 
         this.player.frame = 40;//start her off facing right
-
+        this.player.position.x = 10000;
         this.restartx = result[0].x;
         this.restarty = result[0].y - 128;
 
@@ -444,7 +444,8 @@ sadako.Game.prototype = {
         this.wanderingGhost.enableBody = true;
         result = this.findObjectsByType('wanderingGhost', this.map, 'ObjectLayer');
         result.forEach(function (element) {
-            this.wanderingGhost.create(element.x, element.y, 'ghostW');
+            //this.wanderingGhost.create(element.x, element.y, 'ghost');
+            this.createFromTiledObject(element,this.wanderingGhost,'ghost');
         }, this);
         this.wanderingGhost.children.forEach(function (element) {
             element.animations.add('floatingleft', [0, 1, 2, 3]);
@@ -454,10 +455,9 @@ sadako.Game.prototype = {
             element.animations.add('scaredleft', [16, 17, 18, 19]);
             element.animations.add('scaredright', [20, 21, 22, 23]);
             element.animations.add('winning', [24, 25]);
-
             element.spawnPx = element.x;
             element.spawnPy = element.y;
-
+        
             element.touched = false;
         }, this);
     },
@@ -465,7 +465,6 @@ sadako.Game.prototype = {
         this.moths = this.game.add.group(this.monsters);
         this.moths.enableBody = true;
         result = this.findObjectsByType('moth', this.map, 'ObjectLayer');
-        console.log(result);
         result.forEach(function (element) {
             this.moths.create(element.x, element.y, 'moth');
         }, this);
@@ -787,6 +786,7 @@ sadako.Game.prototype = {
 
         this.ghostMovement();
         this.mothMovement();
+        this.wanderingGhostMovement();
         //this.skullMovement();
         if(mapNum == 4 && !headacheFlag && this.player.position.y > 13568){
             if(this.player.position.y > 14208 || this.player.position.x > 1024 ){
@@ -1109,31 +1109,32 @@ sadako.Game.prototype = {
         }
     },
     wanderingGhostMovement: function(){
+        // 1: ax, 2: direction, 3: range, 4:vel
         this.wanderingGhost.children.forEach(function (element){
-            if(element[ax]=="x"){
-                element.body.velocity.x = element[vel]*element[direc];
-                if(element[direc] == 1){
-                    if(element.body.position.x - element.spawnPx >= element[range]*128){
-                        element[direc]*=-1;
+            if(element[1].value=="x"){
+                element.body.velocity.x = element[4].value*element[2].value;
+                if(element[2].value == 1){
+                    if(element.body.position.x - element.spawnPx >= element[3].value*128){
+                        element[2].value*=-1;
                     }
                 }
                 else{
-                    if(element.spawnPx - element.body.position.x>= element[range]*128){
-                        element[direc]*=-1;
+                    if(element.spawnPx - element.body.position.x>= element[3].value*128){
+                        element[2].value*=-1;
                     }
                 }
                  
             }
             else{
-                element.body.velocity.y = element[vel]*element[direc];
-                if(element[direc] == 1){
-                    if(element.body.position.y - element.spawnPy >= element[range]*128){
-                        element[direc]*=-1;
+                element.body.velocity.y = element[4].value*element[2].value;
+                if(element[2].value == 1){
+                    if(element.body.position.y - element.spawnPy >= element[3].value*128){
+                        element[2].value*=-1;
                     }
                 }
                 else{
-                    if(element.spawnPy - element.body.position.y>= element[range]*128){
-                        element[direc]*=-1;
+                    if(element.spawnPy - element.body.position.y>= element[3].value*128){
+                        element[2].value*=-1;
                     }
                 }
             }
