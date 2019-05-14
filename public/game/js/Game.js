@@ -1000,14 +1000,6 @@ sadako.Game.prototype = {
             element.y = element.spawnPy;
         }, this);
 
-<<<<<<< HEAD
-=======
-        /* this.skulls.children.forEach(function (element){
-            element.x = element.spawnPx;
-            element.y = element.spawnPy;
-        }, this);  */
-
->>>>>>> 0b4b8bd6fd1ef003d11dd7745b80f66b46f8be77
         this.box.children.forEach(function (element) {
             element.x = element.spawnPx;
             element.y = element.spawnPy;
