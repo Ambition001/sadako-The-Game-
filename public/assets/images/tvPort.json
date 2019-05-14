@@ -1,0 +1,144 @@
+{ "frames": [
+   {
+    "filename": "tvPortBig 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 383, "h": 1200 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 383, "h": 1200 },
+    "sourceSize": { "w": 383, "h": 1200 },
+    "duration": 100
+   },
+   {
+    "filename": "tvPortBig 1.aseprite",
+    "frame": { "x": 383, "y": 0, "w": 383, "h": 1200 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 383, "h": 1200 },
+    "sourceSize": { "w": 383, "h": 1200 },
+    "duration": 100
+   },
+   {
+    "filename": "tvPortBig 2.aseprite",
+    "frame": { "x": 766, "y": 0, "w": 383, "h": 1200 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 383, "h": 1200 },
+    "sourceSize": { "w": 383, "h": 1200 },
+    "duration": 100
+   },
+   {
+    "filename": "tvPortBig 3.aseprite",
+    "frame": { "x": 1149, "y": 0, "w": 383, "h": 1200 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 383, "h": 1200 },
+    "sourceSize": { "w": 383, "h": 1200 },
+    "duration": 100
+   },
+   {
+    "filename": "tvPortBig 4.aseprite",
+    "frame": { "x": 1532, "y": 0, "w": 383, "h": 1200 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 383, "h": 1200 },
+    "sourceSize": { "w": 383, "h": 1200 },
+    "duration": 100
+   },
+   {
+    "filename": "tvPortBig 5.aseprite",
+    "frame": { "x": 1915, "y": 0, "w": 383, "h": 1200 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 383, "h": 1200 },
+    "sourceSize": { "w": 383, "h": 1200 },
+    "duration": 100
+   },
+   {
+    "filename": "tvPortBig 6.aseprite",
+    "frame": { "x": 0, "y": 1200, "w": 383, "h": 1200 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 383, "h": 1200 },
+    "sourceSize": { "w": 383, "h": 1200 },
+    "duration": 100
+   },
+   {
+    "filename": "tvPortBig 7.aseprite",
+    "frame": { "x": 383, "y": 1200, "w": 383, "h": 1200 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 383, "h": 1200 },
+    "sourceSize": { "w": 383, "h": 1200 },
+    "duration": 100
+   },
+   {
+    "filename": "tvPortBig 8.aseprite",
+    "frame": { "x": 766, "y": 1200, "w": 383, "h": 1200 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 383, "h": 1200 },
+    "sourceSize": { "w": 383, "h": 1200 },
+    "duration": 100
+   },
+   {
+    "filename": "tvPortBig 9.aseprite",
+    "frame": { "x": 1149, "y": 1200, "w": 383, "h": 1200 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 383, "h": 1200 },
+    "sourceSize": { "w": 383, "h": 1200 },
+    "duration": 100
+   },
+   {
+    "filename": "tvPortBig 10.aseprite",
+    "frame": { "x": 1532, "y": 1200, "w": 383, "h": 1200 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 383, "h": 1200 },
+    "sourceSize": { "w": 383, "h": 1200 },
+    "duration": 100
+   },
+   {
+    "filename": "tvPortBig 11.aseprite",
+    "frame": { "x": 1915, "y": 1200, "w": 383, "h": 1200 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 383, "h": 1200 },
+    "sourceSize": { "w": 383, "h": 1200 },
+    "duration": 100
+   },
+   {
+    "filename": "tvPortBig 12.aseprite",
+    "frame": { "x": 0, "y": 2400, "w": 383, "h": 1200 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 383, "h": 1200 },
+    "sourceSize": { "w": 383, "h": 1200 },
+    "duration": 100
+   },
+   {
+    "filename": "tvPortBig 13.aseprite",
+    "frame": { "x": 383, "y": 2400, "w": 383, "h": 1200 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 383, "h": 1200 },
+    "sourceSize": { "w": 383, "h": 1200 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.9-x64",
+  "image": "H:\\Desktop\\Playground\\CSE380\\sadako\\public\\game\\assets\\sprites\\tvPortU.png",
+  "format": "RGBA8888",
+  "size": { "w": 2304, "h": 3600 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

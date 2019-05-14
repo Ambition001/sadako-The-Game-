@@ -139,8 +139,8 @@ sadako.Preload.prototype = {
         this.load.image('background6','assets/backgrounds/background6.png');
         load = true;
         var loadDoneText = this.game.add.text(this.game.world.centerX + 200, this.game.world.centerY - 1024, "Press ESC to skip after load", textStyle);
-        loadDoneText.addColor("#FF0000", 22);
-        loadDoneText.addColor("#000000", 25);
+        loadDoneText.addColor("#FF0000", 6);
+        loadDoneText.addColor("#000000", 9);
 
 
     },
